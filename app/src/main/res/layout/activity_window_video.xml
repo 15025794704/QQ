@@ -1,13 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_window_video"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/videoview_bg_change_color"
     tools:context="com.aclass.android.qq.VideoWindowActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
+            <ImageButton
+                android:layout_width="2dp"
+                android:layout_height="26dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                app:srcCompat="@drawable/videoview_mini_btn"
+                android:id="@+id/image_btn_mini"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="12" />
+        </LinearLayout>
+
+            <com.aclass.android.qq.custom.control.RoundImageView
+                android:layout_marginTop="50dp"
+                android:layout_width="145dp"
+                android:layout_height="145dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/qq"
+                app:type="circle"
+                android:id="@+id/RoundImageView_video_head"
+                />
+
+        <TextView
+            android:text="漂流瓶的小号"
+            android:textColor="@color/color_white"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+             />
+
+        <TextView
+            android:text="正在呼叫..."
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_white_gray"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:text="当前为非WIFI网络"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="60dp">
+
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="1dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/btn_mic_1"
+                    android:id="@+id/image_btn_mic"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_refuse_1"
+                    android:id="@+id/image_btn_refuse"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="1dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/btn_loudspeaker_1"
+                    android:id="@+id/image_btn_loudspeaker"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
 </RelativeLayout>
