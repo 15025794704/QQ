@@ -17,10 +17,6 @@
         </activity>
         <activity android:name=".EditDataActivity" />
         <activity android:name=".VideoWindowActivity"></activity>
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
