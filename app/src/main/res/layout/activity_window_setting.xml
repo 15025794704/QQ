@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingWindowActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Account management"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/customViewsContainer"
+                android:orientation="horizontal"
+                android:layoutDirection="rtl"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_keyboard_arrow_right_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:text="Notifications"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:drawableEnd="@drawable/ic_keyboard_arrow_right_24"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </ScrollView>
