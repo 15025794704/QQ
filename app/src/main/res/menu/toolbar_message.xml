@@ -7,7 +7,6 @@
         android:icon="@drawable/ic_call_24"
         app:showAsAction="always"
         android:title="Voice call"/>
-
     <item
         android:id="@+id/messageToolbarInfo"
         android:icon="@drawable/ic_menu_24"

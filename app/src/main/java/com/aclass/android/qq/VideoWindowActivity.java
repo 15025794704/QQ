@@ -7,13 +7,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.MyButtonOperation;
+import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.control.RoundImageView;
 
 public class VideoWindowActivity extends AppCompatActivity {
 
+    Screen screen;
     ImageButton btn_refuse;
     ImageButton btn_mic;
     ImageButton btn_loudspeaker;
@@ -54,13 +57,15 @@ public class VideoWindowActivity extends AppCompatActivity {
     protected void init(){
         //设置状态栏背景
       //  ActivityOpreation.setStatusBar(this,R.color.colorVideoViewBG,View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
+        screen=new Screen(this);
         btn_refuse=(ImageButton)findViewById(R.id.image_btn_refuse);
         btn_mic=(ImageButton)findViewById(R.id.image_btn_mic);
         btn_loudspeaker=(ImageButton)findViewById(R.id.image_btn_loudspeaker);
         btn_mini=(ImageButton)findViewById(R.id.image_btn_mini);
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
-
+        
+        //头像框设置大小
+        headImg.setLayoutParams(new LinearLayout.LayoutParams((int)(screen.getposWidth()*0.36),(int)(screen.getposWidth()*0.36)));
         //设置拒绝按钮按下和弹起效果
         MyButtonOperation.changeImageButton(this,btn_refuse,R.drawable.btn_refuse_2,R.drawable.btn_refuse_1);
         //设置小化按钮按下和弹起效果

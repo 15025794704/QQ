@@ -13,6 +13,8 @@ import com.aclass.android.qq.R;
  * Created by Administrator on 2019/10/30.
  */
 
+
+//自定义的Toolbar
 public class MyToolbar extends Toolbar{
     private int menuStyle=0;
     private int NavigationIcon=0;
