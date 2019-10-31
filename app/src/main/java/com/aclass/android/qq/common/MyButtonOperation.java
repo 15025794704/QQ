@@ -38,35 +38,35 @@ public class MyButtonOperation {
         });
     }
 
-    /**错误方法不可用
-     * ImageButton快捷设置要执行的方法，没有返回值
-     * @param btn
-     * @param obj
-     * @param methodName
-     * @param args
-     */
-    private static void setOnClick(ImageButton btn,final Object obj, final String methodName,final Object[] args){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyReflect.invoke(obj,methodName,args);
-            }
-        });
-    }
+//    /**错误方法不可用
+//     * ImageButton快捷设置要执行的方法，没有返回值
+//     * @param btn
+//     * @param obj
+//     * @param methodName
+//     * @param args
+//     */
+//    private static void setOnClick(ImageButton btn,final Object obj, final String methodName,final Object[] args){
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MyReflect.invoke(obj,methodName,args);
+//            }
+//        });
+//    }
 
-    /**错误方法不可用
-     * Button快捷设置要执行的方法，没有返回值
-     * @param btn
-     * @param obj
-     * @param methodName
-     * @param args
-     */
-    private static void setOnClick(Button btn,final Object obj, final String methodName,final Object[] args){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyReflect.invoke(obj,methodName,args);
-            }
-        });
-    }
+//    /**错误方法不可用
+//     * Button快捷设置要执行的方法，没有返回值
+//     * @param btn
+//     * @param obj
+//     * @param methodName
+//     * @param args
+//     */
+//    private static void setOnClick(Button btn,final Object obj, final String methodName,final Object[] args){
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MyReflect.invoke(obj,methodName,args);
+//            }
+//        });
+//    }
 }
