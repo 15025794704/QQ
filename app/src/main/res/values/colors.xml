@@ -6,4 +6,6 @@
     <color name="colorVideoViewBG">#BDCAC6</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_white_gray">#EEE</color>
+    <color name="color_tool_bar_blue_start">#00D7FE</color>
+    <color name="color_tool_bar_blue_end">#00A7FF</color>
 </resources>

@@ -9,6 +9,7 @@
     tools:context="com.aclass.android.qq.VideoWindowActivity">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,6 +52,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/qq"
                 app:type="circle"
+
                 android:id="@+id/RoundImageView_video_head"
                 />
 

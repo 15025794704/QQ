@@ -53,7 +53,7 @@ public class VideoWindowActivity extends AppCompatActivity {
 
     protected void init(){
         //设置状态栏背景
-        ActivityOpreation.setStatusBar(this,R.color.colorVideoViewBG,View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      //  ActivityOpreation.setStatusBar(this,R.color.colorVideoViewBG,View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         btn_refuse=(ImageButton)findViewById(R.id.image_btn_refuse);
         btn_mic=(ImageButton)findViewById(R.id.image_btn_mic);

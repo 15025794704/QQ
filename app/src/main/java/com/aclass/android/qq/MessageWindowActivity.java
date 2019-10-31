@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.aclass.android.qq.databinding.ActivityWindowMessageBinding;
 
@@ -25,6 +26,10 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
+
+    protected void init(){
         // DataBinding，摆脱 findViewById
         mViews = ActivityWindowMessageBinding.inflate(getLayoutInflater());
         // 设置页面界面
@@ -36,7 +41,14 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
         toolbar.setOnMenuItemClickListener(this);
         // 设置工具栏导航图标
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_24);
+        // 设置工具栏导航按键事件
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // 设置工具栏标题文字
-        mViews.messageToolbarTitle.setText("MADNESS");
+        mViews.messageToolbarTitle.setText("漂流瓶");
     }
 }
