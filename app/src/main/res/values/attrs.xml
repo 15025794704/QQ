@@ -8,7 +8,9 @@
         <attr name="radius" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="MyToolbar">
-        <attr name="menu" format="reference">
+        <attr name="menuStyle" format="reference">
+        </attr>
+        <attr name="navigationIcon" format="reference">
         </attr>
     </declare-styleable>
 </resources>
