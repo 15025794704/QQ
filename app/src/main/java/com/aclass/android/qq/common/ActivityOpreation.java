@@ -14,18 +14,17 @@ import com.aclass.android.qq.R;
 public class ActivityOpreation {
 
     /**
-     * 当前activity跳转到另一个activity
+     * 当前activity跳转到另一个activity，不finish当前activity
      * @param activity
      * @param clazz
      */
     public static void jumpActivity(Activity activity,Class<?> clazz){
         Intent intent=new Intent(activity,clazz);
         activity.startActivity(intent);
-        activity.finish();
     }
 
     /**
-     * 当前activity的状态栏背景颜色，以及文字颜色
+     * 设置当前activity的状态栏背景颜色资源，以及显示的文字图标等颜色资源
      * @param activity
      * @param barColor
      * @param wordColor

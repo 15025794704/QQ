@@ -9,9 +9,12 @@ import java.lang.reflect.Method;
  * Created by Administrator on 2019/10/24.
  */
 
+/**
+ * 反射机制
+ */
 public class MyReflect {
     /**
-     * 开启子线程执行方法
+     * 开启子线程应用反射执行方法
      * @param owner  对象
      * @param methodName  方法
      * @param args  参数数组
@@ -35,7 +38,7 @@ public class MyReflect {
     }
 
     /**
-     * 用当前线程执行方法
+     * 用当前线程反射执行方法
      * @param owner  对象
      * @param methodName  方法
      * @param args  参数数组
@@ -65,7 +68,7 @@ public class MyReflect {
     }
 
     /**
-     * 延时执行对象方法
+     * 开启子线程延时执行对象方法
      * @param owner  对象
      * @param methodName   方法
      * @param args  参数数组

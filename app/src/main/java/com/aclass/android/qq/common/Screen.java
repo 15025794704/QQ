@@ -32,10 +32,18 @@ public class Screen {
         posHeight = outSize.y;
     }
 
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
     public int getposWidth() {
         return posWidth;
     }
 
+    /**
+     * 获取屏幕高度
+     * @return
+     */
     public int getposHeight() {
         return posHeight;
     }

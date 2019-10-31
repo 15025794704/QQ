@@ -14,7 +14,7 @@ import static javax.xml.transform.OutputKeys.ENCODING;
  * Created by Administrator on 2019/10/31.
  */
 
-//单例模式
+//单例模式，获取assets文件夹的文件资源
 public class AssetsOperation {
     private static AssetsOperation instance;
     private static AssetManager am;

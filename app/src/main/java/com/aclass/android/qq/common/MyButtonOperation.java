@@ -17,7 +17,8 @@ import com.aclass.android.qq.R;
 public class MyButtonOperation {
 
     /**
-     *设置imageButton按下和弹起可以改变图片填充资源
+     * 设置imagebutton按动改变button背景图
+     *设置imageButton按下时的图片填充资源 和 弹起时的图片填充资源
      * @param context  “填this即可”
      * @param imageButton
      * @param srcDown  按下的资源文件
