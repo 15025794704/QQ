@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+// below: load the desired values from local.properties in order to be injected into BuildConfig and Res
+// the values in local.properties must not contain quotes otherwise the parsed values here will contain quotes
+// 将测试用的 Activity 名字写入 BuildConfig
+// 在 local.properties 文件里新增一行：testActivityName=com.aclass.android.qq.MyActivity
+// 将 com.aclass.android.qq.MyActivity 替换为要进行测试的 Activity 名称（包含包名），应用在 debug 模式启动时便会启动该 Activity
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+def buildTestActivityName = properties.getProperty("testActivityName", "")
+
 android {
     compileSdkVersion 24
     buildToolsVersion "29.0.2"
@@ -10,6 +19,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // below: inject the desired values into BuildConfig and Res
+        // the string values have to be wrapped in quotes because the value in local.properties does not have quotes
+        // 将测试用的 Activity 名字写入 BuildConfig
+        buildConfigField "String", "TEST_ACTIVITY_NAME", "\"$buildTestActivityName\""
+//        resValue "string", "testActivityName", buildTestActivityName
     }
     buildTypes {
         release {
