@@ -1,5 +1,6 @@
 package com.aclass.android.qq;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,7 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_window_message);
         init();
     }
 
@@ -41,6 +43,10 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
         toolbar.setOnMenuItemClickListener(this);
         // 设置工具栏导航图标
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_24);
+
+        toolbar.getNavigationIcon().setTint(Color.WHITE);
+        for(int i=0;i<toolbar.getMenu().size();i++)
+            toolbar.getMenu().getItem(i).getIcon().setTint(Color.WHITE);
         // 设置工具栏导航按键事件
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +55,6 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
             }
         });
         // 设置工具栏标题文字
-        mViews.messageToolbarTitle.setText("漂流瓶");
+        mViews.messageToolbarTitle.setText("吴小吴");
     }
 }
