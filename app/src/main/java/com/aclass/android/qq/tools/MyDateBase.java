@@ -13,6 +13,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,6 +230,7 @@ public class MyDateBase {
 
 	/**
 	 * 更新实体对象
+	 * 返回更新成功的条数
 	 * Friend，Member，Qun，User
 	 * @param entity
 	 */
@@ -237,13 +239,21 @@ public class MyDateBase {
 		Field fields[]=entity.getClass().getDeclaredFields();
 		try {
 			for(Field field:fields) {
-				if(!field.getName().equals("serialVersionUID")) {
+				if(!field.getName().equals("serialVersionUID") && !field.getName().equals("head_Image")) {
 					Object value;
 //					value = new PropertyDescriptor(field.getName(),entity.getClass()).getReadMethod().invoke(entity);
 					String name=field.getName();
 					name="get"+name.substring(0,1).toUpperCase()+name.substring(1);
 					value = entity.getClass().getMethod(name).invoke(entity);
-					sql+="["+field.getName()+"]='"+value+"',";
+
+					if(value==null){
+						sql+="["+field.getName()+"]=null,";
+						continue;
+					}
+					if(value.getClass()==Date.class)
+						sql+="["+field.getName()+"]='"+((Date)value).toLocaleString()+"',";
+					else
+						sql+="["+field.getName()+"]='"+value+"',";
 				}
 			}
 			sql=sql.substring(0,sql.length()-1);
@@ -265,6 +275,48 @@ public class MyDateBase {
 				throw new Exception("其他类不可用，请咨询吴志维");
 			}
 			Request request=new Request(2, sql, null);
+			UDPsend(request);
+			return (int)MyDateBase.receiveObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * 新加实体对象
+	 * 返回加入成功的条数
+	 * Friend，Member，Qun，User
+	 * @param entity
+	 */
+	public static int insertEntity(Entity entity) {
+		String sql = "insert into ["+table.get(entity.getClass())+"] ";
+		String feildStr="(";
+		String valueStr=" (";
+		Field fields[]=entity.getClass().getDeclaredFields();
+		try {
+			for(Field field:fields) {
+				if(!field.getName().equals("serialVersionUID") && !field.getName().equals("head_Image")
+						&& !(field.getName().equals("id")&&entity.getClass()==Message.class)) {
+					feildStr+="["+field.getName()+"],";
+					Object value;
+					String name=field.getName();
+					name="get"+name.substring(0,1).toUpperCase()+name.substring(1);
+					value = entity.getClass().getMethod(name).invoke(entity);
+					if(value==null){
+						valueStr+="null,";
+						continue;
+					}
+					if(value.getClass()== Date.class)
+						valueStr+="'"+((Date)value).toLocaleString()+"',";
+					else
+						valueStr+="'"+value+"',";
+				}
+			}
+			valueStr=valueStr.substring(0,valueStr.length()-1)+")";
+			feildStr=feildStr.substring(0,feildStr.length()-1)+")";
+			sql=sql+feildStr+" VALUES "+valueStr;
+			Request request=new Request(4, sql, null);
 			UDPsend(request);
 			return (int)MyDateBase.receiveObject();
 		} catch (Exception e) {
