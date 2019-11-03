@@ -7,10 +7,13 @@
         </attr>
         <attr name="radius" format="dimension"/>
     </declare-styleable>
+
     <declare-styleable name="MyToolbar">
-        <attr name="menuStyle" format="reference">
-        </attr>
-        <attr name="navigationIcon" format="reference">
-        </attr>
+<!--        工具栏选项-->
+        <attr name="menu" format="reference"/>
+<!--        工具栏导航栏图标颜色-->
+        <attr name="navigationIconTint" format="color"/>
+<!--        工具栏选项图标颜色-->
+        <attr name="menuIconTint" format="color"/>
     </declare-styleable>
 </resources>
