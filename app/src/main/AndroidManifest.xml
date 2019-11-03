@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".AddFriendActivity"></activity>
+        <activity android:name=".NewFriendActivity" />
+        <activity android:name=".ContactChatSettingsActivity" />
+        <activity android:name=".GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" />
         <activity android:name=".SettingWindowActivity" />
         <activity android:name=".MainActivity">

@@ -2,10 +2,15 @@ package com.aclass.android.qq.custom.control;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.aclass.android.qq.R;
 
@@ -16,8 +21,18 @@ import com.aclass.android.qq.R;
 
 //自定义的Toolbar
 public class MyToolbar extends Toolbar{
-    private int menuStyle=0;
-    private int NavigationIcon=0;
+    /**
+     * 选项资源
+     */
+    private int mMenuRes = 0;
+    /**
+     * 导航图标颜色
+     */
+    private int mNavIconTint = Color.BLACK;
+    /**
+     * 选项图标颜色
+     */
+    private int mMenuIconTint = Color.BLACK;
 
     public MyToolbar(Context context){
         super(context);
@@ -29,19 +44,35 @@ public class MyToolbar extends Toolbar{
 
     public MyToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        obtainStyledAttrs(context, attrs, defStyleAttr);
+        initBar();
     }
 
     private void obtainStyledAttrs(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyToolbar, defStyleAttr, 0);
-        menuStyle = a.hasValue(R.styleable.MyToolbar_menuStyle) ? a.getInt(R.styleable.MyToolbar_menuStyle, menuStyle) : menuStyle;
-        NavigationIcon = a.hasValue(R.styleable.MyToolbar_navigationIcon) ? a.getInt(R.styleable.MyToolbar_navigationIcon, NavigationIcon) : NavigationIcon;
+        mMenuRes = a.hasValue(R.styleable.MyToolbar_menu) ? a.getResourceId(R.styleable.MyToolbar_menu, mMenuRes) : mMenuRes;
+        mNavIconTint = a.hasValue(R.styleable.MyToolbar_navigationIconTint) ? a.getColor(R.styleable.MyToolbar_navigationIconTint, mNavIconTint) : mNavIconTint;
+        mMenuIconTint = a.hasValue(R.styleable.MyToolbar_menuIconTint) ? a.getColor(R.styleable.MyToolbar_menuIconTint, mMenuIconTint) : mMenuIconTint;
         a.recycle();
     }
 
     private void initBar() {
-        if(menuStyle!=0)
-            this.inflateMenu(menuStyle);
-        if(NavigationIcon!=0)
-            this.setNavigationIcon(NavigationIcon);
+        // 设置导航按钮图标颜色
+        if (mNavIconTint != Color.BLACK){
+            Drawable navIcon = getNavigationIcon();
+            if (navIcon != null) navIcon.setTint(mNavIconTint);
+        }
+        // 工具栏
+        if(mMenuRes != 0) this.inflateMenu(mMenuRes);
+        // 设置选项按钮图标颜色
+        if (mMenuIconTint != Color.BLACK){
+            Menu menu = getMenu();
+            for (int i = 0; i < menu.size(); i++){
+                MenuItem item = menu.getItem(i);
+                Drawable icon = item.getIcon();
+                if (icon == null) continue;
+                icon.setTint(mMenuIconTint);
+            }
+        }
     }
 }

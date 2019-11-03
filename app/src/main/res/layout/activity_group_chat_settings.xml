@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".GroupChatSettingsActivity">
+
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/csGroupToolbar"
+            android:layout_width="match_parent"
+            android:background="@drawable/toolbar_bg_change_color"
+            app:navigationIcon="@drawable/ic_keyboard_arrow_left_24"
+            app:navigationIconTint="@android:color/white"
+            app:menu="@menu/toolbar_chat_settings_group"
+            app:menuIconTint="@android:color/white"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                tools:text="群聊资料" />
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+</layout>
