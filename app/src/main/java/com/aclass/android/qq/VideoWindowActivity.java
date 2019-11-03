@@ -69,7 +69,7 @@ public class VideoWindowActivity extends AppCompatActivity {
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
 
         //头像框设置大小,图片资源
-        int width=(int)(screen.getposWidth()*0.36);
+        int width=(int)(screen.getposWidth()*0.38);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,width);
         headImg.setLayoutParams(params);
         headImg.setImageBitmap(assetsOperation.getImage("image/qq.png"));
