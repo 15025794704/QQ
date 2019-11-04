@@ -2,4 +2,14 @@
     <string name="app_name">QQ</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="groupChatSettingsTitle">群聊资料</string>
+    <string name="logining">登录</string>
+    <string name="pwd">密码</string>
+    <string name="qq">QQ账号</string>
+    <string name="forgetPwd">忘记密码？</string>
+    <string name="register1">注册</string>
+    <string name="againPwd">再次输入密码</string>
+    <string name="sex">性别</string>
+    <string name="sex1">男</string>
+    <string name="sex2">女</string>
+    <string name="nickname">昵称</string>
 </resources>

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AddFriendActivity"/>
+        <activity android:name=".AddFriendActivity" />
         <activity android:name=".NewFriendActivity" />
         <activity android:name=".ContactChatSettingsActivity" />
         <activity android:name=".GroupChatSettingsActivity" />
@@ -24,8 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditDataActivity" />
-        <activity android:name=".VideoWindowActivity" >
-        </activity>
+        <activity android:name=".VideoWindowActivity" />
+        <activity android:name=".StartWindowActivity"/>
+        <activity android:name=".LoginWindowActivity"/>
+        <activity android:name=".RegisterWindowActivity"/>
     </application>
 
 </manifest>

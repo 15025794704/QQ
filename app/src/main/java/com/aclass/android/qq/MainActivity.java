@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
             if (canEnterTest) return;
         }
         // 默认的 MainActivity
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start_window);
     }
 
     /**
