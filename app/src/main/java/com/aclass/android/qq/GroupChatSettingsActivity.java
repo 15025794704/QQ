@@ -1,22 +1,21 @@
 package com.aclass.android.qq;
 
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowInsets;
 
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;
 
 /**
  * QQ 群聊天设置页面
  */
-public class GroupChatSettingsActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class GroupChatSettingsActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     // DataBinding 对象
     private ActivityGroupChatSettingsBinding mViews;
-    private WindowInsets mInsets;
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -34,6 +33,8 @@ public class GroupChatSettingsActivity extends AppCompatActivity implements Tool
         mViews = ActivityGroupChatSettingsBinding.inflate(getLayoutInflater());
         // 设置页面界面
         setContentView(mViews.getRoot());
+        applyInsets();
+
         MyToolbar toolbar = mViews.csGroupToolbar;
         // 工具栏选项点击监听器
         toolbar.setOnMenuItemClickListener(this);
@@ -43,29 +44,11 @@ public class GroupChatSettingsActivity extends AppCompatActivity implements Tool
                 finish();
             }
         });
-
-        applyInsets();
     }
 
-    /**
-     * 获得状态栏高度、导航栏高度等
-     */
-    private void applyInsets(){
-        mViews.getRoot().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                mInsets = insets;
-                consumeInsets();
-                return insets;
-            }
-        });
-    }
-
-    /**
-     * 响应窗口 insets
-     */
-    private void consumeInsets(){
+    @Override
+    protected void consumeInsets(Rect insets) {
         Toolbar tb = mViews.csGroupToolbar;
-        tb.setPadding(tb.getPaddingStart(), mInsets.getSystemWindowInsetTop(), tb.getPaddingEnd(), tb.getPaddingBottom());
+        tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
     }
 }
