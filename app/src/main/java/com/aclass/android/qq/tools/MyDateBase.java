@@ -57,7 +57,39 @@ public class MyDateBase {
 		}
 		return null;
 	}
-	
+
+    /**
+     * 字节转换成对象
+     * @param b
+     * @return
+     */
+	public static Object toObject(byte[] b){
+		try {
+			ByteArrayInputStream bis=new ByteArrayInputStream(b,0, b.length);
+			ObjectInputStream ois=new ObjectInputStream(bis);
+			return ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+    /**
+     * 对象转换成字节数组
+     * @param obj
+     * @return
+     */
+	public static byte[] toByteArray(Object obj){
+		try {
+			ByteArrayOutputStream bos=new ByteArrayOutputStream();
+			ObjectOutputStream ois=new ObjectOutputStream(bos);
+			ois.writeObject(obj);
+			return bos.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	/**
 	 * 接收对象数据
 	 * @return
@@ -67,7 +99,7 @@ public class MyDateBase {
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
 			socket.receive(packet);
-			 ByteArrayInputStream bis=new ByteArrayInputStream(b,0, b.length);
+			 ByteArrayInputStream bis=new ByteArrayInputStream(b,0, packet.getLength());
 	         ObjectInputStream ois=new ObjectInputStream(bis);
 	         return ois.readObject();
 		} catch (Exception e) {
@@ -95,10 +127,7 @@ public class MyDateBase {
 	 */
 	public static void UDPsend(Object obj) {
 		try {
-			 ByteArrayOutputStream bos=new ByteArrayOutputStream();
-	         ObjectOutputStream output=new ObjectOutputStream(bos);
-	         output.writeObject(obj);
-	         byte[] data= bos.toByteArray();
+	         byte[] data= toByteArray(obj);
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),889);
 			socket.send(sendpacket);
 		} catch (Exception e) {
