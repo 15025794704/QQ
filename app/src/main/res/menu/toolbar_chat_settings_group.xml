@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/csGroupToolbarMore"
-        android:icon="@drawable/ic_menu_24"
+        android:icon="@drawable/ic_more_horiz_24"
         app:showAsAction="ifRoom"
         android:title="More"/>
 </menu>

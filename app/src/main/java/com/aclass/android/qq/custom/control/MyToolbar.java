@@ -75,4 +75,11 @@ public class MyToolbar extends Toolbar{
             }
         }
     }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // 设置最小高度以使导航按钮能够正常地居中显示
+        setMinimumHeight(getMeasuredHeight() - getPaddingTop() - getPaddingBottom());
+    }
 }

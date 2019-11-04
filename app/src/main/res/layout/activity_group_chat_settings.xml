@@ -21,9 +21,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                tools:text="群聊资料" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/groupChatSettingsTitle" />
         </com.aclass.android.qq.custom.control.MyToolbar>
 
         <ScrollView

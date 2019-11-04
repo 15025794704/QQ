@@ -1,28 +1,21 @@
 package com.aclass.android.qq;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowInsets;
-import android.view.WindowManager;
 
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * QQ 群聊天设置页面
  */
-public class GroupChatSettingsActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class GroupChatSettingsActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     // DataBinding 对象
     private ActivityGroupChatSettingsBinding mViews;
-    private WindowInsets mInsets;
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -40,36 +33,22 @@ public class GroupChatSettingsActivity extends AppCompatActivity implements Tool
         mViews = ActivityGroupChatSettingsBinding.inflate(getLayoutInflater());
         // 设置页面界面
         setContentView(mViews.getRoot());
+        applyInsets();
+
         MyToolbar toolbar = mViews.csGroupToolbar;
         // 工具栏选项点击监听器
         toolbar.setOnMenuItemClickListener(this);
-
-        applyInsets();
-    }
-
-    /**
-     * 获得状态栏高度、导航栏高度等
-     */
-    private void applyInsets(){
-        mViews.getRoot().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                mInsets = insets;
-                consumeInsets();
-                return insets;
+            public void onClick(View v) {
+                finish();
             }
         });
     }
 
-    /**
-     * 响应窗口 insets
-     */
-    private void consumeInsets(){
-        mViews.csGroupToolbar.setPadding(
-                mInsets.getSystemWindowInsetLeft(),
-                mInsets.getSystemWindowInsetTop(),
-                mInsets.getSystemWindowInsetRight(),
-                mInsets.getSystemWindowInsetBottom()
-        );
+    @Override
+    protected void consumeInsets(Rect insets) {
+        Toolbar tb = mViews.csGroupToolbar;
+        tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
     }
 }
