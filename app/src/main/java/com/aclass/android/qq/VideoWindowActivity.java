@@ -3,23 +3,21 @@ package com.aclass.android.qq;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.graphics.YuvImage;
-import android.os.Build;
+import android.hardware.Camera;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.hardware.Camera;
 import android.widget.Toast;
 
 import com.aclass.android.qq.common.ActivityOpreation;
@@ -27,6 +25,7 @@ import com.aclass.android.qq.common.AssetsOperation;
 import com.aclass.android.qq.common.MyBitMapOperation;
 import com.aclass.android.qq.common.MyButtonOperation;
 import com.aclass.android.qq.common.Screen;
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.tools.MyDateBase;
@@ -35,7 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class VideoWindowActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener{
+public class VideoWindowActivity extends GeneralActivity implements TextureView.SurfaceTextureListener{
 
     AssetsOperation assetsOperation;
     Screen screen;
@@ -75,11 +74,20 @@ public class VideoWindowActivity extends AppCompatActivity implements TextureVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_video);
+        applyInsets();
         init();
         initData();
        set_btn_mini_click();
        set_btn_refuse_click();
         startThreadStartVideo();
+    }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
+      LinearLayout l=(LinearLayout) findViewById(R.id.LinearLayout_video_window);
+        RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.setMargins(0,insets.top,0,0);
+        l.setLayoutParams(layoutParams);
     }
 
     private void startThreadStartVideo(){
@@ -93,7 +101,7 @@ public class VideoWindowActivity extends AppCompatActivity implements TextureVie
                 if(user==null)
                     ActivityOpreation.updateUI(handler,0x12,"null");
                 else
-                    ActivityOpreation.updateUI(handler,0x12,user.getPassword());
+                    ActivityOpreation.updateUI(handler,0x12,user.toString());
 
                 addCallBack();
             }
@@ -176,6 +184,7 @@ public class VideoWindowActivity extends AppCompatActivity implements TextureVie
             // 设置相机预览宽高，此处设置为TextureView宽高
             Camera.Parameters params = mCamera.getParameters();
             params.setPreviewSize(width, height);
+            params.setPreviewFrameRate(15);
             // 设置自动对焦模式
             List<String> focusModes = params.getSupportedFocusModes();
             if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {

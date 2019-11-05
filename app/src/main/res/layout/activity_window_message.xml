@@ -14,7 +14,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:background="@drawable/toolbar_bg_change_color"
-            android:paddingTop="20dp"
+            android:id="@+id/LinearLayout_message_window"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

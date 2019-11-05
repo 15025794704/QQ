@@ -2,16 +2,19 @@ package com.aclass.android.qq;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityWindowMessageBinding;
 
-public class MessageWindowActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     // DataBinding 对象
     private ActivityWindowMessageBinding mViews;
 
@@ -31,7 +34,13 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
+        applyInsets();
         init();
+    }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
+        ((LinearLayout)findViewById(R.id.LinearLayout_message_window)).setPadding(0,insets.top,0,0);
     }
 
     protected void init(){
