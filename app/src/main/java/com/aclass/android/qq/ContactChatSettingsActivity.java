@@ -17,7 +17,8 @@ public class ContactChatSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_chat_settings);
-        Friend friend = MyDateBase.getFriend("1234567890", "0987654321");
+        MyDateBase dateBase = new MyDateBase();
+        Friend friend = dateBase.getFriend("1234567890", "0987654321");
         Log.d("GGGG", friend.toString());
     }
 }

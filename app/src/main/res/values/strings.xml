@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">QQ</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="groupChatSettingsTitle">群聊资料</string>
 </resources>
