@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.aclass.android.qq">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 开机启动权限 -->
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         <!-- 摄像头权限 -->
@@ -18,7 +18,7 @@
         <!-- 在SDCard读取数据的权限 -->
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
      
-            <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"

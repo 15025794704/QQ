@@ -1,5 +1,6 @@
 package com.aclass.android.qq;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.databinding.ActivityWindowMessageBinding;
 
 public class MessageWindowActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
@@ -17,6 +19,7 @@ public class MessageWindowActivity extends AppCompatActivity implements Toolbar.
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.messageToolbarCall: // 语音通话
+                ActivityOpreation.jumpActivity(this,VideoWindowActivity.class);
                 return true;
             case R.id.messageToolbarInfo: // 聊天详情
                 return true;

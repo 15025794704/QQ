@@ -21,17 +21,10 @@ import java.util.Map;
 
 
 public class MyDateBase {
-	private static DatagramSocket socket;
+	private  DatagramSocket socket;
 	private static String ip="47.107.138.4";
 	private static Map<Class<?>,String> table=new HashMap<Class<?>, String>();
 	static {
-		try {
-			socket=new DatagramSocket();
-			socket.setSoTimeout(3000);//超时
-		} catch (SocketException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
 		table.put(Friend.class, "T_friends");
 		table.put(IP.class, "T_ip");
 		table.put(Member.class, "T_members");
@@ -39,12 +32,22 @@ public class MyDateBase {
 		table.put(Qun.class, "T_qun");
 		table.put(User.class, "T_user");
 	}
-	
+
+	public MyDateBase(){
+		try {
+			socket=new DatagramSocket();
+			socket.setSoTimeout(3000);//超时
+		} catch (SocketException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 接收字节数组数据
 	 * @return
 	 */
-	public static byte[] receiveData() {
+	public  byte[] receiveData() {
 		byte[] b=new byte[1024*20];
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
@@ -94,7 +97,7 @@ public class MyDateBase {
 	 * 接收对象数据
 	 * @return
 	 */
-	public static Object receiveObject() {
+	public  Object receiveObject() {
 		byte[] b=new byte[1024*20];
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
@@ -112,7 +115,7 @@ public class MyDateBase {
 	 * 发送字节数组
 	 * @param data
 	 */
-	public static void UDPsend(byte[] data) {
+	public  void UDPsend(byte[] data) {
 		try {
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),889);
 			socket.send(sendpacket);
@@ -125,7 +128,7 @@ public class MyDateBase {
 	 * 发送对象
 	 * @param obj
 	 */
-	public static void UDPsend(Object obj) {
+	public  void UDPsend(Object obj) {
 		try {
 	         byte[] data= toByteArray(obj);
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),889);
@@ -142,7 +145,7 @@ public class MyDateBase {
 	 * @param address
 	 * @param data
 	 */
-	public static void UDPsend(DatagramSocket socket,SocketAddress address,byte[] data) {
+	public  void UDPsend(DatagramSocket socket,SocketAddress address,byte[] data) {
 		try {
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,address);
 			socket.send(sendpacket);
@@ -156,11 +159,11 @@ public class MyDateBase {
 	 * @param qqNum
 	 * @return
 	 */
-	public static User getUser(String qqNum){
+	public  User getUser(String qqNum){
 		Request request=new Request(1, "select * from T_user where QQNum='"+qqNum+"'", new User());
-		MyDateBase.UDPsend(request);
-		List<User> list=(List<User>)MyDateBase.receiveObject();
-		if(list.size()!=0)
+		UDPsend(request);
+		List<User> list=(List<User>)receiveObject();
+		if(list!=null &&list.size()!=0)
 			return list.get(0);
 		else
 			return null;
@@ -171,10 +174,10 @@ public class MyDateBase {
 	 * @param qqNum
 	 * @return
 	 */
-	public static List<Friend> getFriends(String qqNum){
+	public  List<Friend> getFriends(String qqNum){
 		Request request=new Request(1, "select * from T_friends where QQ1='"+qqNum+"'", new Friend());
-		MyDateBase.UDPsend(request);
-		return (List<Friend>)MyDateBase.receiveObject();
+		UDPsend(request);
+		return (List<Friend>)receiveObject();
 	}
 	
 	/**
@@ -183,10 +186,10 @@ public class MyDateBase {
 	 * @param qqNumFriend
 	 * @return
 	 */
-	public static Friend getFriend(String qqNum,String qqNumFriend){
+	public  Friend getFriend(String qqNum,String qqNumFriend){
 		Request request=new Request(1, "select * from T_friends where QQ1='"+qqNum+"' and QQ2='"+qqNumFriend+"'", new Friend());
-		MyDateBase.UDPsend(request);
-		List<Friend> list=(List<Friend>)MyDateBase.receiveObject();
+		UDPsend(request);
+		List<Friend> list=(List<Friend>)receiveObject();
 		if(list.size()!=0)
 			return list.get(0);
 		else
@@ -198,10 +201,10 @@ public class MyDateBase {
 	 * @param qqNum
 	 * @return
 	 */
-	public static List<Message> getMessages(String qqNum){
+	public  List<Message> getMessages(String qqNum){
 		Request request=new Request(1, "select * from T_msg where receiveNum='"+qqNum+"'", new Message());
-		MyDateBase.UDPsend(request);
-		return (List<Message>)MyDateBase.receiveObject();
+		UDPsend(request);
+		return (List<Message>)receiveObject();
 	}
 	
 	/**
@@ -209,10 +212,10 @@ public class MyDateBase {
 	 * @param qunID
 	 * @return
 	 */
-	public static List<Member> getMembersByID(String qunID){
+	public  List<Member> getMembersByID(String qunID){
 		Request request=new Request(1, "select * from T_members where qunID='"+qunID+"'", new Member());
-		MyDateBase.UDPsend(request);
-		return (List<Member>)MyDateBase.receiveObject();
+		UDPsend(request);
+		return (List<Member>)receiveObject();
 	}
 	
 	/**
@@ -220,10 +223,10 @@ public class MyDateBase {
 	 * @param qqNum
 	 * @return
 	 */
-	public static List<Member> getMembersByQQ(String qqNum){
+	public  List<Member> getMembersByQQ(String qqNum){
 		Request request=new Request(1, "select * from T_members where memberQQ='"+qqNum+"'", new Member());
-		MyDateBase.UDPsend(request);
-		return (List<Member>)MyDateBase.receiveObject();
+		UDPsend(request);
+		return (List<Member>)receiveObject();
 	}
 	
 	/**
@@ -232,10 +235,10 @@ public class MyDateBase {
 	 * @param qqNum
 	 * @return
 	 */
-	public static Member getMemberByQQAndID(String qunID,String qqNum){
+	public  Member getMemberByQQAndID(String qunID,String qqNum){
 		Request request=new Request(1, "select * from T_members where memberQQ='"+qqNum+"' and qunID='"+qunID+"'", new Member());
-		MyDateBase.UDPsend(request);
-		List<Member> list=(List<Member>)MyDateBase.receiveObject();
+		UDPsend(request);
+		List<Member> list=(List<Member>)receiveObject();
 		if(list.size()!=0)
 			return list.get(0);
 		else
@@ -247,10 +250,10 @@ public class MyDateBase {
 	 * @param qunID
 	 * @return
 	 */
-	public static Qun getQun(String qunID){
+	public  Qun getQun(String qunID){
 		Request request=new Request(1, "select * from T_qun where qunID='"+qunID+"'", new Qun());
-		MyDateBase.UDPsend(request);
-		List<Qun> list=(List<Qun>)MyDateBase.receiveObject();
+		UDPsend(request);
+		List<Qun> list=(List<Qun>)receiveObject();
 		if(list.size()!=0)
 			return list.get(0);
 		else
@@ -263,7 +266,7 @@ public class MyDateBase {
 	 * Friend，Member，Qun，User
 	 * @param entity
 	 */
-	public static int updateEntity(Entity entity) {
+	public  int updateEntity(Entity entity) {
 		String sql="update "+table.get(entity.getClass())+" set ";
 		Field fields[]=entity.getClass().getDeclaredFields();
 		try {
@@ -305,7 +308,7 @@ public class MyDateBase {
 			}
 			Request request=new Request(2, sql, null);
 			UDPsend(request);
-			return (int)MyDateBase.receiveObject();
+			return (int)receiveObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -318,7 +321,7 @@ public class MyDateBase {
 	 * Friend，Member，Qun，User
 	 * @param entity
 	 */
-	public static int insertEntity(Entity entity) {
+	public  int insertEntity(Entity entity) {
 		String sql = "insert into ["+table.get(entity.getClass())+"] ";
 		String feildStr="(";
 		String valueStr=" (";
@@ -347,7 +350,7 @@ public class MyDateBase {
 			sql=sql+feildStr+" VALUES "+valueStr;
 			Request request=new Request(4, sql, null);
 			UDPsend(request);
-			return (int)MyDateBase.receiveObject();
+			return (int)receiveObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
