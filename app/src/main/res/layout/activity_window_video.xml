@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     android:background="@drawable/videoview_bg_change_color"
     tools:context="com.aclass.android.qq.VideoWindowActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextureView
+            android:id="@+id/texture_video_ImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+        <FrameLayout
+            android:background="@drawable/videoview_bg_change_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/video_ImageView"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
     <LinearLayout
         android:layout_marginTop="20dp"
