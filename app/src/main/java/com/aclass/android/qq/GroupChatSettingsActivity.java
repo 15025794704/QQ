@@ -33,7 +33,6 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
         mViews = ActivityGroupChatSettingsBinding.inflate(getLayoutInflater());
         // 设置页面界面
         setContentView(mViews.getRoot());
-        applyInsets();
 
         MyToolbar toolbar = mViews.csGroupToolbar;
         // 工具栏选项点击监听器

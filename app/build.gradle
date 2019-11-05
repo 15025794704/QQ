@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.aclass.android.qq"
         minSdkVersion 23 // 最低支持安卓 6.0
-        targetSdkVersion 26 // 此 App 设计为在安卓 7.0 上运行，该安卓版本的用户能够获得最佳使用体验
+        targetSdkVersion 26 // 此 App 设计为在安卓 8.0 上运行，该安卓版本的用户能够获得最佳使用体验
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
