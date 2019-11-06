@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Request implements Serializable{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -23,24 +23,23 @@ public class Request implements Serializable{
 	 * 500.已接收到数据报
 	 */
 	private int requestType=1;
-	
+
 	/**
 	 * 执行的sql语句
 	 */
 	private String sql;
-	
+
 	/**
 	 * 该次请求需要发送的对象，如果没有，可以为null
 	 * 在发送消息的时候用到
 	 * 在上传图片的时候用到
 	 */
 	private Object obj;
-	
-	
+
+
 	public Request(int requestType, String sql, Object obj) {
-		super();
 		this.requestType = requestType;
-		this.setSql(sql);
+		this.sql=sql;
 		this.obj = obj;
 	}
 	public int getRequestType() {
@@ -61,5 +60,5 @@ public class Request implements Serializable{
 	public void setSql(String sql) {
 		this.sql = sql;
 	}
-	
+
 }
