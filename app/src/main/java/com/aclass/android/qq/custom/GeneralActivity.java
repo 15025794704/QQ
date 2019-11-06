@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * 使用方法：继承这个类并实现 {@link #consumeInsets(Rect) consumeInsets} 方法
  */
 public abstract class GeneralActivity extends AppCompatActivity {
-    private boolean isInsetsApplied = false;
+    private View mRootView = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,30 +25,24 @@ public abstract class GeneralActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
         super.addContentView(view, params);
-        toApplyInsets();
-    }
-
-    private void toApplyInsets(){
-        if (isInsetsApplied) return;
-        isInsetsApplied = true;
         applyInsets();
     }
 
@@ -64,7 +58,10 @@ public abstract class GeneralActivity extends AppCompatActivity {
      * 获得状态栏高度、导航栏高度等
      */
     private void applyInsets(){
-        getWindow().getDecorView().getRootView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+        View root = getWindow().getDecorView().getRootView();
+        if (root == mRootView) return;
+        mRootView = root;
+        mRootView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                 consumeInsets(new Rect(
