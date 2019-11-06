@@ -27,11 +27,14 @@ import com.aclass.android.qq.common.MyButtonOperation;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
-import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.entity.Request;
+import com.aclass.android.qq.entity.*;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.SocketAddress;
 import java.util.List;
 
 public class VideoWindowActivity extends GeneralActivity implements TextureView.SurfaceTextureListener{
@@ -44,18 +47,31 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     ImageButton btn_mini;
 
     RoundImageView headImg;
-
+//
+//    int count=0;
+//    long time=0;
     private Camera mCamera;
     private TextureView textureView;
     private ImageView videoView;
 
+    private MyDateBase myDateBase;
     private Thread threadStartVideo;
+    private DatagramSocket socket;
+    private SocketAddress friendAddress;
 
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
             if (msg.what == 0x11) {
+//                if(count==0){
+//                    time=System.currentTimeMillis();
+//                }
+//                if(count==100){
+//                    time=System.currentTimeMillis()-time;
+//                    Toast.makeText(VideoWindowActivity.this,time+"",Toast.LENGTH_LONG).show();
+//                }
+//                count++;
                 byte[] b= bundle.getByteArray("msg");
                 Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
                 bmp= MyBitMapOperation.rotateBitmap(bmp,270);
@@ -66,6 +82,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 Toast.makeText(VideoWindowActivity.this,bundle.getString("msg"),Toast.LENGTH_LONG).show();
             }
             else if(msg.what == 0x13){
+                finish();
             }
         }
     };
@@ -74,7 +91,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_video);
-        applyInsets();
         init();
         initData();
        set_btn_mini_click();
@@ -94,16 +110,23 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         threadStartVideo=new Thread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(1000);
-                MyDateBase myDateBase=new MyDateBase();
-
-                User user= myDateBase.getUser("1505249457");
-                if(user==null)
-                    ActivityOpreation.updateUI(handler,0x12,"null");
-                else
-                    ActivityOpreation.updateUI(handler,0x12,user.toString());
-
-                addCallBack();
+                try {
+                    SystemClock.sleep(800);
+                    socket = new DatagramSocket();
+                    User user = new User();
+                    user.setQQNum("1505249457");
+                    myDateBase.UDPsend(new Request(0, "", user));
+                    SystemClock.sleep(500);
+                    com.aclass.android.qq.entity.Message message = new com.aclass.android.qq.entity.Message();
+                    message.setSendQQ("");
+                    message.setReceiveNum("");
+                    message.setContext("request");
+                    myDateBase.UDPsend(new Request(8, "", message));
+                    friendAddress = (SocketAddress) myDateBase.receiveObject();
+                    addCallBack();
+                }
+                catch (Exception e){
+                }
             }
         });
         threadStartVideo.start();
@@ -115,7 +138,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         btn_mini.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+               close();
             }
         });
     }
@@ -126,17 +149,27 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             @Override
             public void onClick(View v) {
                 //发送断开请求
-                try {
-                    threadStartVideo.stop();
-                }
-                catch (Exception e){
-                }
-
-                finish();
+                close();
             }
         });
     }
 
+    private void close(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    myDateBase.UDPsend(socket,friendAddress,MyDateBase.toByteArray(new Request(9,"close",null)));
+                    threadStartVideo.stop();
+                }
+                catch (Exception e){
+                }
+                finally {
+                    ActivityOpreation.updateUI(handler,0x13,"finish");
+                }
+            }
+        }).start();
+    }
 
     protected void init(){
         //设置状态栏背景
@@ -152,6 +185,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
         textureView=(TextureView) findViewById(R.id.texture_video_ImageView);
         videoView=(ImageView) findViewById(R.id.video_ImageView);
+        myDateBase=new MyDateBase();
         //videoView.setRotation(270);
 
 
@@ -184,7 +218,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             // 设置相机预览宽高，此处设置为TextureView宽高
             Camera.Parameters params = mCamera.getParameters();
             params.setPreviewSize(width, height);
-            params.setPreviewFrameRate(15);
+            chooseFixedPreviewFps(params,30);
             // 设置自动对焦模式
             List<String> focusModes = params.getSupportedFocusModes();
             if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
@@ -225,6 +259,32 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             });
         }
     }
+
+    /**
+     * 选择合适的FPS
+     * @param parameters
+     * @param expectedThoudandFps 期望的FPS
+     * @return
+     */
+    public static int chooseFixedPreviewFps(Camera.Parameters parameters, int expectedThoudandFps) {
+        List<int[]> supportedFps = parameters.getSupportedPreviewFpsRange();
+        for (int[] entry : supportedFps) {
+            if (entry[0] == entry[1] && entry[0] == expectedThoudandFps) {
+                parameters.setPreviewFpsRange(entry[0], entry[1]);
+                return entry[0];
+            }
+        }
+        int[] temp = new int[2];
+        int guess;
+        parameters.getPreviewFpsRange(temp);
+        if (temp[0] == temp[1]) {
+            guess = temp[0];
+        } else {
+            guess = temp[1] / 2;
+        }
+        return guess;
+    }
+
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
