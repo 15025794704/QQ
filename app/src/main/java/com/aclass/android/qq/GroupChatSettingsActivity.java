@@ -20,7 +20,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.csGroupToolbarMore: // more options
+            case R.id.chatSettingsGroupToolbar: // more options
                 return true;
         }
         return true;
@@ -34,7 +34,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
         // 设置页面界面
         setContentView(mViews.getRoot());
 
-        MyToolbar toolbar = mViews.csGroupToolbar;
+        MyToolbar toolbar = mViews.chatSettingsGroupToolbar;
         // 工具栏选项点击监听器
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
 
     @Override
     protected void consumeInsets(Rect insets) {
-        Toolbar tb = mViews.csGroupToolbar;
+        Toolbar tb = mViews.chatSettingsGroupToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
     }
 }

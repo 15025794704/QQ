@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewFriendActivity">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/newFriendToolbar"
+            app:contentInsetStart="15dp"
+            app:contentInsetEnd="15dp"
+            app:navigationIcon="@null"
+            style="@style/AppTheme.Toolbar">
+
+            <TextView
+                android:text="取消"
+                android:layout_gravity="start"
+                style="@style/AppTheme.ToolbarTitle"/>
+
+            <TextView
+                android:text="添加好友"
+                style="@style/AppTheme.ToolbarTitle"/>
+
+            <TextView
+                android:text="发送"
+                android:layout_gravity="end"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/newFriendName"
+                    android:textSize="25sp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

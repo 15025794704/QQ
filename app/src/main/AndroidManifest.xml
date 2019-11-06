@@ -28,8 +28,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AddFriendActivity" />
-        <activity android:name=".NewFriendActivity" />
+        <activity android:name=".seek.SeekActivity" />
+        <activity android:name=".seek.NewFriendActivity" />
         <activity android:name=".ContactChatSettingsActivity" />
         <activity android:name=".GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" />

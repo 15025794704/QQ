@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">QQ</string>
     <string name="groupChatSettingsTitle">群聊资料</string>
+    <string name="addFriendTitle">添加</string>
 </resources>
