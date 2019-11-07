@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -17,6 +17,8 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/seekTabs"
+            app:tabIndicatorColor="#50000000"
+            app:tabIndicator="@drawable/toolbar_bg_change_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

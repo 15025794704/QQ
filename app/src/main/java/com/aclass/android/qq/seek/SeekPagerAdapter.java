@@ -36,8 +36,8 @@ public class SeekPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 1: return "找人";
-            case 0: default: return "找群";
+            case 1: return "找群";
+            case 0: default: return "找人";
         }
     }
 
