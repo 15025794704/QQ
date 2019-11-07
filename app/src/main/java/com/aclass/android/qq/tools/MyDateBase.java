@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -406,6 +407,8 @@ public class MyDateBase {
 		Field fields[]=entity.getClass().getDeclaredFields();
 		try {
 			for(Field field:fields) {
+				if(Modifier.isStatic(field.getModifiers()))
+					continue;
 				if(!field.getName().equals("serialVersionUID") && !field.getName().equals("head_Image")
 						&& !(field.getName().equals("id")&&entity.getClass()==Message.class)) {
 					feildStr+="["+field.getName()+"],";
