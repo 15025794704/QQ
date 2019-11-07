@@ -8,7 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="mColorAccent">@color/colorAccent</item>
         <item name="mColorBackground">@color/colorBackground</item>
+        <item name="mColorOnBackground">@color/colorOnBackground</item>
         <item name="mColorSurface">@color/colorSurface</item>
+        <item name="mColorOnSurface">@color/colorOnSurface</item>
+        <item name="mColorDivider">@color/colorDivider</item>
+        <item name="mColorOptionGo">@color/colorOptionGo</item>
+        <item name="mColorPreview">@color/colorPreview</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
