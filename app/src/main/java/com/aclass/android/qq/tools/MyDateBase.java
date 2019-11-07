@@ -350,6 +350,8 @@ public class MyDateBase {
 		Field fields[]=entity.getClass().getDeclaredFields();
 		try {
 			for(Field field:fields) {
+				if(Modifier.isStatic(field.getModifiers()))
+					continue;
 				if(!field.getName().equals("serialVersionUID") && !field.getName().equals("head_Image")) {
 					Object value;
 //					value = new PropertyDescriptor(field.getName(),entity.getClass()).getReadMethod().invoke(entity);
