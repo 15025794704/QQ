@@ -2,7 +2,6 @@ package com.aclass.android.qq.seek;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -35,7 +34,7 @@ public class SeekActivity extends GeneralActivity {
 
     @Override
     protected void consumeInsets(Rect insets) {
-        Toolbar tb = mViews.seekToolbar;
+        MyToolbar tb = mViews.seekToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
     }
 }

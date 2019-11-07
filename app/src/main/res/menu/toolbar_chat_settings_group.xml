@@ -5,6 +5,6 @@
     <item
         android:id="@+id/chatSettingsGroupToolbarMore"
         android:icon="@drawable/ic_more_horiz_24"
-        app:showAsAction="ifRoom"
-        android:title="More"/>
+        app:showAsAction="always"
+        android:title="@string/textMore"/>
 </menu>

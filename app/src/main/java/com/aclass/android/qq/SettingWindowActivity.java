@@ -1,12 +1,14 @@
 package com.aclass.android.qq;
 
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import com.aclass.android.qq.custom.GeneralActivity;
+import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityWindowSettingBinding;
 
-public class SettingWindowActivity extends AppCompatActivity {
+public class SettingWindowActivity extends GeneralActivity {
     // DataBinding 对象
     private ActivityWindowSettingBinding mViews;
 
@@ -17,8 +19,18 @@ public class SettingWindowActivity extends AppCompatActivity {
         mViews = ActivityWindowSettingBinding.inflate(getLayoutInflater());
         // 设置页面界面
         setContentView(mViews.getRoot());
-        Toolbar toolbar = mViews.settingsToolbar;
-        // 设置工具栏导航图标
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_24);
+        MyToolbar toolbar = mViews.settingsToolbar;
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
+        MyToolbar toolbar = mViews.settingsToolbar;
+        toolbar.setPadding(toolbar.getPaddingStart(), insets.top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
     }
 }

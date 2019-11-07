@@ -4,22 +4,16 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".SettingWindowActivity">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+        <com.aclass.android.qq.custom.control.MyToolbar
             android:id="@+id/settingsToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/AppTheme.Toolbar">
 
             <TextView
-                tools:text="Settings"
-                android:textSize="25sp"
-                android:textColor="@android:color/black"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </android.support.v7.widget.Toolbar>
+                android:text="@string/settingsToolbarTitle"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
 
         <ScrollView
             android:layout_weight="1"
@@ -32,80 +26,95 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:orientation="horizontal"
+                    android:divider="@drawable/options_divider"
+                    android:showDividers="middle"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <TextView
-                        tools:text="Account management"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
                     <LinearLayout
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
                         android:orientation="horizontal"
-                        android:layoutDirection="rtl"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:background="?mColorSurface"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <ImageView
+                        <TextView
+                            android:text="账号管理"
+                            android:textColor="?mColorOnSurface"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            tools:srcCompat="@mipmap/ic_launcher" />
+                            android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layoutDirection="rtl"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                tools:srcCompat="@mipmap/ic_launcher" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        tools:text="Account management"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
 
                     <LinearLayout
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
                         android:orientation="horizontal"
-                        android:layoutDirection="rtl"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:background="?mColorSurface"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:src="@drawable/ic_keyboard_arrow_right_24"
+                        <TextView
+                            android:text="手机号码"
+                            android:textColor="?mColorOnSurface"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layoutDirection="rtl"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_keyboard_arrow_right_24"
+                                android:tint="?mColorOptionGo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
-                    tools:text="Notifications"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
+                    android:text="消息通知"
+                    android:textColor="?mColorOnSurface"
+                    android:textSize="18sp"
                     android:drawableEnd="@drawable/ic_keyboard_arrow_right_24"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:drawableTint="?mColorOptionGo"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     android:paddingStart="18dp"
                     android:paddingEnd="18dp"
+                    android:background="?mColorSurface"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
         </ScrollView>

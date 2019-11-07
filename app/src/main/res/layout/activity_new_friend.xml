@@ -14,6 +14,7 @@
             style="@style/AppTheme.Toolbar">
 
             <TextView
+                android:id="@+id/newFriendToolbarCancel"
                 android:text="取消"
                 android:layout_gravity="start"
                 style="@style/AppTheme.ToolbarTitle"/>
@@ -23,6 +24,7 @@
                 style="@style/AppTheme.ToolbarTitle"/>
 
             <TextView
+                android:id="@+id/newFriendToolbarSend"
                 android:text="发送"
                 android:layout_gravity="end"
                 style="@style/AppTheme.ToolbarTitle"/>

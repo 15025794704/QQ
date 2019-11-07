@@ -18,15 +18,6 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
     private ActivityGroupChatSettingsBinding mViews;
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.chatSettingsGroupToolbar: // more options
-                return true;
-        }
-        return true;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // DataBinding，摆脱 findViewById
@@ -49,5 +40,14 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
     protected void consumeInsets(Rect insets) {
         Toolbar tb = mViews.chatSettingsGroupToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.chatSettingsGroupToolbar: // more options
+                return true;
+        }
+        return true;
     }
 }

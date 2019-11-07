@@ -60,6 +60,7 @@ public class SeekPersonFragment extends Fragment {
                     MyDateBase dateBase = new MyDateBase();
                     final User user = dateBase.getUser(input);
                     Qun group = dateBase.getQun(input);
+                    dateBase.Destory();
                     if (user != null){
                         final Intent intent = new Intent(context, NewFriendActivity.class);
                         intent.putExtra(NewFriendActivity.ARG_CONTACT, (Parcelable) user);

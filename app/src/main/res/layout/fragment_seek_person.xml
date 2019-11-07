@@ -12,9 +12,15 @@
 
             <EditText
                 android:id="@+id/seekPersonNum"
-                android:hint="Enter the other's QQ number"
+                android:hint="@string/seekPersonNumHint"
+                android:background="?mColorSurface"
+                android:drawableStart="@drawable/ic_search_24"
+                android:drawableTint="?android:textColorHint"
                 android:inputType="text"
                 android:imeOptions="actionDone"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
