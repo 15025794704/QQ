@@ -18,7 +18,6 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/seekTabs"
             app:tabIndicatorColor="#50000000"
-            app:tabIndicator="@drawable/toolbar_bg_change_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
