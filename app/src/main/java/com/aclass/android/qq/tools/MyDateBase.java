@@ -22,6 +22,7 @@ import java.util.Map;
 
 public class MyDateBase {
 	private  DatagramSocket socket;
+	private  SocketAddress sendAddress;
 	private static String ip="47.107.138.4";
 	private static Map<Class<?>,String> table=new HashMap<Class<?>, String>();
 	static {
@@ -43,6 +44,25 @@ public class MyDateBase {
 		}
 	}
 
+	public MyDateBase(int port){
+		try {
+			socket=new DatagramSocket(port);
+			socket.setSoTimeout(0);//超时
+		} catch (SocketException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
+
+	public void setTimeout(int timeout){
+		try {
+			socket.setSoTimeout(timeout);//超时
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	/**
 	 * 接收字节数组数据
 	 * @return
@@ -54,6 +74,7 @@ public class MyDateBase {
 			socket.receive(packet);
 			byte[] data=new byte[packet.getLength()];
 			data=packet.getData();
+			sendAddress=packet.getSocketAddress();
 			return data;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -61,14 +82,18 @@ public class MyDateBase {
 		return null;
 	}
 
+	public SocketAddress getSendAddress(){
+		return sendAddress;
+	}
+
     /**
      * 字节转换成对象
      * @param b
      * @return
      */
-	public static Object toObject(byte[] b){
+	public static Object toObject(byte[] b,int length){
 		try {
-			ByteArrayInputStream bis=new ByteArrayInputStream(b,0, b.length);
+			ByteArrayInputStream bis=new ByteArrayInputStream(b,0, length);
 			ObjectInputStream ois=new ObjectInputStream(bis);
 			return ois.readObject();
 		} catch (Exception e) {
@@ -104,13 +129,21 @@ public class MyDateBase {
 			socket.receive(packet);
 			 ByteArrayInputStream bis=new ByteArrayInputStream(b,0, packet.getLength());
 	         ObjectInputStream ois=new ObjectInputStream(bis);
+			sendAddress=packet.getSocketAddress();
 	         return ois.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
+	/**
+	 *关闭端口
+	 */
+	public void Destory(){
+		socket.close();
+	}
+
 	/**
 	 * 发送字节数组
 	 * @param data
@@ -153,7 +186,52 @@ public class MyDateBase {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * 指定客户端地点发送字节数组
+	 * 视频通话使用
+	 * @param socket
+	 * @param address
+	 */
+	public  void UDPsend(DatagramSocket socket,SocketAddress address,Object obj) {
+		try {
+			byte[] data= toByteArray(obj);
+			DatagramPacket sendpacket=new DatagramPacket(data, data.length,address);
+			socket.send(sendpacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 指定客户端地点发送字节数组
+	 * 视频通话使用
+	 * @param address
+	 * @param data
+	 */
+	public  void UDPsend(SocketAddress address,byte[] data) {
+		try {
+			DatagramPacket sendpacket=new DatagramPacket(data, data.length,address);
+			socket.send(sendpacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 指定客户端地点发送字节数组
+	 * 视频通话使用
+	 */
+	public  void UDPsend(SocketAddress address,Object obj) {
+		try {
+			byte[] data= toByteArray(obj);
+			DatagramPacket sendpacket=new DatagramPacket(data, data.length,address);
+			socket.send(sendpacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 通过qq号获取qq实体
 	 * @param qqNum
