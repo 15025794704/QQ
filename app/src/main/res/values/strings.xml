@@ -2,4 +2,6 @@
     <string name="app_name">QQ</string>
     <string name="groupChatSettingsTitle">群聊资料</string>
     <string name="addFriendTitle">添加</string>
+    <string name="seekPersonNumHint">QQ号/手机号/群/公众号</string>
+    <string name="seekGroupNumHint">搜索群号/群名称</string>
 </resources>
