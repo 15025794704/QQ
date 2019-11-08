@@ -10,7 +10,10 @@ import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityNewFriendBinding;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 添加好友，填写验证消息
@@ -20,23 +23,28 @@ public class NewFriendActivity extends GeneralActivity {
 
     private ActivityNewFriendBinding mViews;
 
+    private AtomicReference<User> mContactRef = new AtomicReference<>();
+
+    private User getContact(){
+        return mContactRef.get();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViews = ActivityNewFriendBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
 
-        Intent intent = getIntent();
-        User contact = intent.getParcelableExtra(ARG_CONTACT);
-        final String name = contact.getNiCheng();
-        final String num = contact.getQQNum();
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Intent intent = getIntent();
+                mContactRef.set((User) intent.getParcelableExtra(ARG_CONTACT));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mViews.newFriendName.setText(name + " " + num);
+                        User contact = getContact();
+                        mViews.newFriendName.setText(contact.getNiCheng() + " " + contact.getQQNum());
                     }
                 });
             }
@@ -55,8 +63,8 @@ public class NewFriendActivity extends GeneralActivity {
                     @Override
                     public void run() {
                         Friend friend = new Friend();
-                        friend.setQQ1("1234567890");
-                        friend.setQQ2(num);
+                        friend.setQQ1(Attribute.QQ);
+                        friend.setQQ2(getContact().getQQNum());
                         friend.setIsAgree(0);
                         MyDateBase dateBase = new MyDateBase();
                         int result = dateBase.insertEntity(friend);

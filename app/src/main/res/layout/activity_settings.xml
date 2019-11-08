@@ -21,6 +21,7 @@
             android:layout_height="0dp">
 
             <LinearLayout
+                android:id="@+id/settingsContainer"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -29,8 +30,7 @@
                     android:divider="@drawable/options_divider"
                     android:showDividers="middle"
                     android:orientation="vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
@@ -97,23 +97,101 @@
                                 android:tint="?mColorOptionGo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"/>
+
+                            <TextView
+                                android:layoutDirection="locale"
+                                android:text="132****4176"
+                                android:gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="账号安全"/>
+
+                    <LinearLayout
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:orientation="horizontal"
+                        android:background="?mColorSurface"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="QQ达人"
+                            android:textColor="?mColorOnSurface"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layoutDirection="rtl"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/ic_keyboard_arrow_right_24"
+                                android:tint="?mColorOptionGo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+
+                            <TextView
+                                android:layoutDirection="locale"
+                                android:text="1024天"
+                                android:textColor="#FFF0A040"
+                                android:gravity="center_vertical"
+                                android:drawableStart="@drawable/ic_menu_24"
+                                android:drawablePadding="8dp"
+                                android:drawableTint="#FFF0A040"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:text="消息通知"
-                    android:textColor="?mColorOnSurface"
-                    android:textSize="18sp"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_right_24"
-                    android:drawableTint="?mColorOptionGo"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="?mColorSurface"
+                <LinearLayout
+                    android:divider="@drawable/options_divider"
+                    android:showDividers="middle"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="消息通知"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="隐私"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="通用"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="辅助功能"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="免流量特权"/>
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="关于QQ与帮助"/>
 
             </LinearLayout>
 

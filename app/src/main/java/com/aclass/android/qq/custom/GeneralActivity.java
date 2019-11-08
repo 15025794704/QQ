@@ -15,6 +15,11 @@ import android.view.WindowManager;
  */
 public abstract class GeneralActivity extends AppCompatActivity {
     private View mRootView = null;
+    private Rect mWindowInsets;
+
+    public Rect getWindowInsets(){
+        return new Rect(mWindowInsets);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,12 +69,13 @@ public abstract class GeneralActivity extends AppCompatActivity {
         mRootView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                consumeInsets(new Rect(
+                mWindowInsets = new Rect(
                         insets.getSystemWindowInsetLeft(),
                         insets.getSystemWindowInsetTop(),
                         insets.getSystemWindowInsetRight(),
                         insets.getSystemWindowInsetBottom()
-                ));
+                );
+                consumeInsets(mWindowInsets);
                 return insets;
             }
         });

@@ -31,8 +31,8 @@
         <activity android:name=".ContactChatSettingsActivity" />
         <activity android:name=".GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" />
-        <activity android:name=".SettingWindowActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,9 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditDataActivity" />
-        <activity android:name=".VideoWindowActivity"></activity>
-        <activity android:name=".VideoTest">
-        </activity>
+        <activity android:name=".VideoWindowActivity" />
+        <activity android:name=".VideoTest" />
     </application>
 
 </manifest>
