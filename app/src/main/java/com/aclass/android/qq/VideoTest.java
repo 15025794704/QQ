@@ -41,6 +41,7 @@ public class VideoTest extends AppCompatActivity {
     private DatagramSocket receiveSocket = null;
     private static int receive_port = 9999;
     private WifiManager.MulticastLock lock=null;
+    private SocketAddress friendAddrss;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,18 +96,21 @@ public class VideoTest extends AppCompatActivity {
 
     private void startThreadStartVideo(){
 
-//        final Thread videoBtye= new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    for (; ; ) {
-//                        byte[] b = myDateBase.receiveData();
-//                        ActivityOpreation.updateUI(handler, 0x11, b);
-//                    }
-//                }
-//                catch (Exception e){}
-//            }
-//        });
+        final Thread videoThread= new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (; ; ) {
+                        MyDateBase myDateBase=new MyDateBase();
+                        User user = new User();
+                        user.setQQNum("1505249457");
+                        Request request = new Request(0,"",user);
+                        myDateBase.UDPsend(request);
+                    }
+                }
+                catch (Exception e){}
+            }
+        });
 
 
         new Thread(new Runnable() {//发送服务器登录信息
@@ -130,14 +134,9 @@ public class VideoTest extends AppCompatActivity {
                         receiveSocket.receive(dpReceive);
                         request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
                         if (request.getRequestType() == 8) {
-                            ActivityOpreation.updateUI(handler, 0x12, "对方发来视频");
-                            receiveSocket.receive(dpReceive);
-                            SocketAddress friendAddrss=(SocketAddress) MyDateBase.toObject(buf, dpReceive.getLength());
-                            ActivityOpreation.updateUI(handler, 0x12, " "+friendAddrss.toString());
-//                            videoBtye.start();
+                            videoThread.start();
                         }
                         lock.release();
-                        SystemClock.sleep(2000);
                     }
                 }
                 catch (Exception e){
