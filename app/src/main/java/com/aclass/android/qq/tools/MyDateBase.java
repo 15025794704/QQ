@@ -74,7 +74,8 @@ public class MyDateBase {
 		try {
 			socket.receive(packet);
 			byte[] data=new byte[packet.getLength()];
-			data=packet.getData();
+			for(int i=0;i<packet.getLength();i++)
+				data[i]=b[i];
 			sendAddress=packet.getSocketAddress();
 			return data;
 		} catch (IOException e) {

@@ -24,6 +24,7 @@ package com.aclass.android.qq;
         import com.aclass.android.qq.common.MyBitMapOperation;
         import com.aclass.android.qq.entity.Request;
         import com.aclass.android.qq.entity.User;
+        import com.aclass.android.qq.internet.Attribute;
         import com.aclass.android.qq.tools.MyDateBase;
 
         import java.io.ByteArrayOutputStream;
@@ -32,6 +33,7 @@ package com.aclass.android.qq;
         import java.net.DatagramSocket;
         import java.net.InetAddress;
         import java.net.SocketAddress;
+        import java.util.ArrayList;
         import java.util.List;
 
 public class VideoTest extends AppCompatActivity {
@@ -60,11 +62,6 @@ public class VideoTest extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            MyDateBase myDateBase=new MyDateBase();
-                            User user = new User();
-                            user.setQQNum("1505249457");
-                            Request request = new Request(0,"",user);
-                            myDateBase.UDPsend(request);
                         }
                         catch (Exception e){}
                     }
@@ -94,6 +91,30 @@ public class VideoTest extends AppCompatActivity {
         }
     };
 
+    private void sendVideoRequest(String QQFriend){
+        com.aclass.android.qq.entity.Message msg=new com.aclass.android.qq.entity.Message();
+        msg.setSendQQ(Attribute.QQ);
+        msg.setReceiveNum(QQFriend);
+        msg.setContext("request");
+        Request request=new Request(8,"",msg);
+
+        MyDateBase myDateBase=new MyDateBase();
+        myDateBase.UDPsend(request);
+
+        byte[] b=myDateBase.receiveData();
+        String replay=new String(b,0,b.length);
+
+        if(replay.contains("off")) {
+            myDateBase.Destory();
+            return;
+        }
+        //接通
+        SocketAddress friendaddress= (SocketAddress)myDateBase.receiveObject();
+
+        myDateBase.UDPsend(friendaddress,"connect".getBytes());
+        myDateBase.receiveObject();
+    }
+
     private void startThreadStartVideo(){
 
         final Thread videoThread= new Thread(new Runnable() {
@@ -101,11 +122,24 @@ public class VideoTest extends AppCompatActivity {
             public void run() {
                 try {
                     for (; ; ) {
+                        Request request=Attribute.friendVideoRequest;
+                        ArrayList<Object> objs=new ArrayList<>();
+                        objs=(ArrayList<Object>)request.getObj();
+                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message) objs.get(0);
+                        SocketAddress friendaddress=(SocketAddress)objs.get(1);
+                        String sendQQ=msg.getSendQQ();
+
                         MyDateBase myDateBase=new MyDateBase();
-                        User user = new User();
-                        user.setQQNum("1505249457");
-                        Request request = new Request(0,"",user);
+                        msg.setContext("2>1");
+                        request.setObj(msg);
                         myDateBase.UDPsend(request);
+
+                        byte[] b;
+                        for(;;){
+                            b=new byte[1];
+                            myDateBase.UDPsend(friendaddress,b);
+                            SystemClock.sleep(300);
+                        }
                     }
                 }
                 catch (Exception e){}
@@ -134,6 +168,8 @@ public class VideoTest extends AppCompatActivity {
                         receiveSocket.receive(dpReceive);
                         request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
                         if (request.getRequestType() == 8) {
+                            ActivityOpreation.updateUI(handler, 0x12, "接到视频，开启线程");
+                            Attribute.friendVideoRequest=request;
                             videoThread.start();
                         }
                         lock.release();
