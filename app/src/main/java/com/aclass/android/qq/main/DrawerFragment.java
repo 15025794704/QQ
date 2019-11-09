@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 
 public class DrawerFragment extends GeneralFragment {
     private FragmentDrawerBinding mViews;
-    private FragmentActivity mActivity;
+    private MainActivity mActivity;
 
     public static DrawerFragment newInstance(){
         return new DrawerFragment();
@@ -33,7 +32,13 @@ public class DrawerFragment extends GeneralFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mActivity = getActivity();
+        mActivity = (MainActivity) getActivity();
+        mViews.drawerClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.setPagerItem(1);
+            }
+        });
         mViews.drawerSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +49,7 @@ public class DrawerFragment extends GeneralFragment {
 
     @Override
     protected void consumeInsets(Rect insets) {
+        mViews.drawerGT.setGuidelineBegin(insets.top);
         mViews.drawerGB.setGuidelineEnd(insets.bottom);
     }
 

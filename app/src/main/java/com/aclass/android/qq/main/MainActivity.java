@@ -23,11 +23,25 @@ public class MainActivity extends GeneralActivity {
         mViews = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
         mViews.mainViewPager.setAdapter(new MainPagerAdapter(this, getSupportFragmentManager()));
-        mViews.mainViewPager.setCurrentItem(1);
+        setPagerItem(1);
     }
 
     @Override
     protected void consumeInsets(Rect insets) {
+    }
+
+    void setPagerItem(int item){
+        mViews.mainViewPager.setCurrentItem(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 在抽屉页面时，返回到主界面
+        if (mViews.mainViewPager.getCurrentItem() == 0){
+            setPagerItem(1);
+            return;
+        }
+        super.onBackPressed();
     }
 
     /**

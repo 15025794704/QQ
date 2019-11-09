@@ -31,18 +31,17 @@
         <activity android:name=".ContactChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".GroupChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".MessageWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".SettingWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".SettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".main.MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".EditDataActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".VideoWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".VideoTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+        <activity android:name=".VideoWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".VideoTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

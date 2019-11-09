@@ -22,6 +22,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.MainMorePop" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:background">@drawable/main_more_background</item>
+    </style>
+
     <!-- 带返回按键和白色图标颜色的工具栏 -->
     <style name="AppTheme.Toolbar">
         <item name="android:layout_width">match_parent</item>

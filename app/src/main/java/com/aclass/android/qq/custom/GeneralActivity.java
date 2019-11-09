@@ -75,7 +75,7 @@ public abstract class GeneralActivity extends AppCompatActivity {
                         insets.getSystemWindowInsetRight(),
                         insets.getSystemWindowInsetBottom()
                 );
-                consumeInsets(mWindowInsets);
+                consumeInsets(getWindowInsets());
                 return insets;
             }
         });
