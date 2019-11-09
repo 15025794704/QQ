@@ -13,7 +13,10 @@ import java.util.List;
  */
 
 public class Attribute {
-    public static String QQ;
+    public static String QQ="1505249457";
     public static List<Friend> friendList;
     public static Request friendVideoRequest;
+    public static Boolean isInVideo;
+    public static byte[] video_bitmap;
+    public static byte[] video_bitmap_send;
 }

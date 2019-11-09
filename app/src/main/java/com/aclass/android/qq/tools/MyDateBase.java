@@ -69,7 +69,7 @@ public class MyDateBase {
 	 * @return
 	 */
 	public  byte[] receiveData() {
-		byte[] b=new byte[1024*20];
+		byte[] b=new byte[1024*100];
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
 			socket.receive(packet);
@@ -125,7 +125,7 @@ public class MyDateBase {
 	 * @return
 	 */
 	public  Object receiveObject() {
-		byte[] b=new byte[1024*20];
+		byte[] b=new byte[1024*100];
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
 			socket.receive(packet);
@@ -167,6 +167,33 @@ public class MyDateBase {
 		try {
 	         byte[] data= toByteArray(obj);
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),889);
+			socket.send(sendpacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 发送对象
+	 * @param obj
+	 */
+	public  void UDPsend(int port,Object obj) {
+		try {
+			byte[] data= toByteArray(obj);
+			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),port);
+			socket.send(sendpacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 发送对象
+	 * @param obj
+	 */
+	public  void UDPsend(int port,byte[] data) {
+		try {
+			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),port);
 			socket.send(sendpacket);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -233,6 +260,7 @@ public class MyDateBase {
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * 通过qq号获取qq实体

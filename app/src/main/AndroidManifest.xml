@@ -26,22 +26,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".seek.SeekActivity" />
-        <activity android:name=".seek.NewFriendActivity" />
-        <activity android:name=".ContactChatSettingsActivity" />
-        <activity android:name=".GroupChatSettingsActivity" />
-        <activity android:name=".MessageWindowActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".seek.SeekActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".seek.NewFriendActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ContactChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".GroupChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MessageWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".SettingWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
             </intent-filter>
         </activity>
-        <activity android:name=".EditDataActivity" />
-        <activity android:name=".VideoWindowActivity" />
-        <activity android:name=".VideoTest" />
+        <activity android:name=".EditDataActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".VideoWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".VideoTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

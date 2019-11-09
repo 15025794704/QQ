@@ -33,6 +33,7 @@ package com.aclass.android.qq;
         import java.net.DatagramSocket;
         import java.net.InetAddress;
         import java.net.SocketAddress;
+        import java.net.SocketTimeoutException;
         import java.util.ArrayList;
         import java.util.List;
 
@@ -62,6 +63,12 @@ public class VideoTest extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    sendVideoRequest("1234567890");
+                                }
+                            }).start();
                         }
                         catch (Exception e){}
                     }
@@ -92,27 +99,60 @@ public class VideoTest extends AppCompatActivity {
     };
 
     private void sendVideoRequest(String QQFriend){
-        com.aclass.android.qq.entity.Message msg=new com.aclass.android.qq.entity.Message();
-        msg.setSendQQ(Attribute.QQ);
-        msg.setReceiveNum(QQFriend);
-        msg.setContext("request");
-        Request request=new Request(8,"",msg);
+        try {
+            com.aclass.android.qq.entity.Message msg = new com.aclass.android.qq.entity.Message();
+            msg.setSendQQ(Attribute.QQ);
+            msg.setReceiveNum(QQFriend);
+            msg.setContext("request");
+            Request request = new Request(8, "", msg);
 
-        MyDateBase myDateBase=new MyDateBase();
-        myDateBase.UDPsend(request);
+            final MyDateBase myDateBase = new MyDateBase();
+            myDateBase.setTimeout(10000);
+            myDateBase.UDPsend(request);
 
-        byte[] b=myDateBase.receiveData();
-        String replay=new String(b,0,b.length);
+            request=(Request) myDateBase.receiveObject();
+            if(request.getRequestType()==9){
+                ActivityOpreation.updateUI(handler, 0x12, "好友已拒绝");
+                myDateBase.Destory();
+                return;
+            }
+            else if(request.getRequestType()==10){
+                ActivityOpreation.updateUI(handler, 0x12, "好友不在线");
+                myDateBase.Destory();
+                return;
+            }
 
-        if(replay.contains("off")) {
-            myDateBase.Destory();
-            return;
+            byte[] b= myDateBase.receiveData();
+            final  int port=Integer.parseInt(new String(b));//服务器视频端口
+            ActivityOpreation.updateUI(handler, 0x12, "好友接受，服务器视频端口"+port);
+
+            myDateBase.UDPsend(port,"");
+
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(1000);
+                    for(;;) {
+                        if(!Attribute.isInVideo) {
+                            myDateBase.Destory();
+                            return;
+                        }
+                        myDateBase.UDPsend(port, "123");
+                        SystemClock.sleep(500);
+                    }
+                }
+            }).start();
+
+            for (; ; ) {
+                byte[] da = myDateBase.receiveData();
+                ActivityOpreation.updateUI(handler, 0x12, da.length + ":leng");
+            }
         }
-        //接通
-        SocketAddress friendaddress= (SocketAddress)myDateBase.receiveObject();
-
-        myDateBase.UDPsend(friendaddress,"connect".getBytes());
-        myDateBase.receiveObject();
+        catch (Exception e){
+            ActivityOpreation.updateUI(handler, 0x12, "已关闭");
+            Attribute.isInVideo=false;
+        }
     }
 
     private void startThreadStartVideo(){
@@ -123,26 +163,48 @@ public class VideoTest extends AppCompatActivity {
                 try {
                     for (; ; ) {
                         Request request=Attribute.friendVideoRequest;
-                        ArrayList<Object> objs=new ArrayList<>();
-                        objs=(ArrayList<Object>)request.getObj();
-                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message) objs.get(0);
-                        SocketAddress friendaddress=(SocketAddress)objs.get(1);
+                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
                         String sendQQ=msg.getSendQQ();
 
-                        MyDateBase myDateBase=new MyDateBase();
-                        msg.setContext("2>1");
+                        final MyDateBase myDateBase=new MyDateBase();
+                        myDateBase.setTimeout(10000);
+                        msg.setContext("2>1");//接受
                         request.setObj(msg);
-                        myDateBase.UDPsend(request);
+                        myDateBase.UDPsend(request);    //发送拒绝或接受
 
-                        byte[] b;
-                        for(;;){
-                            b=new byte[1];
-                            myDateBase.UDPsend(friendaddress,b);
-                            SystemClock.sleep(300);
+                        byte[] b= myDateBase.receiveData();
+                        final int port=Integer.parseInt(new String(b));//服务器视频端口
+                        ActivityOpreation.updateUI(handler, 0x12, "服务器视频端口"+port);
+
+                        SystemClock.sleep(300);
+                        myDateBase.UDPsend(port,"");
+
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SystemClock.sleep(300);
+                                for(;;) {
+                                    if(!Attribute.isInVideo) {
+                                        myDateBase.Destory();
+                                        return;
+                                    }
+                                    myDateBase.UDPsend(port, "1235677");
+                                    SystemClock.sleep(500);
+                                }
+                            }
+                        }).start();
+
+                        for (; ; ) {
+                            byte[] da = myDateBase.receiveData();
+                            ActivityOpreation.updateUI(handler, 0x12, da.length + ":leng");
                         }
                     }
                 }
-                catch (Exception e){}
+                catch (Exception e){
+                    ActivityOpreation.updateUI(handler, 0x12,"已关闭");
+                    Attribute.isInVideo=false;
+                }
             }
         });
 
@@ -151,10 +213,10 @@ public class VideoTest extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    receiveSocket = new DatagramSocket(receive_port);
+                    receiveSocket = new DatagramSocket();
                     byte[] buf;
                     User user = new User();
-                    user.setQQNum("1505249457");
+                    user.setQQNum("1234567890");
                     Request request = new Request(0,"",user);
                     buf=MyDateBase.toByteArray(request);
                     receiveSocket.send(new DatagramPacket(buf, buf.length,InetAddress.getByName("47.107.138.4"),890));
@@ -164,7 +226,6 @@ public class VideoTest extends AppCompatActivity {
                         buf = new byte[1024 * 100];
                         dpReceive = new DatagramPacket(buf, buf.length);
                         lock.acquire();
-                        ActivityOpreation.updateUI(handler, 0x12, "准备");
                         receiveSocket.receive(dpReceive);
                         request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
                         if (request.getRequestType() == 8) {
