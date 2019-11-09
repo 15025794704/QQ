@@ -26,13 +26,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".seek.SeekActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".seek.NewFriendActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".ContactChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".GroupChatSettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".seek.SeekActivity" />
+        <activity android:name=".seek.NewFriendActivity" />
+        <activity android:name=".ContactChatSettingsActivity" />
+        <activity android:name=".GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".SettingsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".main.MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
