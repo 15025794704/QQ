@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mainToolbarMessagesNewGroupChat"
+        android:icon="@drawable/ic_add_24"
+        app:showAsAction="never"
+        android:title="创建群聊"/>
+
+    <item
+        android:id="@+id/mainToolbarMessagesSeek"
+        android:icon="@drawable/ic_add_24"
+        app:showAsAction="never"
+        android:title="加好友/群"/>
+
+    <item
+        android:id="@+id/mainToolbarMessagesScan"
+        android:icon="@drawable/ic_add_24"
+        app:showAsAction="never"
+        android:title="扫一扫"/>
+
+    <item
+        android:id="@+id/mainToolbarMessagesSend"
+        android:icon="@drawable/ic_add_24"
+        app:showAsAction="never"
+        android:title="面对面快传"/>
+
+    <item
+        android:id="@+id/mainToolbarMessagesPay"
+        android:icon="@drawable/ic_add_24"
+        app:showAsAction="never"
+        android:title="收付款"/>
+
+</menu>

@@ -24,6 +24,7 @@ public class ContactChatSettingsActivity extends GeneralActivity {
             public void run() {
                 MyDateBase dateBase = new MyDateBase();
                 Friend friend = dateBase.getFriend("1234567890", "0987654321");
+                dateBase.Destory();
                 Log.d("GGGG", friend.toString());
             }
         }).start();

@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.aclass.android.qq"
         minSdkVersion 23 // 最低支持安卓 6.0
-        targetSdkVersion 26 // 此 App 设计为在安卓 8.0 上运行，该安卓版本的用户能够获得最佳使用体验
+        targetSdkVersion 26 // 此 App 设计为在安卓 9.0 上运行，该安卓版本的用户能够获得最佳使用体验
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -43,12 +43,16 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support.constraint:constraint-layout:1.1.3'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    def lifecycle_version = "1.1.1"
+    compile "android.arch.lifecycle:viewmodel:$lifecycle_version"
+    compile "android.arch.lifecycle:livedata:$lifecycle_version"
+//    compile 'com.android.databinding:library:3.5.2'
+    testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
-    testCompile 'junit:junit:4.12'
-
 }

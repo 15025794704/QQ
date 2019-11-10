@@ -1,11 +1,15 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.main;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Rect;
 import android.os.Bundle;
 
+import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.custom.GeneralActivity;
+import com.aclass.android.qq.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends GeneralActivity {
+    private ActivityMainBinding mViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +20,28 @@ public class MainActivity extends AppCompatActivity {
             if (canEnterTest) return;
         }
         // 默认的 MainActivity
-        setContentView(R.layout.activity_start_window);
+        mViews = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mViews.getRoot());
+        mViews.mainViewPager.setAdapter(new MainPagerAdapter(this, getSupportFragmentManager()));
+        setPagerItem(1);
+    }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
+    }
+
+    void setPagerItem(int item){
+        mViews.mainViewPager.setCurrentItem(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 在抽屉页面时，返回到主界面
+        if (mViews.mainViewPager.getCurrentItem() == 0){
+            setPagerItem(1);
+            return;
+        }
+        super.onBackPressed();
     }
 
     /**

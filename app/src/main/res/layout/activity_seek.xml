@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/seekToolbar"
+            style="@style/AppTheme.Toolbar">
+
+            <TextView
+                android:text="@string/addFriendTitle"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/seekTabs"
+            android:background="?mColorSurface"
+            app:tabIndicatorColor="#50000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/seekPager"
+            android:overScrollMode="never"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+</layout>

@@ -1,8 +1,11 @@
 package com.aclass.android.qq.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class Friend extends Entity implements Serializable {
+public class Friend extends Entity implements Serializable, Parcelable {
 	/**
 	 * 
 	 */
@@ -15,7 +18,32 @@ public class Friend extends Entity implements Serializable {
 	private int isDisturb;//消息免打扰
 	private int isHide;//是否屏蔽好友
 	private int isAgree;//好友申请是否通过了
-	
+
+	public Friend(){}
+
+	protected Friend(Parcel in) {
+		QQ1 = in.readString();
+		QQ2 = in.readString();
+		beiZhu = in.readString();
+		QQgroup = in.readString();
+		isTop = in.readInt();
+		isDisturb = in.readInt();
+		isHide = in.readInt();
+		isAgree = in.readInt();
+	}
+
+	public static final Creator<Friend> CREATOR = new Creator<Friend>() {
+		@Override
+		public Friend createFromParcel(Parcel in) {
+			return new Friend(in);
+		}
+
+		@Override
+		public Friend[] newArray(int size) {
+			return new Friend[size];
+		}
+	};
+
 	public String getQQ1() {
 		return QQ1;
 	}
@@ -69,5 +97,21 @@ public class Friend extends Entity implements Serializable {
 		return "Friend [QQ1=" + QQ1 + ", QQ2=" + QQ2 + ", beiZhu=" + beiZhu + ", QQgroup=" + QQgroup + ", isTop="
 				+ isTop + ", isDisturb=" + isDisturb + ", isHide=" + isHide + ", isAgree=" + isAgree + "]";
 	}
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(QQ1);
+		dest.writeString(QQ2);
+		dest.writeString(beiZhu);
+		dest.writeString(QQgroup);
+		dest.writeInt(isTop);
+		dest.writeInt(isDisturb);
+		dest.writeInt(isHide);
+		dest.writeInt(isAgree);
+	}
 }

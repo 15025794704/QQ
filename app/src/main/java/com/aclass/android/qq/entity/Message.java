@@ -1,9 +1,12 @@
 package com.aclass.android.qq.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class Message extends Entity implements Serializable{
+public class Message extends Entity implements Serializable, Parcelable {
 	/**
 	 * 
 	 */
@@ -14,6 +17,29 @@ public class Message extends Entity implements Serializable{
 	private String context;//内容
 	private Date time;//时间
 	private int state;//状态（已接收到>0 ,未接收到=0）
+
+	public Message(){}
+
+	protected Message(Parcel in) {
+		id = in.readInt();
+		sendQQ = in.readString();
+		receiveNum = in.readString();
+		context = in.readString();
+		state = in.readInt();
+	}
+
+	public static final Creator<Message> CREATOR = new Creator<Message>() {
+		@Override
+		public Message createFromParcel(Parcel in) {
+			return new Message(in);
+		}
+
+		@Override
+		public Message[] newArray(int size) {
+			return new Message[size];
+		}
+	};
+
 	public String getSendQQ() {
 		return sendQQ;
 	}
@@ -55,5 +81,18 @@ public class Message extends Entity implements Serializable{
 		return "Message [id=" + id + ", sendQQ=" + sendQQ + ", receiveNum=" + receiveNum + ", context=" + context
 				+ ", time=" + time + ", state=" + state + "]";
 	}
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(id);
+		dest.writeString(sendQQ);
+		dest.writeString(receiveNum);
+		dest.writeString(context);
+		dest.writeInt(state);
+	}
 }

@@ -3,6 +3,7 @@ package com.aclass.android.qq.custom;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,41 +15,43 @@ import android.view.WindowManager;
  * 使用方法：继承这个类并实现 {@link #consumeInsets(Rect) consumeInsets} 方法
  */
 public abstract class GeneralActivity extends AppCompatActivity {
-    private boolean isInsetsApplied = false;
+    private View mRootView = null;
+    private Rect mWindowInsets;
+
+    public Rect getWindowInsets(){
+        return new Rect(mWindowInsets);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 隐藏 action bar，临时修补措施 // TODO: 11/10/2019 修改 App theme 并移除这几句话
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) actionBar.hide();
         applyEdgeToEdge();
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        toApplyInsets();
+        applyInsets();
     }
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
         super.addContentView(view, params);
-        toApplyInsets();
-    }
-
-    private void toApplyInsets(){
-        if (isInsetsApplied) return;
-        isInsetsApplied = true;
         applyInsets();
     }
 
@@ -64,15 +67,19 @@ public abstract class GeneralActivity extends AppCompatActivity {
      * 获得状态栏高度、导航栏高度等
      */
     private void applyInsets(){
-        getWindow().getDecorView().getRootView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+        View root = getWindow().getDecorView().getRootView();
+        if (root == mRootView) return;
+        mRootView = root;
+        mRootView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                consumeInsets(new Rect(
+                mWindowInsets = new Rect(
                         insets.getSystemWindowInsetLeft(),
                         insets.getSystemWindowInsetTop(),
                         insets.getSystemWindowInsetRight(),
                         insets.getSystemWindowInsetBottom()
-                ));
+                );
+                consumeInsets(getWindowInsets());
                 return insets;
             }
         });

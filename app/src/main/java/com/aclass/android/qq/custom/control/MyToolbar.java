@@ -2,11 +2,8 @@ package com.aclass.android.qq.custom.control;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
@@ -73,6 +70,8 @@ public class MyToolbar extends Toolbar{
                 if (icon == null) continue;
                 icon.setTint(mMenuIconTint);
             }
+            Drawable overflowIcon = getOverflowIcon();
+            if (overflowIcon != null) overflowIcon.setTint(mMenuIconTint);
         }
     }
 

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="mColorAccent" format="color"/>
+    <attr name="mColorBackground" format="color"/>
+    <attr name="mColorOnBackground" format="color"/>
+    <attr name="mColorSurface" format="color"/>
+    <attr name="mColorOnSurface" format="color"/>
+    <attr name="mColorDivider" format="color"/>
+    <attr name="mColorOptionGo" format="color"/>
+    <attr name="mColorPreview" format="color"/>
+
     <declare-styleable name="RoundImageView">
         <attr name="type" format="enum">
             <enum name="circle" value="1"/>

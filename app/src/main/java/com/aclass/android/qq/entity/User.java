@@ -1,9 +1,12 @@
 package com.aclass.android.qq.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.sql.Date;
 
-public class User extends Entity implements Serializable{
+public class User extends Entity implements Serializable, Parcelable {
 	/**
 	 * 
 	 */
@@ -25,6 +28,40 @@ public class User extends Entity implements Serializable{
 	private String descript;//个人说明
 	private String school;//学校
 	private String phone;//电话
+
+	public User(){}
+
+	protected User(Parcel in) {
+		QQNum = in.readString();
+		password = in.readString();
+		niCheng = in.readString();
+		sex = in.readString();
+		age = in.readInt();
+		xingZuo = in.readString();
+		qianMing = in.readString();
+		head_Image = in.createByteArray();
+		zhiYe = in.readString();
+		gongSi = in.readString();
+		address = in.readString();
+		homeAddress = in.readString();
+		email = in.readString();
+		descript = in.readString();
+		school = in.readString();
+		phone = in.readString();
+	}
+
+	public static final Creator<User> CREATOR = new Creator<User>() {
+		@Override
+		public User createFromParcel(Parcel in) {
+			return new User(in);
+		}
+
+		@Override
+		public User[] newArray(int size) {
+			return new User[size];
+		}
+	};
+
 	public String getQQNum() {
 		return QQNum;
 	}
@@ -135,5 +172,29 @@ public class User extends Entity implements Serializable{
 				+ ", homeAddress=" + homeAddress + ", email=" + email + ", descript=" + descript + ", school=" + school
 				+ ", phone=" + phone + "]";
 	}
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(QQNum);
+		dest.writeString(password);
+		dest.writeString(niCheng);
+		dest.writeString(sex);
+		dest.writeInt(age);
+		dest.writeString(xingZuo);
+		dest.writeString(qianMing);
+		dest.writeByteArray(head_Image);
+		dest.writeString(zhiYe);
+		dest.writeString(gongSi);
+		dest.writeString(address);
+		dest.writeString(homeAddress);
+		dest.writeString(email);
+		dest.writeString(descript);
+		dest.writeString(school);
+		dest.writeString(phone);
+	}
 }
