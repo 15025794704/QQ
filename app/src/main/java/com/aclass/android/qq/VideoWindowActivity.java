@@ -58,6 +58,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     private ImageView videoView;
 
     private Thread threadStartVideo;
+    private Thread  videoThread;
     private DatagramSocket receiveSocket = null;
     private WifiManager.MulticastLock lock=null;
     private MyDateBase sendVideoDataBase;
@@ -111,11 +112,10 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
 
     private void startThreadStartVideo(){
 
-        final Thread videoThread= new Thread(new Runnable() {
+        videoThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    for (; ; ) {
                         Request request= Attribute.friendVideoRequest;
                         com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
                         String sendQQ=msg.getSendQQ();
@@ -133,19 +133,19 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                         SystemClock.sleep(300);
                         myDateBase.UDPsend(port,"");
 
-
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 SystemClock.sleep(300);
                                 Attribute.isInVideo=true;
+                                addCallBack();
                                 for(;;) {
                                     if(!Attribute.isInVideo) {
                                         myDateBase.Destory();
                                         return;
                                     }
-                                    myDateBase.UDPsend(port, new byte[2]);
-                                    SystemClock.sleep(500);
+                                    myDateBase.UDPsend(port, Attribute.video_bitmap_send);
+                                    SystemClock.sleep(100);
                                 }
                             }
                         }).start();
@@ -154,7 +154,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                             Attribute.video_bitmap = myDateBase.receiveData();
                             ActivityOpreation.updateUI(handler, 0x11, "");
                         }
-                    }
                 }
                 catch (Exception e){
                     ActivityOpreation.updateUI(handler, 0x12,"已关闭");
@@ -164,7 +163,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         });
 
 
-        new Thread(new Runnable() {//发送服务器登录信息
+        threadStartVideo=new Thread(new Runnable() {//发送服务器登录信息
             @Override
             public void run() {
                 try {
@@ -195,7 +194,9 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                     ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
                 }
             }
-        }).start();
+        });
+
+        threadStartVideo.start();
     }
 
 
@@ -249,7 +250,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 public void run() {
                     Attribute.isInVideo=true;
                     SystemClock.sleep(1000);
-                    addCallBack(port);
+                    addCallBack();
                     for(;;) {
                         if(!Attribute.isInVideo) {
                             sendVideoDataBase.Destory();
@@ -263,8 +264,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             }).start();
 
             for (; ; ) {
-                byte[] da = sendVideoDataBase.receiveData();
-                ActivityOpreation.updateUI(handler, 0x12, da.length + ":leng");
+                Attribute.video_bitmap = sendVideoDataBase.receiveData();
+                ActivityOpreation.updateUI(handler, 0x11,"");
             }
         }
         catch (Exception e){
@@ -366,7 +367,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         }
     }
 
-    private void addCallBack(final int port) {
+    private void addCallBack() {
         if(mCamera!=null){
             mCamera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
@@ -380,7 +381,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                                 return;
                             }
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 20, stream);
+                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 14, stream);
                             byte[] b=stream.toByteArray();
                             Attribute.video_bitmap_send=b;
                             stream.close();
@@ -391,6 +392,15 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        if(threadStartVideo!=null)
+            threadStartVideo.stop();
+        if(videoThread!=null)
+            videoThread.stop();
+        super.onDestroy();
     }
 
     /**
