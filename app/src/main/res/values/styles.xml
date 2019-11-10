@@ -1,8 +1,7 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme. todo 修改 parent 为含 NoActionBar 的 style/theme -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

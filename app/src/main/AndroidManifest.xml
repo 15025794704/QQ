@@ -25,12 +25,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning,ManifestResource">
         <activity android:name=".seek.SeekActivity" />
         <activity android:name=".seek.NewFriendActivity" />
         <activity android:name=".ContactChatSettingsActivity" />
         <activity android:name=".GroupChatSettingsActivity" />
-        <activity android:name=".MessageWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MessageWindowActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
@@ -39,9 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditDataActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".VideoWindowActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".VideoTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".EditDataActivity" />
+        <activity android:name=".VideoWindowActivity" />
+        <activity android:name=".VideoTest" />
     </application>
 
 </manifest>
