@@ -2,6 +2,7 @@ package com.aclass.android.qq.internet;
 
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Request;
+import com.aclass.android.qq.entity.User;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class Attribute {
     public static String QQ="1505249457";
+    public static User currentAccount;
     public static List<Friend> friendList;
     public static Request friendVideoRequest;
     public static Boolean isInVideo;

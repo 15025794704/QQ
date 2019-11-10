@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aclass.android.qq.MainContactsFragment;
+import com.aclass.android.qq.MainExploreFragment;
+import com.aclass.android.qq.MainMessagesFragment;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.custom.control.MyToolbar;
@@ -30,6 +34,9 @@ import java.lang.reflect.InvocationTargetException;
 public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private FragmentMainBinding mViews;
     private MainActivity mActivity;
+    private MainMessagesFragment fragmentMessages;
+    private MainContactsFragment fragmentContacts;
+    private MainExploreFragment fragmentExplore;
 
     public static MainFragment newInstance(){
         return new MainFragment();
@@ -57,6 +64,7 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         mViews.mainToolbar.setOnMenuItemClickListener(this);
         mViews.mainToolbar.setOverflowIcon(getContext().getDrawable(R.drawable.ic_add_24));
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
+        getFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, getFragmentMessages()).commit();
     }
 
     @Override
@@ -97,16 +105,36 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         return true;
     }
 
+    private MainMessagesFragment getFragmentMessages(){
+        if (fragmentMessages == null) fragmentMessages = MainMessagesFragment.newInstance();
+        return fragmentMessages;
+    }
+
+    private MainContactsFragment getFragmentContacts(){
+        if (fragmentContacts == null) fragmentContacts = MainContactsFragment.newInstance();
+        return fragmentContacts;
+    }
+
+    private MainExploreFragment getFragmentExplore(){
+        if (fragmentExplore == null) fragmentExplore = MainExploreFragment.newInstance();
+        return fragmentExplore;
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment;
         switch (item.getItemId()){
-            case R.id.mainBottomNavMessages:
-                return true;
             case R.id.mainBottomNavContacts:
-                return true;
+                fragment = getFragmentContacts();
+                break;
             case R.id.mainBottomNavExplore:
-                return true;
+                fragment = getFragmentExplore();
+                break;
+            case R.id.mainBottomNavMessages: default:
+                fragment = getFragmentMessages();
+                break;
         }
+        getFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, fragment).commit();
         return true;
     }
 

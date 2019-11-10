@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.aclass.android.qq.custom.control.MyToolbar
+                android:id="@+id/settingsAccountsToolbar"
+                style="@style/AppTheme.Toolbar">
+
+                <TextView
+                    android:text="账号管理"
+                    style="@style/AppTheme.ToolbarTitle"/>
+            </com.aclass.android.qq.custom.control.MyToolbar>
+        </LinearLayout>
+    </ScrollView>
+</layout>
+

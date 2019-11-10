@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        android:id="@+id/settingsAccounts"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:paddingStart="18dp"
@@ -99,8 +100,9 @@
                                 android:layout_height="match_parent"/>
 
                             <TextView
+                                android:id="@+id/settingsPhone"
                                 android:layoutDirection="locale"
-                                android:text="132****4176"
+                                tools:text="132****4176"
                                 android:gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"/>
