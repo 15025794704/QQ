@@ -45,6 +45,9 @@
         <activity android:name=".EditDataActivity" />
         <activity android:name=".VideoWindowActivity" />
         <activity android:name=".VideoTest" />
+        <activity android:name=".LoginWindowActivity" />
+        <activity android:name=".RegisterWindowActivity" />
+        <activity android:name=".StartWindowActivity" />
     </application>
 
 </manifest>
