@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 
 import com.aclass.android.qq.R;
 
+/**
+ * 应用“联系人”页面
+ * 好友列表等
+ */
 public class MainContactsFragment extends Fragment {
 
     public static MainContactsFragment newInstance(){

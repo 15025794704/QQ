@@ -31,11 +31,22 @@ import com.aclass.android.qq.seek.SeekActivity;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+/**
+ * 应用最主要的页面
+ * 此 fragment 只有顶部工具栏和底部导航栏，导航栏对三个页面进行切换：
+ * 1. {@link MainMessagesFragment “消息”页面}
+ * 2. {@link MainContactsFragment “联系人”页面}
+ * 3. {@link MainExploreFragment “动态”页面}
+ */
+public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemClickListener,
+        PopupMenu.OnMenuItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private FragmentMainBinding mViews;
     private MainActivity mActivity;
+    // 消息页面的 fragment
     private MainMessagesFragment fragmentMessages;
+    // 联系人页面的 fragment
     private MainContactsFragment fragmentContacts;
+    // 动态页面的 fragment
     private MainExploreFragment fragmentExplore;
 
     public static MainFragment newInstance(){
@@ -55,6 +66,7 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+        // 点击头像切换至抽屉页面
         mViews.mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +75,9 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         });
         mViews.mainToolbar.setOnMenuItemClickListener(this);
         mViews.mainToolbar.setOverflowIcon(getContext().getDrawable(R.drawable.ic_add_24));
+        // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
+        // 显示消息页面
         getFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, getFragmentMessages()).commit();
     }
 
@@ -134,6 +148,7 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
                 fragment = getFragmentMessages();
                 break;
         }
+        // 切换对应的页面
         getFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, fragment).commit();
         return true;
     }

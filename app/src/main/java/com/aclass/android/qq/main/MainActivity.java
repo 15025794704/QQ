@@ -8,6 +8,12 @@ import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 
+/**
+ * 应用主界面
+ * 主要是一个 {@link android.support.v4.view.ViewPager ViewPager}，含两个 fragment
+ * 1. {@link MainFragment MainFragment}: 应用最主要的界面，包含聊天列表等
+ * 2. {@link DrawerFragment DrawerFragment}: 应用从侧面滑动出来的页面
+ */
 public class MainActivity extends GeneralActivity {
     private ActivityMainBinding mViews;
 
@@ -22,14 +28,22 @@ public class MainActivity extends GeneralActivity {
         // 默认的 MainActivity
         mViews = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
+        // 通过左右滑动在主页面和抽屉页面之间切换
         mViews.mainViewPager.setAdapter(new MainPagerAdapter(this, getSupportFragmentManager()));
+        // 将主页面设置为默认进入的页面
         setPagerItem(1);
     }
 
+    /**
+     * 本 activity 没有 UI，对窗口 insets 的响应应当在对应的 fragment 里面进行
+     */
     @Override
     protected void consumeInsets(Rect insets) {
     }
 
+    /**
+     * 供 fragment 调用以切换页面
+     */
     void setPagerItem(int item){
         mViews.mainViewPager.setCurrentItem(item);
     }
