@@ -261,6 +261,20 @@ public class MyDateBase {
 		}
 	}
 
+	/* 数据库中是否存在某个特定的qq账号
+	*/
+	public boolean isExitqqNum(String qqNum)
+	{
+		Request request=new Request(1,"select * from T_user where QQNum='"+qqNum+"'",new User());
+		UDPsend(request);
+		List<User> list= (List<User>) receiveObject();
+		if(!list.isEmpty())
+		{
+			return true;
+		}
+		else
+			return false;
+	}
 
 	/**
 	 * 通过qq号获取qq实体
@@ -336,7 +350,7 @@ public class MyDateBase {
 		UDPsend(request);
 		return (List<Member>)receiveObject();
 	}
-	
+
 	/**
 	 * 通过qq号 和 群id 获取 qq加入的单个群成员实体
 	 * @param qunID

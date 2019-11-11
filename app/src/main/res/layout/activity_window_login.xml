@@ -5,110 +5,96 @@
     android:id="@+id/activity_window_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login"
+    android:background="@drawable/login2"
     tools:context="com.aclass.android.qq.LoginWindowActivity">
 
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="280dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="248dp"
-        android:background="@drawable/shape"
-        android:text="@string/logining"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
-        android:id="@+id/pwd"
-        android:layout_width="280dp"
+        android:id="@+id/account_editText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/pwd"
-        android:textColorHint="#ffffff"
-        android:inputType="textPassword"
-        android:textColor="#ffffff"
-        android:selectAllOnFocus="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/num" />
-
-    <EditText
-        android:id="@+id/num"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="130dp"
         android:ems="10"
         android:hint="@string/qq"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:inputType="textPersonName"
         android:textSize="18sp"
+        android:selectAllOnFocus="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="280dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/pwd_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/pwd"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:selectAllOnFocus="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="340dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/forgetPwd"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:text="@string/forgetPwd"
-        android:textAllCaps="false"
-        android:textColor="#0066FF"
-        android:textSize="12sp"
-        android:typeface="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/login_button"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:text="@string/logining"
+        android:textColor="#ffffff"
+        android:background="@android:color/transparent"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="62dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="72dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
         android:background="@android:color/transparent"
         android:text="@string/register1"
         android:textAllCaps="false"
-        android:textColor="#0066FF"
+        android:textColor="#ffffff"
         android:textSize="12sp"
         android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+       android:layout_marginRight="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="72dp"
+        tools:layout_constraintRight_creator="1"
 
-    <ImageView
-        android:id="@+id/imageView"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/shape"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/qq1"
-        tools:ignore="ContentDescription" />
-
+        android:id="@+id/guideline"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="195dp"
+        app:layout_constraintGuide_percent="0.5078125" />
 
 
 </android.support.constraint.ConstraintLayout>

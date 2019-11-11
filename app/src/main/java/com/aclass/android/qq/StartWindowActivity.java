@@ -18,20 +18,20 @@ public class StartWindowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_window);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
-
-          animationDrawable= (AnimationDrawable) imageView.getBackground();
-          animationDrawable.start();
+        imageView= (ImageView) findViewById(R.id.img_show);
+        animationDrawable= (AnimationDrawable) imageView.getBackground();
+        animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
+
             @Override
             public void run() {
-                imageView= (ImageView) findViewById(R.id.img_show);
 
                 Intent intent=new Intent(StartWindowActivity.this,LoginWindowActivity.class);//从一个界面跳转到另外一个界面
                 startActivity(intent);
                 finish();
 
             }
-        },6000);
+        },3000);
 
     }
 }
