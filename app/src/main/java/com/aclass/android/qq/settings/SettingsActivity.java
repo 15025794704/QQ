@@ -1,4 +1,4 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.settings;
 
 import android.content.Intent;
 import android.graphics.Rect;

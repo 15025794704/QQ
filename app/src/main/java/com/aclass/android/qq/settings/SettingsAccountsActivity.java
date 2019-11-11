@@ -1,4 +1,4 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.settings;
 
 import android.graphics.Rect;
 import android.os.Bundle;

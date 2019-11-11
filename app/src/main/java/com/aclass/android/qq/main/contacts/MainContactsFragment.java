@@ -1,10 +1,12 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.main.contacts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.aclass.android.qq.R;
 
 public class MainContactsFragment extends Fragment {
 

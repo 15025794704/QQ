@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aclass.android.qq.SettingsActivity;
+import com.aclass.android.qq.settings.SettingsActivity;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 

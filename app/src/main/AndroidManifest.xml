@@ -28,13 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,ManifestResource">
-        <activity android:name=".SettingsAccountsActivity"></activity>
+        <activity android:name=".settings.SettingsAccountsActivity"/>
         <activity android:name=".seek.SeekActivity" />
         <activity android:name=".seek.NewFriendActivity" />
-        <activity android:name=".ContactChatSettingsActivity" />
-        <activity android:name=".GroupChatSettingsActivity" />
+        <activity android:name=".chat.contact.ContactChatSettingsActivity" />
+        <activity android:name=".chat.group.GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

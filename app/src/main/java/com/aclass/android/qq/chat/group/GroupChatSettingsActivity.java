@@ -1,4 +1,4 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.chat.group;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;

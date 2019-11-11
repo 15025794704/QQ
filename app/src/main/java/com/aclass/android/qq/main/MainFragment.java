@@ -20,9 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aclass.android.qq.MainContactsFragment;
-import com.aclass.android.qq.MainExploreFragment;
-import com.aclass.android.qq.MainMessagesFragment;
+import com.aclass.android.qq.main.contacts.MainContactsFragment;
+import com.aclass.android.qq.main.explore.MainExploreFragment;
+import com.aclass.android.qq.main.messages.MainMessagesFragment;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.custom.control.MyToolbar;

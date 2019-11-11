@@ -1,10 +1,11 @@
-package com.aclass.android.qq;
+package com.aclass.android.qq.chat.contact;
 
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.Entity;
 import com.aclass.android.qq.entity.Friend;
