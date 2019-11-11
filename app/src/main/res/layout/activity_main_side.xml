@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_side"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aclass.android.qq.MainSideActivity">
+
+    <RelativeLayout
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#000000"
+
+        >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/message"
+        android:background="#FFFFFF"
+        >
+        <LinearLayout
+            android:id="@+id/detailMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#ff30"
+            >
+
+            <TextView
+                android:id="@+id/vip"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#3CC4C4"
+                />
+            <TextView
+                android:id="@+id/money"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#8A4DB3"
+                />
+            <TextView
+                android:id="@+id/decoration"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#3CC4C4"
+                />
+            <TextView
+                android:id="@+id/collection"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#8A4DB3"
+                />
+            <TextView
+                android:id="@+id/pictures"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#3CC4C4"
+                />
+            <TextView
+                android:id="@+id/file"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#8A4DB3"
+                />
+            <TextView
+                android:id="@+id/noDate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#3CC4C4"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menu2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/menu"
+        android:background="#0099FF"
+        >
+    </RelativeLayout>
+
+
+</RelativeLayout>
