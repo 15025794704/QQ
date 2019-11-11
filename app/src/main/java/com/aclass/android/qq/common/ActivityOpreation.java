@@ -27,6 +27,18 @@ public class ActivityOpreation {
     }
 
     /**
+     * 当前activity跳转到另一个activity，不finish当前activity
+     * 带传递参数过去
+     * @param activity
+     * @param clazz
+     */
+    public static void jumpActivity(Activity activity,Class<?> clazz,String[] args){
+        Intent intent=new Intent(activity,clazz);
+        intent.putExtra("args",args);
+        activity.startActivity(intent);
+    }
+
+    /**
      * 设置当前activity的状态栏背景颜色资源，以及显示的文字图标等颜色资源
      * @param activity
      * @param barColor

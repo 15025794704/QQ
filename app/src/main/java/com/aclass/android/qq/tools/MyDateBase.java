@@ -494,7 +494,7 @@ public class MyDateBase {
      */
 	public Bitmap getImageByQQ(String QQ){
 		Bitmap bitmap= null;
-		byte[] b=new byte[1024*50];
+		byte[] b=new byte[1024*60];
 		DatagramPacket packet=new DatagramPacket(b,b.length);
 		try {
 			UDPsend(new Request(7,QQ,null));

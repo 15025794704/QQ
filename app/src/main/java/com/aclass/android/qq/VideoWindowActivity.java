@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketAddress;
 import java.util.List;
 
 public class VideoWindowActivity extends GeneralActivity implements TextureView.SurfaceTextureListener{
@@ -47,6 +46,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     AssetsOperation assetsOperation;
     Screen screen;
     ImageButton btn_refuse;
+    ImageButton btn_refuse_come;
+    ImageButton btn_accept_come;
     ImageButton btn_mic;
     ImageButton btn_loudspeaker;
     ImageButton btn_mini;
@@ -96,14 +97,13 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
 
         init();
         initData();
-       set_btn_mini_click();
-       set_btn_refuse_click();
+        set_btn_click();
         startThreadStartVideo();
     }
 
     @Override
     protected void consumeInsets(Rect insets) {
-      LinearLayout l=(LinearLayout) findViewById(R.id.LinearLayout_video_window);
+        LinearLayout l=(LinearLayout) findViewById(R.id.LinearLayout_video_window);
         RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.setMargins(0,insets.top,0,0);
         l.setLayoutParams(layoutParams);
@@ -200,21 +200,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     }
 
 
-    //最小化按钮执行方法
-    protected void set_btn_mini_click(){
-        btn_mini.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        sendVideoRequest("1234567890");
-                    }
-                }).start();
-            }
-        });
-    }
-
     private void sendVideoRequest(String QQFriend){
         try {
             com.aclass.android.qq.entity.Message msg = new com.aclass.android.qq.entity.Message();
@@ -274,14 +259,36 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         }
     }
 
-    //d挂断按钮执行方法
-    protected void set_btn_refuse_click(){
+    protected void set_btn_click(){
         btn_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //发送断开请求
                 Attribute.isInVideo=false;
                 close();
+            }
+        });
+        btn_mini.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        sendVideoRequest("1234567890");
+                    }
+                }).start();
+            }
+        });
+        btn_accept_come.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        btn_refuse_come.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -313,6 +320,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         btn_mic=(ImageButton)findViewById(R.id.image_btn_mic);
         btn_loudspeaker=(ImageButton)findViewById(R.id.image_btn_loudspeaker);
         btn_mini=(ImageButton)findViewById(R.id.image_btn_mini);
+        btn_refuse_come=(ImageButton)findViewById(R.id.image_btn_come_refuse);
+        btn_accept_come=(ImageButton)findViewById(R.id.image_btn_come_accept);
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
         textureView=(TextureView) findViewById(R.id.texture_video_ImageView);
         videoView=(ImageView) findViewById(R.id.video_ImageView);
@@ -328,6 +337,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         MyButtonOperation.changeImageButton(this,btn_refuse,R.drawable.btn_refuse_2,R.drawable.btn_refuse_1);
         //设置小化按钮按下和弹起效果
         MyButtonOperation.changeImageButton(this,btn_mini,R.drawable.videoview_mini_btn2,R.drawable.videoview_mini_btn);
+        MyButtonOperation.changeImageButton(this,btn_accept_come,R.drawable.video_accept2,R.drawable.video_accept2);
+        MyButtonOperation.changeImageButton(this,btn_refuse_come,R.drawable.btn_refuse_2,R.drawable.btn_refuse_1);
     }
 
     private void initData() {

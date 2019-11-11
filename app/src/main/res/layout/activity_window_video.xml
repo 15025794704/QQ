@@ -115,6 +115,8 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/video_show_send"
+                android:visibility="visible"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -148,8 +150,33 @@
                     android:id="@+id/image_btn_loudspeaker"
                     android:layout_weight="1" />
             </LinearLayout>
-        </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/video_show_come"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="60dp">
 
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="1dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/btn_refuse_1"
+                    android:id="@+id/image_btn_come_refuse"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="1dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/video_accept1"
+                    android:id="@+id/image_btn_come_accept"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
