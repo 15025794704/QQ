@@ -505,6 +505,10 @@ public class MyDateBase {
 					break;
 				bos.write(b,0,packet.getLength());
 			}
+			if(bos.size()==0) {
+				bos.close();
+				return null;
+			}
 			bitmap=BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.size());
 			bos.close();
 			return bitmap;
