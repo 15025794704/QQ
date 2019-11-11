@@ -1,5 +1,8 @@
 package com.aclass.android.qq.tools;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.aclass.android.qq.entity.*;
 
 import java.io.ByteArrayInputStream;
@@ -189,7 +192,7 @@ public class MyDateBase {
 
 	/**
 	 * 发送对象
-	 * @param obj
+	 * @param
 	 */
 	public  void UDPsend(int port,byte[] data) {
 		try {
@@ -481,5 +484,32 @@ public class MyDateBase {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	/**
+	 * 获取qq的头像
+	 * 如果qq不存在就返回null
+	 * @param QQ
+	 * @return
+     */
+	public Bitmap getImageByQQ(String QQ){
+		Bitmap bitmap= null;
+		byte[] b=new byte[1024*50];
+		DatagramPacket packet=new DatagramPacket(b,b.length);
+		try {
+			UDPsend(new Request(7,QQ,null));
+			ByteArrayOutputStream bos=new ByteArrayOutputStream();
+			for(;;) {
+				socket.receive(packet);
+				if(packet.getLength()==0)
+					break;
+				bos.write(b,0,packet.getLength());
+			}
+			bitmap=BitmapFactory.decodeByteArray(bos.toByteArray(),0,bos.size());
+			bos.close();
+			return bitmap;
+		}
+		catch (Exception e){}
+		return null;
 	}
 }
