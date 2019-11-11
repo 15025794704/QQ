@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/chatSettingsGroupToolbar"
+            style="@style/AppTheme.Toolbar"
+            app:menu="@menu/toolbar_chat_settings_group">
+
+            <TextView
+                android:text="@string/groupChatSettingsTitle"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+</layout>

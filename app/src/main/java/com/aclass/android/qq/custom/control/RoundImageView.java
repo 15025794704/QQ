@@ -19,7 +19,7 @@ package com.aclass.android.qq.custom.control;
         import android.widget.ImageView;
         import com.aclass.android.qq.R;
 
-
+//自定义的圆角imageview
 public class RoundImageView extends ImageView {
     /**
      * 圆形模式

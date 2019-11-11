@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/messageToolbarCall"
+        android:icon="@drawable/ic_call_24"
+        app:showAsAction="always"
+        android:title="Voice call"/>
+    <item
+        android:id="@+id/messageToolbarInfo"
+        android:icon="@drawable/ic_menu_24"
+        app:showAsAction="ifRoom"
+        android:title="Chat info"/>
+</menu>

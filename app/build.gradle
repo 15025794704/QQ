@@ -1,15 +1,28 @@
 apply plugin: 'com.android.application'
 
+// below: load the desired values from local.properties in order to be injected into BuildConfig and Res
+// the values in local.properties must not contain quotes otherwise the parsed values here will contain quotes
+// 将测试用的 Activity 名字写入 BuildConfig
+// 在 local.properties 文件里新增一行：testActivityName=com.aclass.android.qq.MyActivity
+// 将 com.aclass.android.qq.MyActivity 替换为要进行测试的 Activity 名称（包含包名），应用在 debug 模式启动时便会启动该 Activity
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+def buildTestActivityName = properties.getProperty("testActivityName", "")
 android {
-    compileSdkVersion 24
+    compileSdkVersion 26
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.aclass.android.qq"
-        minSdkVersion 15
-        targetSdkVersion 24
+        minSdkVersion 23 // 最低支持安卓 6.0
+        targetSdkVersion 26 // 此 App 设计为在安卓 9.0 上运行，该安卓版本的用户能够获得最佳使用体验
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // below: inject the desired values into BuildConfig and Res
+        // the string values have to be wrapped in quotes because the value in local.properties does not have quotes
+        // 将测试用的 Activity 名字写入 BuildConfig
+        buildConfigField "String", "TEST_ACTIVITY_NAME", "\"$buildTestActivityName\""
+//        resValue "string", "testActivityName", buildTestActivityName
     }
     buildTypes {
         release {
@@ -17,15 +30,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { res.srcDirs = ['src/main/res'] } }
+    //设置assets文件夹路径
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    // 启用 DataBinding
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support.constraint:constraint-layout:1.1.3'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    def lifecycle_version = "1.1.1"
+    compile "android.arch.lifecycle:viewmodel:$lifecycle_version"
+    compile "android.arch.lifecycle:livedata:$lifecycle_version"
+//    compile 'com.android.databinding:library:3.5.2'
+    testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
 }

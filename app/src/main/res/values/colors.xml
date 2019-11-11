@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorBackground">#FFF5F6FA</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnBackground">#FF202020</color>
+    <color name="colorOnSurface">#FF050505</color>
+    <color name="colorDivider">#FFF6F6FA</color>
+    <color name="colorOptionGo">#FF999999</color>
+    <color name="colorPreview">#FFA0A0A0</color>
+
+    <color name="ic_launcher_background">#FFFFFF</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FF00A7FF</color>
     <color name="colorVideoViewBG">#BDCAC6</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_white_gray">#EEE</color>
+    <color name="color_tool_bar_blue_start">#00D7FE</color>
+    <color name="color_tool_bar_blue_end">#00A7FF</color>
 </resources>

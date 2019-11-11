@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">QQ</string>
+    <string name="groupChatSettingsTitle">群聊资料</string>
+    <string name="logining">登录</string>
+    <string name="pwd">密码</string>
+    <string name="qq">QQ账号</string>
+    <string name="forgetPwd">忘记密码？</string>
+    <string name="register1">注册</string>
+    <string name="againPwd">再次输入密码</string>
+    <string name="sex">性别</string>
+    <string name="sex1">男</string>
+    <string name="sex2">女</string>
+    <string name="nickname">昵称</string>
+    <string name="addFriendTitle">添加</string>
+    <string name="seekPersonNumHint">QQ号/手机号/群/公众号</string>
+    <string name="seekGroupNumHint">搜索群号/群名称</string>
+    <string name="settingsToolbarTitle">设置</string>
+    <string name="mainBottomNavMessages">消息</string>
+    <string name="mainBottomNavContacts">联系人</string>
+    <string name="mainBottomNavExplore">动态</string>
+    <string name="textMore">更多</string>
 </resources>

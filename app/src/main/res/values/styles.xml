@@ -1,11 +1,70 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Base application theme. todo 修改 parent 为含 NoActionBar 的 style/theme -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
-         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-         <item name="colorAccent">@color/colorAccent</item>
-     </style>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="mColorAccent">@color/colorAccent</item>
+        <item name="mColorBackground">@color/colorBackground</item>
+        <item name="mColorOnBackground">@color/colorOnBackground</item>
+        <item name="mColorSurface">@color/colorSurface</item>
+        <item name="mColorOnSurface">@color/colorOnSurface</item>
+        <item name="mColorDivider">@color/colorDivider</item>
+        <item name="mColorOptionGo">@color/colorOptionGo</item>
+        <item name="mColorPreview">@color/colorPreview</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
- </resources>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.MainMorePop" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:popupMenuStyle">@style/AppTheme.MainMorePopMenu</item>
+    </style>
+
+    <style name="AppTheme.MainMorePopMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/main_more_background</item>
+    </style>
+
+    <!-- 带返回按键和白色图标颜色的工具栏 -->
+    <style name="AppTheme.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/toolbar_bg_change_color</item>
+        <item name="navigationIcon">@drawable/ic_keyboard_arrow_left_24</item>
+        <item name="navigationIconTint">@android:color/white</item>
+        <item name="menuIconTint">@android:color/white</item>
+    </style>
+
+    <!-- 白色的工具栏标题 -->
+    <style name="AppTheme.ToolbarTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+<!--    以单个 TextView 实现的“选项”控件-->
+    <style name="AppTheme.SimpleOption">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:drawableEnd">@drawable/ic_keyboard_arrow_right_24</item>
+        <item name="android:drawablePadding">13dp</item>
+        <item name="android:drawableTint">?mColorOptionGo</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?mColorSurface</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>
