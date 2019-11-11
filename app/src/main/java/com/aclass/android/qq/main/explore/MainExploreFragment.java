@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.aclass.android.qq.R;
 
+/**
+ * 应用“动态”页面
+ */
 public class MainExploreFragment extends Fragment {
 
     public static MainExploreFragment newInstance(){

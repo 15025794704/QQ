@@ -12,6 +12,9 @@ import com.aclass.android.qq.settings.SettingsActivity;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 
+/**
+ * 应用抽屉页面，从主页面右滑进入
+ */
 public class DrawerFragment extends GeneralFragment {
     private FragmentDrawerBinding mViews;
     private MainActivity mActivity;
@@ -33,12 +36,14 @@ public class DrawerFragment extends GeneralFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+        // 点击关闭按钮切换至应用主页面
         mViews.drawerClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.setPagerItem(1);
             }
         });
+        // 进入设置页面
         mViews.drawerSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

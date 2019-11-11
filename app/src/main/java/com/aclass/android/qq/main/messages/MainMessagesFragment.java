@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 
 import com.aclass.android.qq.R;
 
+/**
+ * 应用“消息”页面
+ * 聊天消息列表
+ */
 public class MainMessagesFragment extends Fragment {
 
     public static MainMessagesFragment newInstance(){
