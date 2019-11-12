@@ -27,11 +27,11 @@
         </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/LinearLayout_video_window"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:id="@+id/LinearLayout_video_window"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -44,7 +44,7 @@
 
             <Space
             android:layout_width="2dp"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_weight="0.5" />
 
             <ImageButton
@@ -58,57 +58,69 @@
 
             <Space
                 android:layout_width="2dp"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_weight="12" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="50dp"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/LinearLayout_video_window_info"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.aclass.android.qq.custom.control.RoundImageView
-                android:layout_width="145dp"
-                android:layout_height="145dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/qq"
-                app:type="circle"
-                android:id="@+id/RoundImageView_video_head"
-                />
+            <LinearLayout
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.aclass.android.qq.custom.control.RoundImageView
+                    android:layout_width="145dp"
+                    android:layout_height="145dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/qq"
+                    app:type="circle"
+                    android:id="@+id/RoundImageView_video_head"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:text="漂流瓶的小号"
+                android:textColor="@color/color_white"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                 />
+
+            <TextView
+                android:text="正在呼叫..."
+                android:layout_marginTop="10dp"
+                android:textColor="@color/color_white_gray"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2" />
+
+            <TextView
+                android:text="当前为非WIFI网络"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/color_white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3" />
+
         </LinearLayout>
 
-
-        <TextView
-            android:text="漂流瓶的小号"
-            android:textColor="@color/color_white"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-             />
-
-        <TextView
-            android:text="正在呼叫..."
-            android:layout_marginTop="10dp"
-            android:textColor="@color/color_white_gray"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2" />
-
-        <TextView
-            android:text="当前为非WIFI网络"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/color_white"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3" />
 
         <RelativeLayout
             android:layout_width="match_parent"
