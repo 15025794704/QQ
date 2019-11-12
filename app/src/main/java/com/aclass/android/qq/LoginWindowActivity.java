@@ -52,8 +52,8 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
 
                     String username = login_account.getText().toString().trim();
                     System.out.print("账号:"+username);
-                    if (username.length() < 2) {
-                        Toast.makeText(LoginWindowActivity.this,"QQ账号不得小于2个字符",Toast.LENGTH_SHORT).show();
+                    if (username.length() !=10) {
+                        Toast.makeText(LoginWindowActivity.this,"QQ账号应不是10个字符",Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -65,9 +65,9 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
                 if(!hasFocus){
                     String pwd=login_password.getText().toString().trim();
                     System.out.print("密码:"+pwd);
-                    if(pwd.length()<3)
+                    if(pwd.length()<8||pwd.length()>18)
                     {
-                        Toast.makeText(LoginWindowActivity.this,"密码不得小于3个字符",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginWindowActivity.this,"密码的长度小于了8位或者超出了18位",Toast.LENGTH_SHORT).show();
                     }
 
                 }
