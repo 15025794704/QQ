@@ -33,6 +33,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     // DataBinding 对象
     private ActivityWindowMessageBinding mViews;
     private Thread threadStartVideo;
+    private String QQFriend;
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
@@ -123,9 +124,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                         receiveSocket.receive(dpReceive);
                         request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
                         if (request.getRequestType() == 8) {
-                            String send=( (Message)request.getObj()).getSendQQ();
-                            ActivityOpreation.jumpActivity(MessageWindowActivity.this,VideoWindowActivity.class,new String[]{"receive",send});
-                            Attribute.friendVideoRequest=request;
+                            if(!Attribute.isInVideo) {
+                                String send = ((Message) request.getObj()).getSendQQ();
+                                ActivityOpreation.jumpActivity(MessageWindowActivity.this, VideoWindowActivity.class, new String[]{"receive", send});
+                                Attribute.friendVideoRequest = request;
+                            }
                         }
 //                        lock.release();
                     }
