@@ -36,9 +36,7 @@ import com.aclass.android.qq.tools.MyDateBase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VideoWindowActivity extends GeneralActivity implements TextureView.SurfaceTextureListener{
@@ -53,17 +51,20 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     ImageButton btn_mini;
 
     RoundImageView headImg;
+    private LinearLayout info;
 
     private Camera mCamera;
     private TextureView textureView;
     private ImageView videoView;
 
-    private Thread threadStartVideo;
     private Thread  videoThread;
-    private DatagramSocket receiveSocket = null;
+    private Thread  sendVideoThread;
     private WifiManager.MulticastLock lock=null;
     private MyDateBase sendVideoDataBase;
+    private MyDateBase receiveVideoDataBase;
+    private int ServerPort;
     private String QQfriend;
+    private String videoType;
 
     public Handler handler = new Handler() {
         @Override
@@ -71,7 +72,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             Bundle bundle = msg.getData();
             if (msg.what == 0x11) {
                 byte[] b=Attribute.video_bitmap;
-//                Toast.makeText(VideoWindowActivity.this,""+b.length,Toast.LENGTH_LONG).show();
                 Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
                 bmp= MyBitMapOperation.rotateBitmap(bmp,270);
                 bmp=MyBitMapOperation.flipBitmap(bmp);
@@ -82,6 +82,12 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             }
             else if(msg.what == 0x13){
                 finish();
+            }
+            else if(msg.what == 0x14){
+                info.setVisibility(View.INVISIBLE);
+            }
+            else if(msg.what == 0x15){
+                info.setVisibility(View.INVISIBLE);
             }
         }
     };
@@ -95,10 +101,14 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 .getSystemService(Context.WIFI_SERVICE);
         lock= manager.createMulticastLock("test wifi");
 
+        String[] args=getIntent().getStringArrayExtra("args");
+        QQfriend=args[1];
+        videoType=args[0];
+
         init();
         initData();
         set_btn_click();
-        startThreadStartVideo();
+        initVideoThread();
     }
 
     @Override
@@ -109,49 +119,57 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         l.setLayoutParams(layoutParams);
     }
 
-
-    private void startThreadStartVideo(){
+    private void initVideoThread(){
 
         videoThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                        Request request= Attribute.friendVideoRequest;
-                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
-                        String sendQQ=msg.getSendQQ();
+                    Attribute.isInVideo=true;
+                    Request request= Attribute.friendVideoRequest;
+                    com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
 
-                        final MyDateBase myDateBase=new MyDateBase();
-                        myDateBase.setTimeout(10000);
-                        msg.setContext("2>1");//接受
-                        request.setObj(msg);
-                        myDateBase.UDPsend(request);    //发送拒绝或接受
+                    receiveVideoDataBase.setTimeout(5000);
+                    msg.setContext("2>1");//接受
+                    request.setObj(msg);
+                    receiveVideoDataBase.UDPsend(request);    //发送拒绝或接受
 
-                        byte[] b= myDateBase.receiveData();
+                        byte[] b= receiveVideoDataBase.receiveData();
                         final int port=Integer.parseInt(new String(b));//服务器视频端口
+                    ServerPort=port;
                         ActivityOpreation.updateUI(handler, 0x12, "服务器视频端口"+port);
+                         ActivityOpreation.updateUI(handler, 0x14, "");//隐藏信息
 
                         SystemClock.sleep(300);
-                        myDateBase.UDPsend(port,"");
+                    receiveVideoDataBase.UDPsend(port,"");
 
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 SystemClock.sleep(300);
-                                Attribute.isInVideo=true;
                                 addCallBack();
                                 for(;;) {
                                     if(!Attribute.isInVideo) {
-                                        myDateBase.Destory();
+                                        receiveVideoDataBase.Destory();
                                         return;
                                     }
-                                    myDateBase.UDPsend(port, Attribute.video_bitmap_send);
-                                    SystemClock.sleep(100);
+                                    receiveVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
+                                    SystemClock.sleep(125);
                                 }
                             }
                         }).start();
 
                         for (; ; ) {
-                            Attribute.video_bitmap = myDateBase.receiveData();
+                            if(!Attribute.isInVideo) {
+                                sendVideoDataBase.Destory();
+                                return;
+                            }
+                            Attribute.video_bitmap = receiveVideoDataBase.receiveData();
+                            if( Attribute.video_bitmap.length==0){
+                                sendVideoDataBase.Destory();
+                                Attribute.isInVideo=false;
+                                return;
+                            }
                             ActivityOpreation.updateUI(handler, 0x11, "");
                         }
                 }
@@ -162,46 +180,11 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             }
         });
 
-
-        threadStartVideo=new Thread(new Runnable() {//发送服务器登录信息
-            @Override
-            public void run() {
-                try {
-                    receiveSocket = new DatagramSocket();
-                    byte[] buf;
-                    User user = new User();
-                    user.setQQNum("1505249457");
-                    Request request = new Request(0,"",user);
-                    buf=MyDateBase.toByteArray(request);
-                    receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
-                    DatagramPacket dpReceive;
-
-                    while (true) {
-                        buf = new byte[1024*10];
-                        dpReceive = new DatagramPacket(buf, buf.length);
-                        lock.acquire();
-                        receiveSocket.receive(dpReceive);
-                        request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
-                        if (request.getRequestType() == 8) {
-                            ActivityOpreation.updateUI(handler, 0x12, "接到视频，开启线程");
-                            Attribute.friendVideoRequest=request;
-                            videoThread.start();
-                        }
-                        lock.release();
-                    }
-                }
-                catch (Exception e){
-                    ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
-                }
-            }
-        });
-
-        threadStartVideo.start();
     }
-
 
     private void sendVideoRequest(String QQFriend){
         try {
+            SystemClock.sleep(1000);
             com.aclass.android.qq.entity.Message msg = new com.aclass.android.qq.entity.Message();
             msg.setSendQQ(Attribute.QQ);
             msg.setReceiveNum(QQFriend);
@@ -209,7 +192,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             Request request = new Request(8, "", msg);
 
             sendVideoDataBase = new MyDateBase();
-            sendVideoDataBase.setTimeout(10000);
+            sendVideoDataBase.setTimeout(15000);
             sendVideoDataBase.UDPsend(request);
 
             request=(Request) sendVideoDataBase.receiveObject();
@@ -224,17 +207,20 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 return;
             }
 
+            sendVideoDataBase.setTimeout(5000);
+            Attribute.isInVideo=true;
             byte[] b= sendVideoDataBase.receiveData();
             final  int port=Integer.parseInt(new String(b));//服务器视频端口
+            ServerPort=port;
             ActivityOpreation.updateUI(handler, 0x12, "好友接受，服务器视频端口"+port);
+            ActivityOpreation.updateUI(handler, 0x14, "");//隐藏信息
 
             sendVideoDataBase.UDPsend(port,"");
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Attribute.isInVideo=true;
-                    SystemClock.sleep(1000);
+                    SystemClock.sleep(675);
                     addCallBack();
                     for(;;) {
                         if(!Attribute.isInVideo) {
@@ -242,14 +228,23 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                             return;
                         }
                         sendVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
-                        SystemClock.sleep(100);
+                        SystemClock.sleep(125);
                     }
 
                 }
             }).start();
 
             for (; ; ) {
+                if(!Attribute.isInVideo ) {
+                    sendVideoDataBase.Destory();
+                    return;
+                }
                 Attribute.video_bitmap = sendVideoDataBase.receiveData();
+                if( Attribute.video_bitmap.length==0){
+                    sendVideoDataBase.Destory();
+                    Attribute.isInVideo=false;
+                    return;
+                }
                 ActivityOpreation.updateUI(handler, 0x11,"");
             }
         }
@@ -271,24 +266,34 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         btn_mini.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        sendVideoRequest("1234567890");
-                    }
-                }).start();
+
             }
         });
         btn_accept_come.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((LinearLayout) findViewById(R.id.video_show_send)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.video_show_come)).setVisibility(View.INVISIBLE);
+                videoThread.start();//接受
             }
         });
         btn_refuse_come.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Request request= Attribute.friendVideoRequest;
+                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
 
+                        receiveVideoDataBase.setTimeout(10000);
+                        msg.setContext("refuse");//拒绝
+                        request.setObj(msg);
+                        receiveVideoDataBase.UDPsend(request);    //发送拒绝或接受
+                        receiveVideoDataBase.Destory();
+                        ActivityOpreation.updateUI(handler,0x13,"");//finish
+                    }
+                }).start();
             }
         });
     }
@@ -298,7 +303,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             @Override
             public void run() {
                 try {
-                    threadStartVideo.stop();
+                    sendVideoDataBase.UDPsend(ServerPort,new byte[0]);
                 }
                 catch (Exception e){
                 }
@@ -310,7 +315,24 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     }
 
     protected void init(){
-        //设置状态栏背景
+
+        if(videoType.equals("send")){
+            ((LinearLayout) findViewById(R.id.video_show_send)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.video_show_come)).setVisibility(View.INVISIBLE);
+            sendVideoThread= new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sendVideoRequest(QQfriend);
+                }
+            });
+            sendVideoThread .start();
+        }
+        else {
+            ((LinearLayout) findViewById(R.id.video_show_send)).setVisibility(View.INVISIBLE);
+            ((LinearLayout) findViewById(R.id.video_show_come)).setVisibility(View.VISIBLE);
+            receiveVideoDataBase=new MyDateBase();
+        }
+            //设置状态栏背景
       //  ActivityOpreation.setStatusBar(this,R.color.colorVideoViewBG,View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         //初始化对象
@@ -325,6 +347,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
         textureView=(TextureView) findViewById(R.id.texture_video_ImageView);
         videoView=(ImageView) findViewById(R.id.video_ImageView);
+        info=(LinearLayout)findViewById(R.id.LinearLayout_video_window_info);
         //videoView.setRotation(270);
 
 
@@ -339,6 +362,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         MyButtonOperation.changeImageButton(this,btn_mini,R.drawable.videoview_mini_btn2,R.drawable.videoview_mini_btn);
         MyButtonOperation.changeImageButton(this,btn_accept_come,R.drawable.video_accept2,R.drawable.video_accept2);
         MyButtonOperation.changeImageButton(this,btn_refuse_come,R.drawable.btn_refuse_2,R.drawable.btn_refuse_1);
+
     }
 
     private void initData() {
@@ -407,10 +431,14 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
 
     @Override
     protected void onDestroy(){
-        if(threadStartVideo!=null)
-            threadStartVideo.stop();
-        if(videoThread!=null)
-            videoThread.stop();
+        try {
+            Attribute.isInVideo=false;
+            if (videoThread != null)
+                videoThread.stop();
+            if(sendVideoThread!=null)
+                sendVideoThread.stop();
+        }
+        catch (Exception e){}
         super.onDestroy();
     }
 
