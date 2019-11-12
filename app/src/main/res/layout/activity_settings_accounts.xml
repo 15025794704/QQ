@@ -1,22 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/settingsAccountsToolbar"
+            style="@style/AppTheme.Toolbar">
 
-            <com.aclass.android.qq.custom.control.MyToolbar
-                android:id="@+id/settingsAccountsToolbar"
-                style="@style/AppTheme.Toolbar">
+            <TextView
+                android:text="账号管理"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:id="@+id/settingsAccountsContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="账号管理"
-                    style="@style/AppTheme.ToolbarTitle"/>
-            </com.aclass.android.qq.custom.control.MyToolbar>
-        </LinearLayout>
-    </ScrollView>
+                    android:id="@+id/settingsAccountsName"
+                    tools:text="MADNESS"
+                    android:textSize="22sp"
+                    android:textColor="?mColorOnSurface"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="30dp"
+                    android:background="?mColorSurface"
+                    android:padding="15dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="关联 QQ 号"
+                    android:layout_marginTop="12dp"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="关联 QQ 号后，即可代收该号的好友消息。"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="在线状态"
+                    android:layout_marginTop="12dp"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <LinearLayout
+                    android:divider="@drawable/options_divider"
+                    android:showDividers="middle"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/settingsAccountsLogOut"
+                        android:text="退出当前账号"
+                        android:drawableEnd="@null"
+                        style="@style/AppTheme.SimpleOption"/>
+
+                    <TextView
+                        android:id="@+id/settingsAccountsQuit"
+                        android:text="退出 QQ"
+                        android:drawableEnd="@null"
+                        style="@style/AppTheme.SimpleOption"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>
 

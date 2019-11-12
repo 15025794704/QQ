@@ -1,6 +1,7 @@
 package com.aclass.android.qq.settings;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -41,14 +42,19 @@ public class SettingsActivity extends GeneralActivity {
             @Override
             public void run() {
                 MyDateBase dateBase = new MyDateBase();
+
                 final User myAccount = dateBase.getUser("1234567890");
                 if (myAccount == null) return;
+                final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
                 Attribute.currentAccount = myAccount;
+                Attribute.currentAccountProfilePhoto = profilePhoto;
+
                 final User currentAccount = Attribute.currentAccount;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mViews.settingsPhone.setText(currentAccount.getPhone());
+                        mViews.settingsProfilePhoto.setImageBitmap(Attribute.currentAccountProfilePhoto);
                     }
                 });
             }

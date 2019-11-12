@@ -1,5 +1,7 @@
 package com.aclass.android.qq.internet;
 
+import android.graphics.Bitmap;
+
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
@@ -15,7 +17,10 @@ import java.util.List;
 
 public class Attribute {
     public static String QQ="1505249457";
+    // 当前账号
     public static User currentAccount;
+    // 当前账号头像
+    public static Bitmap currentAccountProfilePhoto;
     public static List<Friend> friendList;
     public static Request friendVideoRequest;
     public static Boolean isInVideo;

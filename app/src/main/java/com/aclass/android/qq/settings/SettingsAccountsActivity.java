@@ -1,16 +1,19 @@
 package com.aclass.android.qq.settings;
 
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivitySettingsAccountsBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 
-public class SettingsAccountsActivity extends GeneralActivity {
+public class SettingsAccountsActivity extends GeneralActivity implements View.OnClickListener {
     private ActivitySettingsAccountsBinding mViews;
 
     @Override
@@ -25,11 +28,28 @@ public class SettingsAccountsActivity extends GeneralActivity {
             }
         });
         final User currentAccount = Attribute.currentAccount;
+        mViews.settingsAccountsName.setText(currentAccount.getNiCheng());
+        mViews.settingsAccountsName.setCompoundDrawables(new BitmapDrawable(getResources(), Attribute.currentAccountProfilePhoto), null, null, null);
+        mViews.settingsAccountsLogOut.setOnClickListener(this);
+        mViews.settingsAccountsQuit.setOnClickListener(this);
     }
 
     @Override
     protected void consumeInsets(Rect insets) {
         MyToolbar toolbar = mViews.settingsAccountsToolbar;
         toolbar.setPadding(toolbar.getPaddingStart(), insets.top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
+        LinearLayout container = mViews.settingsAccountsContainer;
+        container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == null) return;
+        switch (v.getId()){
+            case R.id.settingsAccountsLogOut:
+                break;
+            case R.id.settingsAccountsQuit:
+                break;
+        }
     }
 }
