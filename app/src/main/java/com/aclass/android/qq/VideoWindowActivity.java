@@ -101,9 +101,9 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 .getSystemService(Context.WIFI_SERVICE);
         lock= manager.createMulticastLock("test wifi");
 
-        ArrayList<String> args=getIntent().getStringArrayListExtra("args");
-        QQfriend=args.get(1);
-        videoType=args.get(0);
+        String[] args=getIntent().getStringArrayExtra("args");
+        QQfriend=args[1];
+        videoType=args[0];
 
         init();
         initData();

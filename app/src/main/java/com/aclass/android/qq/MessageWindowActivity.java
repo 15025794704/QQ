@@ -65,6 +65,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
         init();
+        startThreadStartVideo();
     }
 
     @Override
@@ -109,7 +110,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                     DatagramSocket receiveSocket = new DatagramSocket();
                     byte[] buf;
                     User user = new User();
-                    user.setQQNum("1505249457");
+                    user.setQQNum("1234567890");
                     Request request = new Request(0,"",user);
                     buf=MyDateBase.toByteArray(request);
                     receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
