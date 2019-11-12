@@ -5,7 +5,7 @@
     android:id="@+id/activity_window_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register_background"
+    android:background="@drawable/register"
     tools:context="com.aclass.android.qq.RegisterWindowActivity">
 
     <ImageView
@@ -14,12 +14,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon"
+        app:srcCompat="@drawable/ic_register"
         tools:ignore="ContentDescription"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="120dp"
-        android:layout_marginLeft="120dp" />
+        android:layout_marginStart="320dp"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="64dp" />
     <EditText
         android:id="@+id/num"
         android:layout_width="0dp"

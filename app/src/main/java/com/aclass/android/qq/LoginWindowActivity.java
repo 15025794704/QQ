@@ -32,6 +32,7 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_window_login);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
+
         login_account= findViewById(R.id.account_editText);
         login_password= findViewById(R.id.pwd_editText);
         user_register_button =findViewById(R.id.register_button);

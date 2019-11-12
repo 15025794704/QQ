@@ -36,16 +36,16 @@ public class TestMainActivity extends ListActivity {
          * */
 
 
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(account,state),R.layout.activity_test_main,new String[]{"name","state"},new int[]{R.id.accountID,R.id.isLoginID});
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(account),R.layout.activity_test_main,new String[]{"name"},new int[]{R.id.accountID});
       setListAdapter(adapter);
 
     }
     //得到数据
-    private List<Map<String, Object>> getData(String account,boolean state){
+    private List<Map<String, Object>> getData(String account){
         List<Map<String,Object>> datas = new ArrayList<Map<String, Object>>();
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("name", (Object) account);
-        data.put("state",state);
+       /* data.put("state",state);*/
         datas.add(data);
         return datas;
     }
