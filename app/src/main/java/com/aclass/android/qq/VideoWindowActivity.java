@@ -192,7 +192,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             Request request = new Request(8, "", msg);
 
             sendVideoDataBase = new MyDateBase();
-            sendVideoDataBase.setTimeout(5000);
+            sendVideoDataBase.setTimeout(15000);
             sendVideoDataBase.UDPsend(request);
 
             request=(Request) sendVideoDataBase.receiveObject();
@@ -207,7 +207,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 return;
             }
 
-
+            sendVideoDataBase.setTimeout(5000);
             Attribute.isInVideo=true;
             byte[] b= sendVideoDataBase.receiveData();
             final  int port=Integer.parseInt(new String(b));//服务器视频端口
