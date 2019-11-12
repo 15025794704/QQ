@@ -1,4 +1,7 @@
 <resources>
+    <dimen name="optionGroupMargin">12dp</dimen>
+    <dimen name="optionPaddingVertical">18dp</dimen>
+    <dimen name="optionPaddingHorizontal">18dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>

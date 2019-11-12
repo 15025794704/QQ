@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
@@ -26,28 +26,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/settingsAccountsName"
-                    tools:text="MADNESS"
-                    android:textSize="22sp"
-                    android:textColor="?mColorOnSurface"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="30dp"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     android:background="?mColorSurface"
-                    android:padding="15dp"
-                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/settingsAccountsProfilePhoto"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="@dimen/optionPaddingHorizontal"
+                        tools:srcCompat="@mipmap/ic_launcher"
+                        android:layout_width="78dp"
+                        android:layout_height="78dp"/>
+
+                    <TextView
+                        android:id="@+id/settingsAccountsName"
+                        tools:text="MADNESS"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@id/settingsAccountsProfilePhoto"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/settingsAccountsInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/settingsAccountsInfo"
+                        tools:text="1234567890"
+                        android:textSize="15sp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintStart_toEndOf="@id/settingsAccountsProfilePhoto"
+                        app:layout_constraintTop_toBottomOf="@id/settingsAccountsName"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </android.support.constraint.ConstraintLayout>
 
                 <TextView
                     android:text="关联 QQ 号"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
                     android:text="关联 QQ 号后，即可代收该号的好友消息。"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
+                    android:paddingStart="@dimen/optionPaddingHorizontal"
+                    android:paddingEnd="@dimen/optionPaddingHorizontal"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:layout_width="match_parent"
@@ -55,17 +82,13 @@
 
                 <TextView
                     android:text="在线状态"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <LinearLayout
-                    android:divider="@drawable/options_divider"
-                    android:showDividers="middle"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOptionGroup">
 
                     <TextView
                         android:id="@+id/settingsAccountsLogOut"

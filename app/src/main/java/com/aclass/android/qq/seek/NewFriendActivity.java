@@ -1,6 +1,7 @@
 package com.aclass.android.qq.seek;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -40,11 +41,16 @@ public class NewFriendActivity extends GeneralActivity {
             public void run() {
                 Intent intent = getIntent();
                 mContactRef.set((User) intent.getParcelableExtra(ARG_CONTACT));
+                MyDateBase dateBase = new MyDateBase();
+                final User contact = getContact();
+                final Bitmap profilePhoto = dateBase.getImageByQQ(contact.getQQNum());
+                dateBase.Destory();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        User contact = getContact();
-                        mViews.newFriendName.setText(contact.getNiCheng() + " " + contact.getQQNum());
+                        mViews.newFriendProfilePhoto.setImageBitmap(profilePhoto);
+                        mViews.newFriendName.setText(contact.getNiCheng());
+                        mViews.newFriendInfo.setText(contact.getSex() + " " + contact.getAge() + "岁 " + contact.getAddress());
                     }
                 });
             }

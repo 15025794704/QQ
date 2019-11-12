@@ -43,7 +43,7 @@ public class SettingsActivity extends GeneralActivity {
             public void run() {
                 MyDateBase dateBase = new MyDateBase();
 
-                final User myAccount = dateBase.getUser("1234567890");
+                final User myAccount = dateBase.getUser("9097138199");
                 if (myAccount == null) return;
                 final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
                 Attribute.currentAccount = myAccount;
