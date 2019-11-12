@@ -61,6 +61,7 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
+                                android:id="@+id/settingsProfilePhoto"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 tools:srcCompat="@mipmap/ic_launcher" />
