@@ -1,7 +1,6 @@
 package com.aclass.android.qq.settings;
 
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,8 +27,9 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
             }
         });
         final User currentAccount = Attribute.currentAccount;
+        mViews.settingsAccountsProfilePhoto.setImageBitmap(Attribute.currentAccountProfilePhoto);
         mViews.settingsAccountsName.setText(currentAccount.getNiCheng());
-        mViews.settingsAccountsName.setCompoundDrawables(new BitmapDrawable(getResources(), Attribute.currentAccountProfilePhoto), null, null, null);
+        mViews.settingsAccountsInfo.setText(currentAccount.getQQNum());
         mViews.settingsAccountsLogOut.setOnClickListener(this);
         mViews.settingsAccountsQuit.setOnClickListener(this);
     }

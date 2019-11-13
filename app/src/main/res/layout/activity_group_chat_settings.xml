@@ -20,6 +20,99 @@
         <ScrollView
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="群聊成员"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:background="?mColorSurface"
+                    android:paddingTop="@dimen/optionPaddingVertical"
+                    android:paddingBottom="@dimen/optionPaddingVertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="文件"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="相册"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="签到"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="更多"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOptionGroup">
+
+                    <TextView
+                        android:text="群聊名称"
+                        style="@style/AppTheme.SimpleOption"/>
+
+                    <TextView
+                        android:text="二维码"
+                        style="@style/AppTheme.SimpleOption"/>
+
+                    <TextView
+                        android:text="群公告"
+                        style="@style/AppTheme.SimpleOption"/>
+                </LinearLayout>
+
+                <TextView
+                    android:text="查找聊天内容"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="置顶"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="免打扰"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </layout>

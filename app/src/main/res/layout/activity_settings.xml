@@ -27,18 +27,15 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:divider="@drawable/options_divider"
-                    android:showDividers="middle"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/AppTheme.SimpleOptionGroup"
+                    android:layout_marginTop="@dimen/optionGroupMargin">
+
                     <LinearLayout
                         android:id="@+id/settingsAccounts"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:paddingStart="18dp"
-                        android:paddingEnd="18dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="@dimen/optionPaddingHorizontal"
+                        android:paddingEnd="@dimen/optionPaddingHorizontal"
                         android:orientation="horizontal"
                         android:background="?mColorSurface"
                         android:layout_width="match_parent"
@@ -62,17 +59,17 @@
 
                             <ImageView
                                 android:id="@+id/settingsProfilePhoto"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 tools:srcCompat="@mipmap/ic_launcher" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:paddingStart="18dp"
-                        android:paddingEnd="18dp"
+                        android:paddingTop="@dimen/optionPaddingVertical"
+                        android:paddingBottom="@dimen/optionPaddingVertical"
+                        android:paddingStart="@dimen/optionPaddingHorizontal"
+                        android:paddingEnd="@dimen/optionPaddingHorizontal"
                         android:orientation="horizontal"
                         android:background="?mColorSurface"
                         android:layout_width="match_parent"
@@ -115,10 +112,10 @@
                         android:text="账号安全"/>
 
                     <LinearLayout
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:paddingStart="18dp"
-                        android:paddingEnd="18dp"
+                        android:paddingTop="@dimen/optionPaddingVertical"
+                        android:paddingBottom="@dimen/optionPaddingVertical"
+                        android:paddingStart="@dimen/optionPaddingHorizontal"
+                        android:paddingEnd="@dimen/optionPaddingHorizontal"
                         android:orientation="horizontal"
                         android:background="?mColorSurface"
                         android:layout_width="match_parent"
@@ -161,12 +158,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:divider="@drawable/options_divider"
-                    android:showDividers="middle"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/AppTheme.SimpleOptionGroup"
+                    android:layout_marginTop="@dimen/optionGroupMargin">
 
                     <TextView
                         style="@style/AppTheme.SimpleOption"
@@ -186,13 +179,13 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"
                     android:text="免流量特权"/>
 
                 <TextView
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"
                     android:text="关于QQ与帮助"/>
 

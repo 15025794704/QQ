@@ -19,8 +19,8 @@
                 android:drawablePadding="8dp"
                 android:inputType="text"
                 android:imeOptions="actionDone"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/optionGroupMargin"
+                android:layout_marginBottom="@dimen/optionGroupMargin"
                 android:padding="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -48,8 +48,8 @@
             <TextView
                 style="@style/AppTheme.SimpleOption"
                 android:text="查看附近的人"
+                android:layout_marginBottom="@dimen/optionGroupMargin"
                 android:drawableStart="@drawable/ic_menu_24"/>
-
         </LinearLayout>
     </ScrollView>
 </layout>

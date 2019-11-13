@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -8,14 +9,15 @@
 
         <com.aclass.android.qq.custom.control.MyToolbar
             android:id="@+id/newFriendToolbar"
-            app:contentInsetStart="15dp"
-            app:contentInsetEnd="15dp"
+            app:contentInsetStart="@dimen/optionPaddingHorizontal"
+            app:contentInsetEnd="@dimen/optionPaddingHorizontal"
             app:navigationIcon="@null"
             style="@style/AppTheme.Toolbar">
 
             <TextView
                 android:id="@+id/newFriendToolbarCancel"
                 android:text="取消"
+                android:textSize="19sp"
                 android:layout_gravity="start"
                 style="@style/AppTheme.ToolbarTitle"/>
 
@@ -26,6 +28,7 @@
             <TextView
                 android:id="@+id/newFriendToolbarSend"
                 android:text="发送"
+                android:textSize="19sp"
                 android:layout_gravity="end"
                 style="@style/AppTheme.ToolbarTitle"/>
         </com.aclass.android.qq.custom.control.MyToolbar>
@@ -40,12 +43,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/newFriendProfilePhoto"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="@dimen/optionPaddingHorizontal"
+                        tools:srcCompat="@mipmap/ic_launcher"
+                        android:layout_width="108dp"
+                        android:layout_height="108dp"/>
+
+                    <TextView
+                        android:id="@+id/newFriendName"
+                        tools:text="MADNESS"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@id/newFriendProfilePhoto"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/newFriendInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/newFriendInfo"
+                        tools:text="男 20岁 重庆 渝北"
+                        android:textSize="18sp"
+                        android:layout_marginTop="3dp"
+                        app:layout_constraintStart_toEndOf="@id/newFriendProfilePhoto"
+                        app:layout_constraintTop_toBottomOf="@id/newFriendName"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </android.support.constraint.ConstraintLayout>
+
                 <TextView
-                    android:id="@+id/newFriendName"
-                    android:textSize="25sp"
-                    android:textColor="@android:color/black"
+                    android:text="填写验证信息"
+                    android:textSize="18sp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <EditText
+                    tools:text="我是HHHHH"
+                    android:minHeight="120dp"
+                    android:background="?mColorSurface"
+                    android:gravity="top"
+                    android:padding="18dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="设置备注和分组"
+                    android:textSize="18sp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOptionGroup">
+
+                    <TextView
+                        android:text="备注"
+                        android:drawableEnd="@null"
+                        style="@style/AppTheme.SimpleOption"/>
+
+                    <TextView
+                        android:text="分组"
+                        style="@style/AppTheme.SimpleOption"/>
+                </LinearLayout>
+
+                <TextView
+                    android:text="不让TA看我的动态"
+                    android:drawableEnd="@null"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
