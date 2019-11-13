@@ -41,28 +41,21 @@
         </LinearLayout>
 
             <ScrollView
+                android:id="@+id/message_midde_scroll"
                 android:background="#addfd1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
                     <ListView
                         android:id="@+id/message_windos_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-
-                </LinearLayout>
-
             </ScrollView>
         <LinearLayout
             android:id="@+id/message_btn_group_layout"
             android:orientation="vertical"
-            android:background="#e1e1e1"
+            android:background="#e9e9e9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -74,6 +67,8 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 >
                 <EditText
                     android:paddingLeft="15dp"
@@ -82,12 +77,12 @@
                     android:paddingBottom="6dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/rectangle_round"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="5.5"
                     android:gravity="left"
-                    android:lineSpacingMultiplier="1.2"
+                    android:lineSpacingMultiplier="1.0"
                     android:maxLength="100"
                     android:id="@+id/editText_message_send" />
 
@@ -106,27 +101,61 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp">
                 <ImageButton
                     android:layout_width="0dp"
                     android:background="@null"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_button_mic"
                     android:id="@+id/message_btn_mic"
-                    android:tint="#888888"
+                    android:tint="#888"
+                    android:layout_weight="1" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:background="@null"
+                    android:layout_height="wrap_content"
+                    android:tint="#888"
+                    app:srcCompat="@drawable/ic_message_btn_image"
+                    android:id="@+id/message_btn_image"
                     android:layout_weight="1" />
 
                 <ImageButton
                     android:layout_width="0dp"
                     android:background="@null"
                     android:layout_height="wrap_content"
-                    android:tint="#888888"
+                    android:tint="#888"
+                    app:srcCompat="@drawable/ic_message_btn_camera"
+                    android:id="@+id/message_btn_camera"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:background="@null"
+                    android:layout_height="wrap_content"
+                    android:tint="#888"
+                    app:srcCompat="@drawable/ic_message_btn_redpack"
+                    android:id="@+id/message_btn_red"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:background="@null"
+                    android:layout_height="wrap_content"
+                    android:tint="#888"
                     app:srcCompat="@drawable/ic_button_emoji"
                     android:id="@+id/message_btn_emoji"
                     android:layout_weight="1" />
             </LinearLayout>
 
+            <ScrollView
+                android:id="@+id/message_bottom_hide_scroll"
+                android:background="@color/color_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

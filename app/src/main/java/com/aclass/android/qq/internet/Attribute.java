@@ -26,4 +26,6 @@ public class Attribute {
     public static Boolean isInVideo;
     public static Bitmap video_bitmap;
     public static Bitmap video_bitmap_send;
+
+    public static Bitmap[][] emojiList;//表情包
 }

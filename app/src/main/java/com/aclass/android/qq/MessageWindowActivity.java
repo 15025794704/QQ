@@ -1,5 +1,6 @@
 package com.aclass.android.qq;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
@@ -8,15 +9,21 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +47,13 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     private TextView titleName;
     private EditText edit;
     private Button btn_send;
+    private Object[][] listBtn;
+    private ImageButton emojiBtn;
+    private ImageButton cameraBtn;
+    private ImageButton imageBtn;
+    private ImageButton micBtn;
+    private ImageButton redBtn;
+    private ScrollView bottomView;
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
@@ -107,36 +121,131 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
         btn_send=(Button)findViewById(R.id.message_btn_sendmsg) ;
         edit=(EditText)findViewById(R.id.editText_message_send);
+        bottomView=(ScrollView)findViewById(R.id.message_bottom_hide_scroll);
+        emojiBtn=(ImageButton)findViewById(R.id.message_btn_emoji);
+        imageBtn=(ImageButton)findViewById(R.id.message_btn_image);
+        micBtn=(ImageButton)findViewById(R.id.message_btn_mic);
+        redBtn=(ImageButton)findViewById(R.id.message_btn_red);
+        cameraBtn=(ImageButton)findViewById(R.id.message_btn_camera);
+
+        listBtn=new Object[][]{{micBtn,0},{imageBtn,0},{cameraBtn,0},{redBtn,0},{emojiBtn,0}};
 
         Screen screen=new Screen(this);
         int h=screen.getposHeight();
         int w=screen.getposWidth();
 
-//        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,(int)(h*(6.0/121)));
-//        layoutParams.weight=(float)1.3;
-//        btn_send.setLayoutParams(layoutParams);
-
-//        layoutParams=new LinearLayout.LayoutParams((int)(w*(51.0/68)), ViewGroup.LayoutParams.WRAP_CONTENT);
-//        edit.setLayoutParams(layoutParams);
         edit.setMaxHeight((int)(h*26.0/121));
+
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(h*48.0/121));
+        bottomView.setLayoutParams(layoutParams);
+        bottomView.setVisibility(View.GONE);
     }
 
     private void click(){
+        ((ScrollView)findViewById(R.id.message_midde_scroll)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                bottomView.setVisibility(View.GONE);
+                closeAllBtnBG();
+                hideInputView();
+                return true;
+            }
+        });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(MessageWindowActivity.this,""+btn_send.getHeight(),Toast.LENGTH_LONG).show();
+
             }
         });
-
-        edit.setOnClickListener(new View.OnClickListener() {
+        edit.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
+                bottomView.setVisibility(View.GONE);
+                closeAllBtnBG();
+                return false;
+            }
+        });
+        edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
                 LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(btn_send.getWidth(),btn_send.getHeight());
                 layoutParams.gravity= Gravity.BOTTOM;
                 btn_send.setLayoutParams(layoutParams);
             }
         });
+        emojiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeBg(4);
+            }
+        });
+        redBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeBg(3);
+            }
+        });
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeBg(2);
+            }
+        });
+        micBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeBg(0);
+            }
+        });
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeBg(1);
+            }
+        });
+    }
+
+    /**
+     * 隐藏输入法
+     */
+    private void hideInputView(){
+        View view = getCurrentFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private int changeBg(int index){
+        hideInputView();
+        int rs=0;
+        for(int i=0;i<listBtn.length;i++){
+            ImageButton btn=(ImageButton) listBtn[i][0];
+            int click=(int) listBtn[i][1];
+            if(click==1){
+                btn.getDrawable().setTint(Color.rgb(136,136,136));
+                listBtn[i][1]=0;
+                if(index==i)
+                    bottomView.setVisibility(View.GONE);
+            }
+            else{
+                if(index==i){
+                    btn.getDrawable().setTint(Color.rgb(58,182,231));
+                    bottomView.setVisibility(View.VISIBLE);
+                    listBtn[i][1]=1;
+                    rs=1;
+                }
+            }
+        }
+        return rs;
+    }
+
+    private void closeAllBtnBG(){
+        for(int i=0;i<listBtn.length;i++){
+            ImageButton btn=(ImageButton) listBtn[i][0];
+            btn.getDrawable().setTint(Color.rgb(136,136,136));
+            listBtn[i][1]=0;
+        }
     }
 
     private void startThreadStartVideo(){
