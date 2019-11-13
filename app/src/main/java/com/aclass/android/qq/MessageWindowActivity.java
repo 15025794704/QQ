@@ -1,39 +1,45 @@
 package com.aclass.android.qq;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aclass.android.qq.common.ActivityOpreation;
-import com.aclass.android.qq.common.MyBitMapOperation;
+import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
-import com.aclass.android.qq.databinding.ActivityWindowMessageBinding;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
-    // DataBinding 对象
-    private ActivityWindowMessageBinding mViews;
     private Thread threadStartVideo;
     private String QQFriend;
+    private TextView titleName;
+    private EditText edit;
+    private Button btn_send;
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
@@ -66,20 +72,18 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
         init();
-        startThreadStartVideo();
-    }
+        click();
+//        startThreadStartVideo();
 
+    }
     @Override
     protected void consumeInsets(Rect insets) {
-        ((LinearLayout)findViewById(R.id.LinearLayout_message_window)).setPadding(0,insets.top,0,0);
+//        ((LinearLayout)findViewById(R.id.LinearLayout_message_window)).setPadding(0,insets.top,0,0);
     }
 
     protected void init(){
-        // DataBinding，摆脱 findViewById
-        mViews = ActivityWindowMessageBinding.inflate(getLayoutInflater());
         // 设置页面界面
-        setContentView(mViews.getRoot());
-        Toolbar toolbar = mViews.messageToolbar;
+        Toolbar toolbar = (Toolbar)findViewById(R.id.messageToolbar) ;
         // 工具栏选项
         toolbar.inflateMenu(R.menu.toolbar_message);
         // 工具栏选项点击监听器
@@ -98,9 +102,42 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             }
         });
         // 设置工具栏标题文字
-        mViews.messageToolbarTitle.setText("吴小吴");
+        titleName=(TextView)findViewById(R.id.messageToolbarTitle_name);
+        titleName.setText("吴小吴");
+
+        btn_send=(Button)findViewById(R.id.message_btn_sendmsg) ;
+        edit=(EditText)findViewById(R.id.editText_message_send);
+
+        Screen screen=new Screen(this);
+        int h=screen.getposHeight();
+        int w=screen.getposWidth();
+
+//        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,(int)(h*(6.0/121)));
+//        layoutParams.weight=(float)1.3;
+//        btn_send.setLayoutParams(layoutParams);
+
+//        layoutParams=new LinearLayout.LayoutParams((int)(w*(51.0/68)), ViewGroup.LayoutParams.WRAP_CONTENT);
+//        edit.setLayoutParams(layoutParams);
+        edit.setMaxHeight((int)(h*26.0/121));
     }
 
+    private void click(){
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(MessageWindowActivity.this,""+btn_send.getHeight(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(btn_send.getWidth(),btn_send.getHeight());
+                layoutParams.gravity= Gravity.BOTTOM;
+                btn_send.setLayoutParams(layoutParams);
+            }
+        });
+    }
 
     private void startThreadStartVideo(){
 

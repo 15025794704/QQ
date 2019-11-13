@@ -71,8 +71,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
             if (msg.what == 0x11) {
-                byte[] b=Attribute.video_bitmap;
-                Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+                Bitmap bmp=Attribute.video_bitmap;
                 bmp= MyBitMapOperation.rotateBitmap(bmp,270);
                 bmp=MyBitMapOperation.flipBitmap(bmp);
                 videoView.setImageBitmap(bmp);
@@ -164,8 +163,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                                 sendVideoDataBase.Destory();
                                 return;
                             }
-                            Attribute.video_bitmap = receiveVideoDataBase.receiveData();
-                            if( Attribute.video_bitmap.length==0){
+                            Attribute.video_bitmap = (Bitmap) receiveVideoDataBase.receiveObject();
+                            if( Attribute.video_bitmap.getWidth()<=1){
                                 sendVideoDataBase.Destory();
                                 Attribute.isInVideo=false;
                                 return;
@@ -239,8 +238,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                     sendVideoDataBase.Destory();
                     return;
                 }
-                Attribute.video_bitmap = sendVideoDataBase.receiveData();
-                if( Attribute.video_bitmap.length==0){
+                Attribute.video_bitmap = (Bitmap) sendVideoDataBase.receiveObject();
+                if( Attribute.video_bitmap.getWidth()<=1){
                     sendVideoDataBase.Destory();
                     Attribute.isInVideo=false;
                     return;
@@ -303,7 +302,10 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             @Override
             public void run() {
                 try {
-                    sendVideoDataBase.UDPsend(ServerPort,new byte[0]);
+                    Bitmap b=Attribute.video_bitmap_send;
+                    b.setWidth(1);
+                    b.setHeight(1);
+                    sendVideoDataBase.UDPsend(ServerPort,b);
                 }
                 catch (Exception e){
                 }
@@ -416,9 +418,11 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                                 return;
                             }
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 14, stream);
+                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 30, stream);
                             byte[] b=stream.toByteArray();
-                            Attribute.video_bitmap_send=b;
+                            Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+                            Bitmap bitmap=Bitmap.createScaledBitmap(bmp,600,900,true);
+                            Attribute.video_bitmap_send=bitmap;
                             stream.close();
                         }
                     }catch(Exception e){
