@@ -36,12 +36,6 @@ public class MainActivity extends GeneralActivity {
         boolean isColdStart = MainApplication.INSTANCE.isNew();
         super.onCreate(savedInstanceState);
 
-        // 测试某个 Activity
-        if (BuildConfig.DEBUG) {
-            boolean canEnterTest = testMyActivity();
-            if (canEnterTest) return;
-        }
-
         // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
@@ -82,6 +76,16 @@ public class MainActivity extends GeneralActivity {
         if (!checkAccount()) return;
         Attribute.QQ = prefGeneral.getString("loginUserName", "");
         initAccount();
+
+        // 测试某个 Activity
+        if (BuildConfig.DEBUG) {
+            boolean canEnterTest = testMyActivity();
+            if (canEnterTest) {
+                isScreenInitialized = true;
+                return;
+            }
+        }
+
         initScreen();
         isScreenInitialized = true;
     }
