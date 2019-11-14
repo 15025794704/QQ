@@ -3,16 +3,13 @@ package com.aclass.android.qq;
 import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -22,7 +19,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -30,8 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
@@ -42,7 +36,6 @@ import com.aclass.android.qq.common.AssetsOperation;
 import com.aclass.android.qq.common.DisplayUtil;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
-import com.aclass.android.qq.custom.control.MyEditText;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
@@ -57,7 +50,7 @@ import java.net.InetAddress;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     private Thread threadStartVideo;
-    private String QQFriend;
+    private String QQFriend="1505249457";
     private TextView titleName;
     private EditText edit;
     private Button btn_send;
@@ -68,15 +61,17 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     private ImageButton micBtn;
     private ImageButton redBtn;
     private ScrollView bottomView;
+    private ScrollView scrollListView;
     private LinearLayout bottomViewContext;
     private LinearLayout bottomEmoji;
+    private LinearLayout linearListView;
 
-    private ListView msgListView;
+    private int load=0;
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.messageToolbarCall: // 语音通话
-                ActivityOpreation.jumpActivity(this,VideoWindowActivity.class,new String[]{"send","1234567890"});
+                ActivityOpreation.jumpActivity(this,VideoWindowActivity.class,new String[]{"send",QQFriend});
                 return true;
             case R.id.messageToolbarInfo: // 聊天详情
                 return true;
@@ -105,7 +100,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         setContentView(R.layout.activity_window_message);
         init();
         click();
-//        startThreadStartVideo();
+        startThreadStartVideo();
         loadEmoji();
         fillPic();
 
@@ -156,11 +151,15 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         redBtn=(ImageButton)findViewById(R.id.message_btn_red);
         cameraBtn=(ImageButton)findViewById(R.id.message_btn_camera);
         bottomEmoji=(LinearLayout)findViewById(R.id.message_bottom_hide_emoji);
-        msgListView=(ListView) findViewById(R.id.message_windos_list);
-
+        linearListView=(LinearLayout)findViewById(R.id.message_windos_list_view);
+        scrollListView=(ScrollView)findViewById(R.id.message_midde_scroll);
         listBtn=new Object[][]{{micBtn,0},{imageBtn,0},{cameraBtn,0},{redBtn,0},{emojiBtn,0}};
 
-        msgListView.setAdapter(new MessageAdapter());
+
+        View view=View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item_right,null);
+        TextView textView=(TextView)view.findViewById(R.id.window_message_list_item_textView);
+        RoundImageView head=(RoundImageView)view.findViewById(R.id.window_message_list_item_head);
+
 
         Screen screen=new Screen(this);
         int h=screen.getposHeight();
@@ -174,29 +173,57 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     }
 
     private void click(){
-        msgListView.setOnTouchListener(new View.OnTouchListener() {
+        linearListView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 bottomView.setVisibility(View.GONE);
                 closeAllBtnBG();
                 hideInputView();
-                return true;
-            }
-        });
-        ((ScrollView)findViewById(R.id.message_midde_scroll)).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                bottomView.setVisibility(View.GONE);
-                closeAllBtnBG();
-                hideInputView();
-                return true;
             }
         });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMsg(edit.getText().toString());
-                edit.setText("");
+                if(edit.getText().toString().equals(""))
+                    return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyDateBase myDateBase=null;
+                        try {
+                            myDateBase = new MyDateBase();
+                            myDateBase.setTimeout(600);
+                            Message msg = new Message();
+                            msg.setSendQQ(Attribute.QQ);
+                            msg.setReceiveNum(QQFriend);
+                            msg.setContext(edit.getText().toString());
+                            myDateBase.UDPsend(new Request(5, "", msg));
+                            myDateBase.receiveACK();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    addMsg(false,edit.getText().toString());
+                                    edit.setText("");
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        catch (Exception e){
+                            ActivityOpreation.updateUI(handler,0x12,"消息未发送成功");
+                            return;
+                        }
+                        finally {
+                            myDateBase.Destory();
+                            myDateBase=null;
+                        }
+                    }
+                }).start();
+
             }
         });
         edit.setOnTouchListener(new View.OnTouchListener() {
@@ -210,15 +237,22 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                edit.setMinHeight(edit.getHeight());
-                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(btn_send.getWidth(),btn_send.getHeight());
-                layoutParams.gravity= Gravity.BOTTOM;
-                btn_send.setLayoutParams(layoutParams);
+                if (load == 0) {
+                    edit.setMinHeight(edit.getHeight());
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(btn_send.getWidth(), btn_send.getHeight());
+                    layoutParams.gravity = Gravity.BOTTOM;
+                    btn_send.setLayoutParams(layoutParams);
+                    load=1;
+                }
             }
         });
         emojiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (load == 0) {
+                    edit.setMinHeight(edit.getHeight());
+                    load=1;
+                }
                 int rs=changeBg(4);
                 if(rs==1) {
                     bottomView.setVisibility(View.VISIBLE);
@@ -284,8 +318,17 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         edit.clearFocus();
     }
 
+    @Override
+    protected void onDestroy(){
+        try {
+            Attribute.mainMessageReceive.stop();
+            Attribute.restartMessageReceive.stop();
+        }catch (Exception e){}
+        super.onDestroy();
+    }
+
     /**
-     * 双击返回键退出
+     * 返回键隐藏
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -325,7 +368,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             return;
         if(v>=7)
             return;
-        int len= DisplayUtil.sp2px(MessageWindowActivity.this,19);
+        int len= DisplayUtil.sp2px(MessageWindowActivity.this,24);
         SpannableString spannableString=new SpannableString(emojiStr);
         Bitmap b=Bitmap.createScaledBitmap(Attribute.emojiList[h][v],len,len,true);
 
@@ -418,10 +461,10 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     private void loadEmoji(){
         AssetsOperation ao=AssetsOperation.getInstance(this);
-        Attribute.emojiList=new Bitmap[19][7];
+        Attribute.emojiList=new Bitmap[20][7];
         try {
-            for (int i = 0; i < 131; i++) {
-                Attribute.emojiList[i/7][i%7] =ao.getImage("emoji/"+(i+1) + ".gif");
+            for (int i = 0; i < 140; i++) {
+                Attribute.emojiList[i/7][i%7] =ao.getImage("emoji/"+i + ".gif");
             }
         }
         catch (Exception e){
@@ -430,22 +473,40 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     }
 
     private void startThreadStartVideo(){
-
-        threadStartVideo=new Thread(new Runnable() {//发送服务器登录信息
+        Attribute.restartMessageReceive=new Thread(new Runnable() {
             @Override
             public void run() {
+                while(true) {
+                    try {
+                        SystemClock.sleep(3*60*1000);
+                        Attribute.mainMessageReceive.stop();
+                    }
+                    catch (Exception e){}
+                    finally {
+                        Attribute.mainMessageReceive.start();
+                    }
+                }
+            }
+        });
+
+        Attribute.restartMessageReceive.start();
+
+      Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
+            @Override
+            public void run() {
+                DatagramSocket receiveSocket;
                 try {
-                    DatagramSocket receiveSocket = new DatagramSocket();
+                    receiveSocket = new DatagramSocket();
                     byte[] buf;
                     User user = new User();
-                    user.setQQNum("1234567890");
+                    user.setQQNum(Attribute.QQ);
                     Request request = new Request(0,"",user);
                     buf=MyDateBase.toByteArray(request);
                     receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
                     DatagramPacket dpReceive;
 
                     while (true) {
-                        buf = new byte[1024*10];
+                        buf = new byte[1024*60];
                         dpReceive = new DatagramPacket(buf, buf.length);
 //                        lock.acquire();
                         receiveSocket.receive(dpReceive);
@@ -453,30 +514,57 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                         if (request.getRequestType() == 8) {
                             if(!Attribute.isInVideo) {
                                 String send = ((Message) request.getObj()).getSendQQ();
-                                ActivityOpreation.jumpActivity(MessageWindowActivity.this, VideoWindowActivity.class, new String[]{"receive", send});
                                 Attribute.friendVideoRequest = request;
+                                ActivityOpreation.jumpActivity(MessageWindowActivity.this, VideoWindowActivity.class, new String[]{"receive", send});
                             }
+                        }
+                        else if(request.getRequestType()==5){
+                            Attribute.friendMessageRequest=request;
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Message msg=(Message) Attribute.friendMessageRequest.getObj();
+                                    addMsg(true,msg.getContext());
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+                                        }
+                                    });
+                                }
+                            });
                         }
 //                        lock.release();
                     }
                 }
                 catch (Exception e){
+                    e.printStackTrace();
                     ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
                 }
             }
         });
 
-        threadStartVideo.start();
+        Attribute.mainMessageReceive.start();
     }
 
     /**
      * 添加消息入列表
      * @param msg
      */
-    private void addMsg(String msg){
-        View view=View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item,null);
-        TextView textView=(TextView)view.findViewById(R.id.window_message_list_item_textView);
-        RoundImageView head=(RoundImageView)view.findViewById(R.id.window_message_list_item_head);
+    private void addMsg(boolean left,String msg){
+        View view;
+        TextView textView;
+        RoundImageView head;
+        if(left==true) {
+            view = View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item, null);
+            textView = (TextView) view.findViewById(R.id.window_message_list_item_textView);
+            head = (RoundImageView) view.findViewById(R.id.window_message_list_item_head);
+        }
+        else{
+            view = View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item_right, null);
+            textView = (TextView) view.findViewById(R.id.window_message_list_item_textView_right);
+            head = (RoundImageView) view.findViewById(R.id.window_message_list_item_head_right);
+        }
         textView.setText("");
         int indexStart=0;
         for(int i=0;i<msg.length();i++){
@@ -497,7 +585,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         if(indexStart<msg.length()){
             textView.append(msg.substring(indexStart,msg.length()));
         }
-        msgListView.addFooterView(view);
+        linearListView.addView(view);
     }
 
     /**

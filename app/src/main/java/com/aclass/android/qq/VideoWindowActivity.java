@@ -71,7 +71,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
             if (msg.what == 0x11) {
-                Bitmap bmp=Attribute.video_bitmap;
+                Bitmap bmp=byte2Bitmap(Attribute.video_bitmap);
                 bmp= MyBitMapOperation.rotateBitmap(bmp,270);
                 bmp=MyBitMapOperation.flipBitmap(bmp);
                 videoView.setImageBitmap(bmp);
@@ -83,9 +83,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 finish();
             }
             else if(msg.what == 0x14){
-                info.setVisibility(View.INVISIBLE);
-            }
-            else if(msg.what == 0x15){
                 info.setVisibility(View.INVISIBLE);
             }
         }
@@ -104,6 +101,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         QQfriend=args[1];
         videoType=args[0];
 
+        Attribute.video_bitmap_send=bitmap2Bytes(BitmapFactory.decodeResource(getResources(),R.drawable.qq));
         init();
         initData();
         set_btn_click();
@@ -136,17 +134,17 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                         byte[] b= receiveVideoDataBase.receiveData();
                         final int port=Integer.parseInt(new String(b));//服务器视频端口
                     ServerPort=port;
-                        ActivityOpreation.updateUI(handler, 0x12, "服务器视频端口"+port);
+                        ActivityOpreation.updateUI(handler, 0x12, "连接成功");
                          ActivityOpreation.updateUI(handler, 0x14, "");//隐藏信息
 
-                        SystemClock.sleep(300);
+                        SystemClock.sleep(1000);
                     receiveVideoDataBase.UDPsend(port,"");
 
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                SystemClock.sleep(300);
                                 addCallBack();
+                                SystemClock.sleep(300);
                                 for(;;) {
                                     if(!Attribute.isInVideo) {
                                         receiveVideoDataBase.Destory();
@@ -158,17 +156,21 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                             }
                         }).start();
 
+                        receiveVideoDataBase.setTimeout(5000);
                         for (; ; ) {
                             if(!Attribute.isInVideo) {
-                                sendVideoDataBase.Destory();
+                                receiveVideoDataBase.Destory();
                                 return;
                             }
-                            Attribute.video_bitmap = (Bitmap) receiveVideoDataBase.receiveObject();
-                            if( Attribute.video_bitmap.getWidth()<=1){
-                                sendVideoDataBase.Destory();
+                            byte[] bt= receiveVideoDataBase.receiveData();
+                            if( bt.length==0){
+                                receiveVideoDataBase.Destory();
                                 Attribute.isInVideo=false;
+                                ActivityOpreation.updateUI(handler, 0x12,"已挂断");
+                                ActivityOpreation.updateUI(handler, 0x13,"");
                                 return;
                             }
+                            Attribute.video_bitmap=bt;
                             ActivityOpreation.updateUI(handler, 0x11, "");
                         }
                 }
@@ -211,7 +213,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             byte[] b= sendVideoDataBase.receiveData();
             final  int port=Integer.parseInt(new String(b));//服务器视频端口
             ServerPort=port;
-            ActivityOpreation.updateUI(handler, 0x12, "好友接受，服务器视频端口"+port);
+            ActivityOpreation.updateUI(handler, 0x12, "搭建连接成功"+port);
             ActivityOpreation.updateUI(handler, 0x14, "");//隐藏信息
 
             sendVideoDataBase.UDPsend(port,"");
@@ -219,31 +221,36 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    SystemClock.sleep(675);
                     addCallBack();
+                    SystemClock.sleep(1375);
                     for(;;) {
                         if(!Attribute.isInVideo) {
                             sendVideoDataBase.Destory();
                             return;
                         }
-                        sendVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
+                        if(Attribute.video_bitmap_send!=null)
+                            sendVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
                         SystemClock.sleep(125);
                     }
 
                 }
             }).start();
 
+            sendVideoDataBase.setTimeout(5000);
             for (; ; ) {
                 if(!Attribute.isInVideo ) {
                     sendVideoDataBase.Destory();
                     return;
                 }
-                Attribute.video_bitmap = (Bitmap) sendVideoDataBase.receiveObject();
-                if( Attribute.video_bitmap.getWidth()<=1){
+                byte[] bt= sendVideoDataBase.receiveData();
+                if( bt.length==0){
                     sendVideoDataBase.Destory();
                     Attribute.isInVideo=false;
+                    ActivityOpreation.updateUI(handler, 0x12,"已挂断");
+                    ActivityOpreation.updateUI(handler, 0x13,"");
                     return;
                 }
+                Attribute.video_bitmap=bt;
                 ActivityOpreation.updateUI(handler, 0x11,"");
             }
         }
@@ -258,7 +265,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             @Override
             public void onClick(View v) {
                 //发送断开请求
-                Attribute.isInVideo=false;
                 close();
             }
         });
@@ -302,10 +308,21 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             @Override
             public void run() {
                 try {
-                    Bitmap b=Attribute.video_bitmap_send;
-                    b.setWidth(1);
-                    b.setHeight(1);
-                    sendVideoDataBase.UDPsend(ServerPort,b);
+                    if(sendVideoDataBase!=null) {
+                        sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                        SystemClock.sleep(30);
+                        sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                    }
+                    if(receiveVideoDataBase!=null) {
+                        receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                        SystemClock.sleep(30);
+                        receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                    }
+                    Attribute.isInVideo=false;
+                    if (videoThread != null)
+                        videoThread.stop();
+                    if(sendVideoThread!=null)
+                        sendVideoThread.stop();
                 }
                 catch (Exception e){
                 }
@@ -418,11 +435,9 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                                 return;
                             }
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 30, stream);
+                            image.compressToJpeg(new Rect(0, 0, size.width,size.height), 16, stream);
                             byte[] b=stream.toByteArray();
-                            Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
-                            Bitmap bitmap=Bitmap.createScaledBitmap(bmp,600,900,true);
-                            Attribute.video_bitmap_send=bitmap;
+                            Attribute.video_bitmap_send=b;
                             stream.close();
                         }
                     }catch(Exception e){
@@ -481,4 +496,13 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
 
+    private byte[] bitmap2Bytes(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return baos.toByteArray();
+    }
+
+    private Bitmap byte2Bitmap(byte[] data) {
+        return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
 }

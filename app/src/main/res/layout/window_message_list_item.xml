@@ -3,9 +3,12 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="top"
+    android:paddingRight="52dp"
+    android:paddingTop="18dp"
     android:layout_height="match_parent">
 
     <com.aclass.android.qq.custom.control.RoundImageView
+        android:layout_marginRight="2dp"
         android:id="@+id/window_message_list_item_head"
         android:layout_width="40dp"
         app:type="circle"

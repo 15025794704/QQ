@@ -2,6 +2,7 @@ package com.aclass.android.qq.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.aclass.android.qq.entity.*;
 
@@ -58,6 +59,10 @@ public class MyDateBase {
 		}
 	}
 
+	public DatagramSocket getSokect(){
+		return socket;
+	}
+
 	public void setTimeout(int timeout){
 		try {
 			socket.setSoTimeout(timeout);//超时
@@ -85,6 +90,16 @@ public class MyDateBase {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public  void receiveACK() throws IOException {
+		byte[] b=new byte[1024];
+		DatagramPacket packet=new DatagramPacket(b,b.length);
+			socket.receive(packet);
+			byte[] data=new byte[packet.getLength()];
+			for(int i=0;i<packet.getLength();i++)
+				data[i]=b[i];
+			sendAddress=packet.getSocketAddress();
 	}
 
 	public SocketAddress getSendAddress(){
@@ -199,6 +214,7 @@ public class MyDateBase {
 			DatagramPacket sendpacket=new DatagramPacket(data, data.length,InetAddress.getByName(ip),port);
 			socket.send(sendpacket);
 		} catch (Exception e) {
+			Log.e("长度",data.length+"");
 			e.printStackTrace();
 		}
 	}
