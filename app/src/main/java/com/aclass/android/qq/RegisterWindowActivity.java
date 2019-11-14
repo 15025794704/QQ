@@ -1,10 +1,8 @@
 package com.aclass.android.qq;
 
-import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,13 +10,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RegisterWindowActivity extends AppCompatActivity {
+public class RegisterWindowActivity extends GeneralActivity {
     EditText new_account;
     EditText new_pwd;
     EditText again_pwd;
@@ -36,8 +35,6 @@ public class RegisterWindowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_register);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.hide();
 
           operation();
 
@@ -70,29 +67,21 @@ public class RegisterWindowActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //从闪屏界面跳转到首界面
-                                Intent intent = new Intent(RegisterWindowActivity.this, LoginWindowActivity.class);
-                                startActivity(intent);
                                 finish();
                             }
                         }, 5000);//延迟5S后发送handler信息
-
-
-
                     }
                     else
                     {
                         Toast.makeText(RegisterWindowActivity.this,"该qq账号已存在",Toast.LENGTH_SHORT).show();
-
                     }
-
-
-
-
-
                 }
             }
         });
+    }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
     }
 
     private TimerTask getTask()

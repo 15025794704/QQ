@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -47,9 +48,17 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
         if (v == null) return;
         switch (v.getId()){
             case R.id.settingsAccountsLogOut:
+                logOut();
                 break;
             case R.id.settingsAccountsQuit:
                 break;
         }
+    }
+
+    private void logOut(){
+        getSharedPreferences("GeneralPrefs", MODE_PRIVATE).edit().putBoolean("isLogin", false).apply();
+        Toast.makeText(this, "You are logged out", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
+        finish();
     }
 }

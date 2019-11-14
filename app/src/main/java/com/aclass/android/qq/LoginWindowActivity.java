@@ -2,23 +2,20 @@ package com.aclass.android.qq;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.StrictMode;
-import android.provider.Settings;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.aclass.android.qq.entity.Entity;
+import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
-import com.aclass.android.qq.main.MainFragment;
-import com.aclass.android.qq.main.contacts.MainContactsFragment;
+import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.tools.MyDateBase;
 
-public class LoginWindowActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginWindowActivity extends GeneralActivity implements View.OnClickListener {
    EditText login_account;
     EditText login_password;
     Button user_register_button;
@@ -31,8 +28,6 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_window_login);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.hide();
 
         login_account= findViewById(R.id.account_editText);
         login_password= findViewById(R.id.pwd_editText);
@@ -41,6 +36,11 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
         initWidget();
 
     }
+
+    @Override
+    protected void consumeInsets(Rect insets) {
+    }
+
     private void initWidget() {
 
         user_login_button.setOnClickListener( this);
@@ -131,11 +131,9 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
                 // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
                 setResult(RESULT_OK, data);
                 //跳转到主界面，登录成功的状态传递到 主页面 中
-                startActivity(new Intent(LoginWindowActivity.this, MainContactsFragment.class));
+                startActivity(new Intent(LoginWindowActivity.this, MainActivity.class));
                 //销毁登录界面
-                LoginWindowActivity.this.finish();
-
-
+                finish();
             }
             else
             {
@@ -156,8 +154,8 @@ public class LoginWindowActivity extends AppCompatActivity implements View.OnCli
     保存登录状态和登录用户名(账号)到SharedPreferences中
      */
     private void saveLoginStatus(boolean status,String account) {
-        //loginInfo表示文件名 ,系统自动存成loginInfo.xml  SharedPreferences sp=getSharedPreferences("loginInfo", MODE_PRIVATE);
-        SharedPreferences sp = getSharedPreferences("loginInfo",MODE_PRIVATE);
+        // GeneralPrefs 表示文件名 ,系统自动存成 GeneralPrefs.xml  SharedPreferences sp=getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         //获取编辑器
         SharedPreferences.Editor editor = sp.edit();
         //存入boolean类型的登录状态

@@ -1,7 +1,6 @@
 package com.aclass.android.qq.settings;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +11,9 @@ import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivitySettingsBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
-import com.aclass.android.qq.tools.MyDateBase;
 
 public class SettingsActivity extends GeneralActivity {
+    private static int REQUEST_ACCOUNTS = 1;
     // DataBinding 对象
     private ActivitySettingsBinding mViews;
 
@@ -35,20 +34,12 @@ public class SettingsActivity extends GeneralActivity {
         mViews.settingsAccounts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, SettingsAccountsActivity.class));
+                startActivityForResult(new Intent(SettingsActivity.this, SettingsAccountsActivity.class), REQUEST_ACCOUNTS);
             }
         });
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyDateBase dateBase = new MyDateBase();
-
-                final User myAccount = dateBase.getUser("9097138199");
-                if (myAccount == null) return;
-                final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
-                Attribute.currentAccount = myAccount;
-                Attribute.currentAccountProfilePhoto = profilePhoto;
-
                 final User currentAccount = Attribute.currentAccount;
                 runOnUiThread(new Runnable() {
                     @Override
@@ -67,5 +58,14 @@ public class SettingsActivity extends GeneralActivity {
         toolbar.setPadding(toolbar.getPaddingStart(), insets.top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
         LinearLayout container = mViews.settingsContainer;
         container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 退出账号
+        if (requestCode == REQUEST_ACCOUNTS && resultCode == RESULT_OK){
+            finish();
+        }
     }
 }
