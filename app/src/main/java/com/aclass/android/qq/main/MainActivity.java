@@ -25,7 +25,7 @@ import com.aclass.android.qq.tools.MyDateBase;
 public class MainActivity extends GeneralActivity {
     private static int REQUEST_SPLASH = 1;
 
-    private SharedPreferences prefLogin;
+    private SharedPreferences prefGeneral;
     private boolean isScreenInitialized = false;
 
     private ActivityMainBinding mViews;
@@ -43,7 +43,7 @@ public class MainActivity extends GeneralActivity {
         }
 
         // 默认的 MainActivity
-        prefLogin = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
+        prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
             startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
             return;
@@ -80,14 +80,14 @@ public class MainActivity extends GeneralActivity {
 
     private void init(){
         if (!checkAccount()) return;
-        Attribute.QQ = prefLogin.getString("loginUserName", "");
+        Attribute.QQ = prefGeneral.getString("loginUserName", "");
         initAccount();
         initScreen();
         isScreenInitialized = true;
     }
 
     private boolean checkAccount(){
-        boolean isLoggedIn = prefLogin.getBoolean("isLogin", false);
+        boolean isLoggedIn = prefGeneral.getBoolean("isLogin", false);
         if (!isLoggedIn){
             startActivity(new Intent(this, LoginWindowActivity.class));
             finish();
