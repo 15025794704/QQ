@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="top"
+    android:layout_height="match_parent">
+
+    <com.aclass.android.qq.custom.control.RoundImageView
+        android:id="@+id/window_message_list_item_head"
+        android:layout_width="40dp"
+        app:type="circle"
+        android:src="@color/color_tool_bar_blue_start"
+        android:layout_height="40dp" />
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="TextViewssfsfasf\n测试"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:background="@drawable/box_yellow_bg"
+            android:id="@+id/window_message_list_item_textView"
+             />
+    </RelativeLayout>
+
+</LinearLayout>

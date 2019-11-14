@@ -41,15 +41,24 @@
         </LinearLayout>
 
             <ScrollView
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 android:id="@+id/message_midde_scroll"
                 android:background="#addfd1"
                 android:layout_weight="1"
+                android:fillViewport="true"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
-                    <ListView
-                        android:id="@+id/message_windos_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                android:layout_height="wrap_content">
+                       <ListView
+                           android:clickable="false"
+                           android:divider="#00000000"
+                           android:dividerHeight="18dp"
+                           android:headerDividersEnabled="false"
+                           android:footerDividersEnabled="false"
+                           android:id="@+id/message_windos_list"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           />
 
             </ScrollView>
         <LinearLayout
@@ -77,11 +86,11 @@
                     android:paddingBottom="6dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/rectangle_round"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="5.5"
-                    android:gravity="left"
+                    android:gravity="center|left"
                     android:lineSpacingMultiplier="1.0"
                     android:maxLength="100"
                     android:id="@+id/editText_message_send" />
@@ -154,6 +163,29 @@
                 android:background="@color/color_white"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_gravity="center"
+                            android:text="新的版本即将发布，敬请期待。。。"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </FrameLayout>
+                    <LinearLayout
+                        android:background="@color/color_white"
+                        android:id="@+id/message_bottom_hide_emoji"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </LinearLayout>
+                </RelativeLayout>
 
             </ScrollView>
         </LinearLayout>
