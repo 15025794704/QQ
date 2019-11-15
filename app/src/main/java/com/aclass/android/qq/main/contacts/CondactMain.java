@@ -91,10 +91,11 @@ public class CondactMain extends AppCompatActivity {
            }
 
         }
-
+/*
         //设置悬浮头部VIEW
         explistview.setHeaderView(getLayoutInflater().inflate(R.layout.group_head,
                 explistview, false));
+                */
         adapter = new PinnedHeaderExpandableAdapter(groupList, getApplicationContext(),explistview);
         explistview.setAdapter(adapter);
 
@@ -118,8 +119,8 @@ public class CondactMain extends AppCompatActivity {
                 explistview.collapseGroup(expandFlag);
                 // 展开被选的group
                 explistview.expandGroup(groupPosition);
-                // 设置被选中的group置于顶端
-                explistview.setSelectedGroup(groupPosition);
+               /* // 设置被选中的group置于顶端
+                explistview.setSelectedGroup(groupPosition);*/
                 expandFlag = groupPosition;
             }
             return true;

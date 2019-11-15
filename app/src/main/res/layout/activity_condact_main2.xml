@@ -4,37 +4,78 @@
     android:id="@+id/activity_condact_main2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="com.aclass.android.qq.main.contacts.CondactMain">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="7"
+        android:layout_weight="8"
+        android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            tools:ignore="NestedWeights">
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/shape1"
+                ></SearchView>
+        </LinearLayout>
+       <RelativeLayout
+           android:layout_height="match_parent"
+           android:layout_width="match_parent"
+           android:layout_weight="6"
+           >
+        <TextView
+           android:id="@+id/newFriendMark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/s1"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="RtlHardcoded,SpUsage"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_jiantou"
+
+
+            />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
     <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:layout_weight="3"
+         android:layout_weight="2"
          >
-    <com.aclass.android.qq.main.contacts.PinnedHeaderExpandableListView
-        android:id="@+id/explistview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="0.0dip"
-        android:cacheColorHint="#00000000"
-        android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="false"
-        android:fastScrollEnabled="false"
-        android:footerDividersEnabled="true"
-        android:groupIndicator="@null"
-        android:scrollbars="vertical"
-        android:scrollingCache="true"
 
-        tools:ignore="RtlHardcoded" />
-     </LinearLayout>
+        <com.aclass.android.qq.main.contacts.PinnedHeaderExpandableListView
+            android:id="@+id/explistview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0.0dip"
+            android:cacheColorHint="#00000000"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="false"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="true"
+            android:groupIndicator="@null"
+            android:scrollbars="vertical"
+            android:scrollingCache="true"
+
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
 </LinearLayout>

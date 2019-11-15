@@ -5,12 +5,14 @@
     android:layout_height="60dip"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
-    <com.aclass.android.qq.main.contacts.CricleImageView
+    <com.aclass.android.qq.custom.control.RoundImageView
         android:id="@+id/child_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_marginStart="16dip"
+        android:layout_marginTop="5dip"
+        app:type="circle"
+         app:radius="3dip"
         android:src="@null"
         android:contentDescription=""
         tools:ignore="RtlHardcoded,RtlSymmetry" />

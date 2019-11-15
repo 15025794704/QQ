@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -40,7 +42,7 @@ public class MainActivity extends GeneralActivity {
         // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
-            startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);// SplashActivity.class
+            startActivityForResult(new Intent(this,SplashActivity.class), REQUEST_SPLASH);// SplashActivity.class
             return;
         }
 
@@ -52,6 +54,7 @@ public class MainActivity extends GeneralActivity {
      */
     @Override
     protected void consumeInsets(Rect insets) {
+
     }
 
     @Override
