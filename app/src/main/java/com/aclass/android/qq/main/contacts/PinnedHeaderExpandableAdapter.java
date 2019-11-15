@@ -65,11 +65,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         tv_beizhu.setText(contentInfo.getBeiZhu());
         if(contentInfo.getIsHide()==0)
         {
-            isZaiXian="在线";
+            isZaiXian="[在线]";
         }
         else
         {
-            isZaiXian="离线";
+            isZaiXian="[离线]";
         }
 
         tv_isHide.setText(isZaiXian);
@@ -119,10 +119,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         ImageView iv = (ImageView)view.findViewById(R.id.groupIcon);
 
         if (isExpanded) {
-            iv.setImageResource(R.drawable.btn_browser);
+            iv.setImageResource(R.drawable.btn_browser2);
         }
         else{
-            iv.setImageResource(R.drawable.btn_browser2);
+            iv.setImageResource(R.drawable.btn_browser);
         }
 
         TextView text = (TextView)view.findViewById(R.id.groupto);

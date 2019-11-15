@@ -39,7 +39,7 @@ public class MainActivity extends GeneralActivity {
         // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
-            startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
+            startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);//
             return;
         }
 
