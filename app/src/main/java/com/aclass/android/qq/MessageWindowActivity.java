@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.icu.text.DisplayContext;
+import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -42,12 +45,26 @@ import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Proxy;
 import java.util.Date;
+import java.util.List;
+
+import kotlin.jvm.Throws;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     private String QQFriend="1505249457";
@@ -111,10 +128,75 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                     Manifest.permission.WAKE_LOCK,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1 );
         }
+        loadMessageList();
     }
     @Override
     protected void consumeInsets(Rect insets) {
 //        ((LinearLayout)findViewById(R.id.LinearLayout_message_window)).setPadding(0,insets.top,0,0);
+    }
+
+    protected  void loadMessageList(){
+        try {
+            //读取json数据
+            FileInputStream fis = checkAndcreateNewFile(QQFriend);
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            String json=new String(data,0,data.length);
+            json="["+json.substring(0,json.length()-1)+"]";
+            //转换json数据
+            Gson gson = new Gson();
+            Type listType=new TypeToken<List<Message>>(){}.getType();
+            List<Message> msgList = gson.fromJson(json, listType);
+
+            //添加历史msg
+            if(msgList!=null)
+                for(Message msg:msgList) {
+                    if (msg.getReceiveNum().equals(QQFriend))
+                        addMsg(true, msg.getContext());
+                    else
+                        addMsg(false, msg.getContext());
+                }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected FileInputStream checkAndcreateNewFile(String QQFriend){
+        try {
+            FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
+            return fis;
+        }
+        catch (FileNotFoundException e){
+            try {
+                File path = this.getFilesDir();
+                File dir=new File(path.toString(),"message/");
+                if(!dir.exists()){
+                    dir.mkdirs();
+                }
+                File file=new File(dir.toString(), QQFriend + ".json");
+                file.createNewFile();
+                FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
+                return fis;
+            }
+            catch (Exception e2){}
+        }
+        return null;
+    }
+
+    protected void writeFile(Message msg){
+        try {
+            Log.d("杰森","123");
+            System.out.print("13123");
+            FileOutputStream fos = openFileOutput("message/"+ QQFriend + ".json",MODE_APPEND);
+            String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
+                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
+            fos.write(json.getBytes());
+            fos.close();
+        }
+        catch (IOException e){
+            Log.e("错误",e.getMessage());
+        }
     }
 
     protected void init(){
@@ -213,9 +295,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                     });
                                 }
                             });
+                            writeFile(msg);
                         }
                         catch (Exception e){
                             ActivityOpreation.updateUI(handler,0x12,"消息未发送成功");
+                            e.printStackTrace();
                             return;
                         }
                         finally {
@@ -525,6 +609,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                 @Override
                                 public void run() {
                                     Message msg=(Message) Attribute.friendMessageRequest.getObj();
+                                    writeFile(msg);
                                     addMsg(true,msg.getContext());
                                     handler.post(new Runnable() {
                                         @Override

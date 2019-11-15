@@ -2,6 +2,9 @@ package com.aclass.android.qq;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+
+import com.aclass.android.qq.common.MyButtonOperation;
 
 public class MainSideActivity extends AppCompatActivity {
 
@@ -9,5 +12,7 @@ public class MainSideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_side);
+        Button vipbtn=(Button)findViewById(R.id.vipBtn);
+        MyButtonOperation.changeButtonBG(this,vipbtn,R.drawable.vip_btn_down,R.drawable.vip_btn_up);
     }
 }

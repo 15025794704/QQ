@@ -50,6 +50,7 @@
         <activity android:name=".RegisterWindowActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".main.contacts.CondactMain"></activity>
+        <activity android:name=".MainSideActivity"></activity>
     </application>
 
 </manifest>

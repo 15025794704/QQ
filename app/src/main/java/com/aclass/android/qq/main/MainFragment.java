@@ -76,6 +76,7 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         });
         mViews.mainToolbar.setOnMenuItemClickListener(this);
         mViews.mainToolbar.setOverflowIcon(getContext().getDrawable(R.drawable.ic_add_24));
+        mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
         // 显示消息页面
