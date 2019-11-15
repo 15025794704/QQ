@@ -20,7 +20,7 @@ public class SplashActivity extends GeneralActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         imageView= (ImageView) findViewById(R.id.img_show);
-        animationDrawable= (AnimationDrawable) imageView.getBackground();
+        animationDrawable= (AnimationDrawable) imageView.getDrawable();
         animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
 

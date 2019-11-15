@@ -47,9 +47,9 @@ import com.aclass.android.qq.tools.MyDateBase;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Date;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
-    private Thread threadStartVideo;
     private String QQFriend="1505249457";
     private TextView titleName;
     private EditText edit;
@@ -197,6 +197,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                             msg.setSendQQ(Attribute.QQ);
                             msg.setReceiveNum(QQFriend);
                             msg.setContext(edit.getText().toString());
+                            msg.setTime(new Date());
                             myDateBase.UDPsend(new Request(5, "", msg));
                             myDateBase.receiveACK();
                             handler.post(new Runnable() {
@@ -588,30 +589,4 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         linearListView.addView(view);
     }
 
-    /**
-     * 适配器
-     */
-    private class MessageAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return "12";
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view=View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item,null);
-
-            return view;
-        }
-    }
 }
