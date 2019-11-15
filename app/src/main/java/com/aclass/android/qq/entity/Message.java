@@ -16,6 +16,7 @@ public class Message extends Entity implements Serializable, Parcelable {
 	private String receiveNum;//接受者号码（qq号，群号）
 	private String context;//内容
 	private Date time;//时间
+	private String sendTime;//发送时间，用字符串比date方便存储
 	private int state;//状态（已接收到>0 ,未接收到=0）
 
 	public Message(){}
@@ -94,5 +95,13 @@ public class Message extends Entity implements Serializable, Parcelable {
 		dest.writeString(receiveNum);
 		dest.writeString(context);
 		dest.writeInt(state);
+	}
+
+	public String getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime) {
+		this.sendTime = sendTime;
 	}
 }

@@ -2,6 +2,7 @@ package com.aclass.android.qq.common;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +34,28 @@ public class MyButtonOperation {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     SystemClock.sleep(100);
                     ((ImageButton) v).setImageDrawable(context.getResources().getDrawable(srcUp));
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * 设置button按动改变button背景
+     *设置Button按下时的填充资源 和 弹起时的填充资源
+     * @param context  “填this即可”
+     * @param srcDown  按下的资源文件
+     * @param srcUp  弹起的资源文件
+     */
+    public static void changeButtonBG(final Context context,final Button button, final int srcDown, final int srcUp) {
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    button.setBackground(context.getResources().getDrawable(srcUp));
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    SystemClock.sleep(100);
+                    button.setBackground(context.getResources().getDrawable(srcUp));
                 }
                 return false;
             }
