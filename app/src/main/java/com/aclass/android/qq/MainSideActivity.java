@@ -13,6 +13,6 @@ public class MainSideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_side);
         Button vipbtn=(Button)findViewById(R.id.vipBtn);
-        MyButtonOperation.changeButtonBG(this,vipbtn,R.drawable.vip_btn_down,R.drawable.vip_btn_up);
+        MyButtonOperation.changeButtonBG(this,vipbtn,R.drawable.main_side_btn_down,R.drawable.main_side_btn_up);
     }
 }

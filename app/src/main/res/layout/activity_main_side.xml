@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/message"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:background="#000000"
 
         >
@@ -19,7 +19,7 @@
     <RelativeLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="400dp"
         android:layout_below="@id/message"
         android:background="#FFFFFF"
         >
@@ -37,49 +37,67 @@
                 android:layout_weight="1"
                 android:text="了解会员特权"
                 android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
 
-            <TextView
-                android:id="@+id/money"
+            <Button
+                android:id="@+id/moneyBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#8A4DB3"
+                android:text="我的钱包"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
-            <TextView
-                android:id="@+id/decoration"
+
+            <Button
+                android:id="@+id/decorationBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#3CC4C4"
+                android:text="我的个性装扮"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
-            <TextView
-                android:id="@+id/collection"
+
+            <Button
+                android:id="@+id/collectionBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#8A4DB3"
+                android:text="我的收藏"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
-            <TextView
-                android:id="@+id/pictures"
+
+            <Button
+                android:id="@+id/picturesBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#3CC4C4"
+                android:text="我的相册"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
-            <TextView
-                android:id="@+id/file"
+
+            <Button
+                android:id="@+id/fileBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#8A4DB3"
+                android:text="我的文件"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
-            <TextView
-                android:id="@+id/noDate"
+
+            <Button
+                android:id="@+id/noDateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#3CC4C4"
+                android:text="免流量特权"
+                android:gravity="clip_horizontal"
+                style="@style/AppTheme.SimpleOption"/>
                 />
 
         </LinearLayout>
