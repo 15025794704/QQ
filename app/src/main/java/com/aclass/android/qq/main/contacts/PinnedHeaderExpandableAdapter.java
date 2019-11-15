@@ -127,7 +127,19 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         }
 
         TextView text = (TextView)view.findViewById(R.id.groupto);
+        TextView groupFriendIsHide=view.findViewById(R.id.group_FriendIsHide);//好友在线人数
         text.setText(list.get(groupPosition).getQQGroupName());
+        int counts=list.get(groupPosition).getInfo().size();//总人数
+        int zaixian=0;
+        for(int i=0;i<list.get(groupPosition).getInfo().size();i++)
+        {
+            if(list.get(groupPosition).getInfo().get(i).getIsHide()==0)
+            {
+                zaixian++;
+            }
+        }
+        groupFriendIsHide.setText(zaixian+"/"+counts);
+
         return view;
     }
 //当子条目ID相同时是否复用
