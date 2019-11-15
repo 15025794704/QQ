@@ -336,6 +336,17 @@ public class MyDateBase {
 		else
 			return null;
 	}
+	/*
+	* 通过组名获取好友列表
+	*
+	* */
+	public List<Friend> getFriendsByqqGroup(String qqGroupName)
+	{
+		Request request=new Request(1,"select * from T_friends where QQgroup='"+qqGroupName+"'",new Friend());
+		UDPsend(request);
+		List<Friend> list= (List<Friend>) receiveObject();
+		return list;
+	}
 	
 	/**
 	 * 通过qq号获取未接收的离线消息实体集合
