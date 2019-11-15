@@ -4,12 +4,13 @@
     android:id="@+id/activity_main_side"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aclass.android.qq.MainSideActivity">
+    tools:context="com.aclass.android.qq.MainSideActivity"
+    android:padding="15dp">
 
     <RelativeLayout
         android:id="@+id/message"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:background="#000000"
 
         >
@@ -27,16 +28,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#ff30"
             >
 
-            <TextView
-                android:id="@+id/vip"
+            <Button
+                android:id="@+id/vipBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#3CC4C4"
+                android:text="了解会员特权"
+                android:gravity="clip_horizontal"
                 />
+
             <TextView
                 android:id="@+id/money"
                 android:layout_width="match_parent"

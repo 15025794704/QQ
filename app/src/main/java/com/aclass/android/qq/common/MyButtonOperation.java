@@ -52,7 +52,7 @@ public class MyButtonOperation {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    button.setBackground(context.getResources().getDrawable(srcUp));
+                    button.setBackground(context.getResources().getDrawable(srcDown));
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     SystemClock.sleep(100);
                     button.setBackground(context.getResources().getDrawable(srcUp));
