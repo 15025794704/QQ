@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.entity.Friend;
@@ -47,7 +48,7 @@ public class CondactMain extends AppCompatActivity {
         List<Friend> specificFriends ;
 
         MyDateBase myDateBase=new MyDateBase();
-        List<Friend> friends=myDateBase.getFriends("1234567890");
+        List<Friend> friends=myDateBase.getFriends("0987654321");
          for(int i=0;i<friends.size();i++) {
 
               String GroupName = friends.get(i).getQQgroup();

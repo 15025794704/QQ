@@ -62,6 +62,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView tv_beizhu= (TextView) view.findViewById(R.id.child_beizhu);
         TextView tv_isHide= (TextView) view.findViewById(R.id.child_isHide);
         TextView tv_qianming= (TextView) view.findViewById(R.id.child_qianming);
+        ImageView iv_icon=view.findViewById(R.id.child_icon);
         tv_beizhu.setText(contentInfo.getBeiZhu());
         if(contentInfo.getIsHide()==0)
         {
@@ -74,7 +75,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
         tv_isHide.setText(isZaiXian);
         tv_qianming.setText(contentInfo.getQianming());
-
+       iv_icon.setImageBitmap(contentInfo.getIcon());
 
         return view;
     }

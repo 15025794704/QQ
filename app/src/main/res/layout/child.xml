@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dip"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
-    <ImageView
+    <com.aclass.android.qq.main.contacts.CricleImageView
         android:id="@+id/child_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:paddingLeft="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
         android:src="@null"
         android:contentDescription=""
         tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -16,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
-        >
+        android:layout_marginLeft="10dp"
+        tools:ignore="RtlHardcoded">
 
         <TextView
             android:id="@+id/child_beizhu"
@@ -26,7 +28,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="5dip"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_weight="1"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -37,15 +39,15 @@
             android:orientation="horizontal"
             android:paddingTop="5dip"
             >
+
             <TextView
                 android:id="@+id/child_isHide"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-
                 android:width="50dp"
                 android:layout_weight="5"
                 tools:ignore="NestedWeights,RtlHardcoded,RtlSymmetry" />
+
             <TextView
                 android:id="@+id/child_qianming"
                 android:layout_width="match_parent"
