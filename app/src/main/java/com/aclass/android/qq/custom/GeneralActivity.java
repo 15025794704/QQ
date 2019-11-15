@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 
@@ -15,7 +14,6 @@ import android.view.WindowManager;
  * 使用方法：继承这个类并实现 {@link #consumeInsets(Rect) consumeInsets} 方法
  */
 public abstract class GeneralActivity extends AppCompatActivity {
-    private View mRootView = null;
     private Rect mWindowInsets;
 
     public Rect getWindowInsets(){
@@ -29,29 +27,6 @@ public abstract class GeneralActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         applyEdgeToEdge();
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        applyInsets();
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        applyInsets();
-    }
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
-        applyInsets();
-    }
-
-    @Override
-    public void addContentView(View view, ViewGroup.LayoutParams params) {
-        super.addContentView(view, params);
         applyInsets();
     }
 
@@ -68,9 +43,7 @@ public abstract class GeneralActivity extends AppCompatActivity {
      */
     private void applyInsets(){
         View root = getWindow().getDecorView().getRootView();
-        if (root == mRootView) return;
-        mRootView = root;
-        mRootView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+        root.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                 mWindowInsets = new Rect(

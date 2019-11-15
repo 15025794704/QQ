@@ -17,11 +17,13 @@ import java.util.List;
  */
 
 public class Attribute {
-    public static String QQ="1234567890";
+    public static String QQ;
     // 当前账号
     public static User currentAccount;
     // 当前账号头像
     public static Bitmap currentAccountProfilePhoto;
+    // 当前账号是否完成初始化
+    public static boolean isAccountInitialized = false;
     public static List<Friend> friendList;
     public static Request friendVideoRequest;
     public static Request friendMessageRequest;
