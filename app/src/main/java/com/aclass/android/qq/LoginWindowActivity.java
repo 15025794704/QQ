@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.main.MainActivity;
+import com.aclass.android.qq.main.contacts.CondactMain;
 import com.aclass.android.qq.tools.MyDateBase;
 
 public class LoginWindowActivity extends GeneralActivity implements View.OnClickListener {
@@ -131,7 +132,7 @@ public class LoginWindowActivity extends GeneralActivity implements View.OnClick
                 // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
                 setResult(RESULT_OK, data);
                 //跳转到主界面，登录成功的状态传递到 主页面 中
-                startActivity(new Intent(LoginWindowActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginWindowActivity.this, MainActivity.class));/* MainActivity.class*/
                 //销毁登录界面
                 finish();
             }

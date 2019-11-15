@@ -14,6 +14,7 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.main.contacts.CondactMain;
 import com.aclass.android.qq.tools.MyDateBase;
 
 /**
@@ -39,7 +40,7 @@ public class MainActivity extends GeneralActivity {
         // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
-            startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);
+            startActivityForResult(new Intent(this, SplashActivity.class), REQUEST_SPLASH);// SplashActivity.class
             return;
         }
 

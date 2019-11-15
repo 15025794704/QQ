@@ -62,19 +62,20 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView tv_beizhu= (TextView) view.findViewById(R.id.child_beizhu);
         TextView tv_isHide= (TextView) view.findViewById(R.id.child_isHide);
         TextView tv_qianming= (TextView) view.findViewById(R.id.child_qianming);
+        ImageView iv_icon=view.findViewById(R.id.child_icon);
         tv_beizhu.setText(contentInfo.getBeiZhu());
         if(contentInfo.getIsHide()==0)
         {
-            isZaiXian="在线";
+            isZaiXian="[在线]";
         }
         else
         {
-            isZaiXian="离线";
+            isZaiXian="[离线]";
         }
 
         tv_isHide.setText(isZaiXian);
         tv_qianming.setText(contentInfo.getQianming());
-
+       iv_icon.setImageBitmap(contentInfo.getIcon());
 
         return view;
     }
@@ -119,14 +120,26 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         ImageView iv = (ImageView)view.findViewById(R.id.groupIcon);
 
         if (isExpanded) {
-            iv.setImageResource(R.drawable.btn_browser);
+            iv.setImageResource(R.drawable.btn_browser2);
         }
         else{
-            iv.setImageResource(R.drawable.btn_browser2);
+            iv.setImageResource(R.drawable.btn_browser);
         }
 
         TextView text = (TextView)view.findViewById(R.id.groupto);
+        TextView groupFriendIsHide=view.findViewById(R.id.group_FriendIsHide);//好友在线人数
         text.setText(list.get(groupPosition).getQQGroupName());
+        int counts=list.get(groupPosition).getInfo().size();//总人数
+        int zaixian=0;
+        for(int i=0;i<list.get(groupPosition).getInfo().size();i++)
+        {
+            if(list.get(groupPosition).getInfo().get(i).getIsHide()==0)
+            {
+                zaixian++;
+            }
+        }
+        groupFriendIsHide.setText(zaixian+"/"+counts);
+
         return view;
     }
 //当子条目ID相同时是否复用
