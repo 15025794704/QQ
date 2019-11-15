@@ -31,7 +31,6 @@
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/mainBottomNav"
                 android:background="?mColorSurface"
-                app:itemIconTint="?mColorAccent"
                 app:itemTextColor="?mColorOnSurface"
                 app:menu="@menu/bottom_nav_main"
                 android:layout_gravity="bottom"
