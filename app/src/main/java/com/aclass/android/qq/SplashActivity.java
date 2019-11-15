@@ -4,7 +4,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -17,10 +17,11 @@ public class SplashActivity extends GeneralActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_window);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.hide();
-        imageView= (ImageView) findViewById(R.id.img_show);
-        animationDrawable= (AnimationDrawable) imageView.getBackground();
+        // 隐藏状态栏
+        View decor = getWindow().getDecorView();
+        decor.setSystemUiVisibility(decor.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        imageView = (ImageView) findViewById(R.id.img_show);
+        animationDrawable = (AnimationDrawable) imageView.getDrawable();
         animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
 
