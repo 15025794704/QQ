@@ -25,6 +25,11 @@ public class Attribute {
     // 当前账号是否完成初始化
     public static boolean isAccountInitialized = false;
     public static List<Friend> friendList;
+
+
+
+    //*****************************《《《《《《《《《《《《《《《
+    //消息、接收线程专用版
     public static Request friendVideoRequest;
     public static Request friendMessageRequest;
     public static Boolean isInVideo=false;
@@ -35,4 +40,5 @@ public class Attribute {
 
     public static Thread mainMessageReceive;
     public static Thread restartMessageReceive;
+    //*****************************》》》》》》》》》》》》》》》》
 }
