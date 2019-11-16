@@ -1,5 +1,6 @@
 package com.aclass.android.qq.main.contacts;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,17 +27,17 @@ public class CondactMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condact_main2);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.hide();
-        initView();
-        initData();
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) actionBar.hide();
+//        initView();
+//        initData();
     }
 
     /**
      * 初始化VIEW
      */
     private void initView() {
-        explistview = (PinnedHeaderExpandableListView)findViewById(R.id.explistview);
+//        explistview = (PinnedHeaderExpandableListView)findViewById(R.id.explistview);
     }
 
     /**
@@ -96,7 +97,7 @@ public class CondactMain extends AppCompatActivity {
         explistview.setHeaderView(getLayoutInflater().inflate(R.layout.group_head,
                 explistview, false));
                 */
-        adapter = new PinnedHeaderExpandableAdapter(groupList, getApplicationContext(),explistview);
+        adapter = new PinnedHeaderExpandableAdapter(groupList,getApplicationContext(),explistview);
         explistview.setAdapter(adapter);
 
 
