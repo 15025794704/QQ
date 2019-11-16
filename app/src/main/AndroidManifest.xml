@@ -49,13 +49,13 @@
         <activity android:name=".LoginWindowActivity" />
         <activity android:name=".RegisterWindowActivity" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".main.contacts.CondactMain" />
         <activity android:name=".MainSideActivity" />
 
         <service
             android:name=".internet.ReceiveService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
     </application>
 
 </manifest>

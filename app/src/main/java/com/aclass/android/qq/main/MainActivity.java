@@ -16,7 +16,6 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
-import com.aclass.android.qq.main.contacts.CondactMain;
 import com.aclass.android.qq.tools.MyDateBase;
 
 /**

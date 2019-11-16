@@ -3,6 +3,7 @@ package com.aclass.android.qq.main.contacts;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,20 +13,21 @@ import android.widget.ExpandableListView;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 应用“联系人”页面
  * 好友列表等
  */
-public class MainContactsFragment extends Fragment {
-//    private PinnedHeaderExpandableListView explistview;
-    private int expandFlag = -1;//控制列表的展开
+public class MainContactsFragment extends Fragment  {
+ private PinnedHeaderExpandableListView explistView;
     private PinnedHeaderExpandableAdapter adapter;
-
+    private int expandFlag=-1;//控制列表的展开
     public static MainContactsFragment newInstance(){
         return new MainContactsFragment();
     }
@@ -33,29 +35,33 @@ public class MainContactsFragment extends Fragment {
     public MainContactsFragment() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initView();
+       View view =inflater.inflate(R.layout.fragment_main_contacts, container, false);
+      explistView=view.findViewById(R.id.explistview);
         initData();
-        return inflater.inflate(R.layout.fragment_main_contacts, container, false);
+        return view;
     }
-    /**
-     * 初始化VIEW
-     */
-    private void initView() {
-//        explistview = (PinnedHeaderExpandableListView) explistview.findViewById(R.layout.fragment_main_contacts);
-    }
+
+    /*
+    * 初始化适配器
+    * */
+  /*  private void initAdapter(){
+        adapter=new PinnedHeaderExpandableAdapter(groupList,getContext());
+        mElistview.setAdapter(adapter);
+    }*/
 
     /**
      * 初始化数据
      */
     private void initData() {
-        List<GroupTitleInfo> groupList= new ArrayList<>();
+         List<GroupTitleInfo> groupList=new ArrayList<>();
         List<String> list=new ArrayList<>();
         List<Friend> specificFriends ;
 
         MyDateBase myDateBase=new MyDateBase();
-        List<Friend> friends=myDateBase.getFriends("0987654321");
+        List<Friend> friends=myDateBase.getFriends(Attribute.QQ);
         for(int i=0;i<friends.size();i++) {
 
             String GroupName = friends.get(i).getQQgroup();
@@ -98,41 +104,37 @@ public class MainContactsFragment extends Fragment {
             }
 
         }
-/*
-        //设置悬浮头部VIEW
-        explistview.setHeaderView(getLayoutInflater().inflate(R.layout.group_head,
-                explistview, false));
-                */
-//        adapter = new PinnedHeaderExpandableAdapter(groupList,getContext(),explistview);
-//        explistview.setAdapter(adapter);
-
-
+        adapter=new PinnedHeaderExpandableAdapter(groupList,getActivity());
+        explistView.setAdapter(adapter);
     }
 
     class GroupClickListener implements ExpandableListView.OnGroupClickListener {
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v,
                                     int groupPosition, long id) {
-//            if (expandFlag == -1) {
-//                // 展开被选的group
-//                explistview.expandGroup(groupPosition);
-//                // 设置被选中的group置于顶端
-//                explistview.setSelectedGroup(groupPosition);
-//                expandFlag = groupPosition;
-//            } else if (expandFlag == groupPosition) {
-//                explistview.collapseGroup(expandFlag);
-//                expandFlag = -1;
-//            } else {
-//                explistview.collapseGroup(expandFlag);
-//                // 展开被选的group
-//                explistview.expandGroup(groupPosition);
-//               /* // 设置被选中的group置于顶端
-//                explistview.setSelectedGroup(groupPosition);*/
-//                expandFlag = groupPosition;
-//            }
+            if (expandFlag == -1) {
+                // 展开被选的group
+                explistView.expandGroup(groupPosition);
+                // 设置被选中的group置于顶端
+                explistView.setSelectedGroup(groupPosition);
+                expandFlag = groupPosition;
+            } else if (expandFlag == groupPosition) {
+                explistView.collapseGroup(expandFlag);
+                expandFlag = -1;
+            } else {
+                explistView.collapseGroup(expandFlag);
+                // 展开被选的group
+                explistView.expandGroup(groupPosition);
+                // 设置被选中的group置于顶端
+                explistView.setSelectedGroup(groupPosition);
+                expandFlag = groupPosition;
+            }
             return true;
         }
     }
+
+
+
     /*
     * 去重
     * */

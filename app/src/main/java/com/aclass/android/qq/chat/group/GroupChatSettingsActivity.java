@@ -11,6 +11,7 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;
 
+
 /**
  * QQ 群聊天设置页面
  */
