@@ -5,18 +5,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
-import com.aclass.android.qq.R;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
-import com.aclass.android.qq.main.contacts.CondactMain;
 import com.aclass.android.qq.tools.MyDateBase;
 
 /**
