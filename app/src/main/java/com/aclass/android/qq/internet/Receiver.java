@@ -32,12 +32,14 @@ import java.util.ArrayList;
 public class Receiver {
 
     public static void startReceiver(final Context context,final Activity activity){
+        if(Attribute.restartMessageReceive!=null)
+            return;
         Attribute.restartMessageReceive=new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
                     try {
-                        SystemClock.sleep(3*60*1000);
+                        SystemClock.sleep(2*60*1000);
                         Attribute.mainMessageReceive.stop();
                     }
                     catch (Exception e){}
@@ -103,8 +105,8 @@ public class Receiver {
             }
         });
 
-//        Attribute.restartMessageReceive.start();
-//        Attribute.mainMessageReceive.start();
+        Attribute.restartMessageReceive.start();
+        Attribute.mainMessageReceive.start();
     }
 
 

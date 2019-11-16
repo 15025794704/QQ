@@ -38,7 +38,6 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
-import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.tools.MyDateBase;
@@ -51,12 +50,13 @@ import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
-    private String QQFriend="1505249457";
+    private String QQFriend="0987654321";
     private TextView titleName;
     private EditText edit;
     private Button btn_send;
@@ -106,12 +106,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
+                                                                Receiver.startReceiver(this,this);
         init();
         click();
-        startThreadStartVideo();
         loadEmoji();
         fillPic();
-
         //询问获取权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.CAMERA
@@ -120,6 +119,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1 );
         }
         loadMessageList();
+        startMsgDidplayThread();
+        fullScroll();
     }
     @Override
     protected void consumeInsets(Rect insets) {
@@ -562,79 +563,6 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         }
     }
 
-    private void startThreadStartVideo(){
-        Attribute.restartMessageReceive=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try {
-                        SystemClock.sleep(3*60*1000);
-                        Attribute.mainMessageReceive.stop();
-                    }
-                    catch (Exception e){}
-                    finally {
-                        Attribute.mainMessageReceive.start();
-                    }
-                }
-            }
-        });
-
-        Attribute.restartMessageReceive.start();
-
-      Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
-            @Override
-            public void run() {
-                DatagramSocket receiveSocket;
-                try {
-                    receiveSocket = new DatagramSocket();
-                    byte[] buf;
-                    User user = new User();
-                    String qq=Attribute.QQ;
-                    qq="1234567890";
-                    user.setQQNum(qq);
-                    Request request = new Request(0,"",user);
-                    buf=MyDateBase.toByteArray(request);
-                    receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
-                    DatagramPacket dpReceive;
-
-                    while (true) {
-                        buf = new byte[1024*60];
-                        dpReceive = new DatagramPacket(buf, buf.length);
-//                        lock.acquire();
-                        receiveSocket.receive(dpReceive);
-                        request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
-                        if (request.getRequestType() == 8) {
-                            if(!Attribute.isInVideo) {
-                                String send = ((Message) request.getObj()).getSendQQ();
-                                Attribute.friendVideoRequest = request;
-                                ActivityOpreation.jumpActivity(MessageWindowActivity.this, VideoWindowActivity.class, new String[]{"receive", send});
-                            }
-                        }
-                        else if(request.getRequestType()==5){
-                            Attribute.friendMessageRequest=request;
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Message msg=(Message) Attribute.friendMessageRequest.getObj();
-                                    Receiver.writeMessageToFile(MessageWindowActivity.this,msg,msg.getSendQQ());
-                                    addMsg(true,msg.getContext());
-                                    fullScroll();
-                                }
-                            });
-                        }
-//                        lock.release();
-                    }
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                    ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
-                }
-            }
-        });
-
-        Attribute.mainMessageReceive.start();
-    }
-
     /**
      * 获取当前窗口发来消息并显示
      */
@@ -643,6 +571,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             @Override
             public void run() {
                 try{
+                    if(Attribute.msgArrayList==null)
+                        Attribute.msgArrayList=new ArrayList<>();
                     Attribute.msgArrayList.clear();
                     Attribute.insertQQview=QQFriend;
                     while (true){
