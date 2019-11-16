@@ -71,6 +71,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     private LinearLayout bottomViewContext;
     private LinearLayout bottomEmoji;
     private LinearLayout linearListView;
+    private Thread getMsgThread;
+    private boolean isExit=false;
 
     private int load=0;
     @Override
@@ -188,6 +190,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Attribute.insertQQview="";
+                isExit=true;
                 finish();
             }
         });
@@ -378,8 +382,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     @Override
     protected void onDestroy(){
         try {
-            Attribute.mainMessageReceive.stop();
-            Attribute.restartMessageReceive.stop();
+            Attribute.insertQQview="";
+            isExit=true;
+            getMsgThread.stop();
         }catch (Exception e){}
         super.onDestroy();
     }
@@ -628,6 +633,43 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         });
 
         Attribute.mainMessageReceive.start();
+    }
+
+    /**
+     * 获取当前窗口发来消息并显示
+     */
+    private void startMsgDidplayThread(){
+        getMsgThread= new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Attribute.msgArrayList.clear();
+                    Attribute.insertQQview=QQFriend;
+                    while (true){
+                        if(isExit)
+                            return;
+                        if(!Attribute.msgArrayList.isEmpty()){
+                            final Message msgg=Attribute.msgArrayList.get(0);
+                            if(msgg==null)
+                                continue;
+                            Attribute.msgArrayList.remove(0);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    addMsg(true,msgg.getContext());
+                                    fullScroll();
+                                }
+                            });
+                        }
+                        SystemClock.sleep(300);
+                    }
+                }
+                catch (Exception e){
+                    return;
+                }
+            }
+        });
+        getMsgThread.start();
     }
 
     /**

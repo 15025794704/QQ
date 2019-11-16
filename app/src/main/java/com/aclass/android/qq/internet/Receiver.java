@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2019/11/6.
@@ -50,6 +51,8 @@ public class Receiver {
                 }
             }
         });
+
+        Attribute.msgArrayList=new ArrayList<>();
 
         Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
             @Override
@@ -84,6 +87,9 @@ public class Receiver {
                                 @Override
                                 public void run() {
                                     Message msg=(Message) Attribute.friendMessageRequest.getObj();
+                                    if(Attribute.insertQQview!=null && Attribute.insertQQview.equals(msg.getSendQQ())){
+                                        Attribute.msgArrayList.add(msg);
+                                    }
                                     Receiver.writeMessageToFile(context,msg,msg.getSendQQ());
                                 }
                             }).start();
