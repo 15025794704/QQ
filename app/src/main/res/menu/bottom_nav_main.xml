@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/mainBottomNavMessages"
-        android:icon="@drawable/ic_more_horiz_24"
+        android:icon="@drawable/main_tab_messages"
         app:showAsAction="always"
         android:title="@string/mainBottomNavMessages"/>
 
     <item
         android:id="@+id/mainBottomNavContacts"
-        android:icon="@drawable/ic_more_horiz_24"
+        android:icon="@drawable/main_tab_contacts"
         app:showAsAction="always"
         android:title="@string/mainBottomNavContacts"/>
 
     <item
         android:id="@+id/mainBottomNavExplore"
-        android:icon="@drawable/ic_more_horiz_24"
+        android:icon="@drawable/main_tab_explore"
         app:showAsAction="ifRoom"
         android:title="@string/mainBottomNavExplore"/>
 </menu>

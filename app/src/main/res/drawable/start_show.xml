@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false"><!--oneshot="false":设置动画循环播放，true:值播放一次-->
-    <!--duration="100"相隔两张图片播放时间间隔-->
-    <item android:drawable="@drawable/before_login" android:duration="900"/>
-    <item android:drawable="@drawable/before_login1" android:duration="900"/>
-    <item android:drawable="@drawable/before_login3" android:duration="1000"/>
-
-</animation-list>

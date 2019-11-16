@@ -14,7 +14,22 @@ import android.widget.ExpandableListView;
  * Created by 24015 on 2019/11/14.
  */
 
-public class PinnedHeaderExpandableListView extends ExpandableListView implements AbsListView.OnScrollListener,ExpandableListView.OnGroupClickListener {
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+
+/**
+ * Created by 24015 on 2019/11/14.
+ */
+
+public class PinnedHeaderExpandableListView extends ExpandableListView  implements AbsListView.OnScrollListener,ExpandableListView.OnGroupClickListener {
     public PinnedHeaderExpandableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         registerListener();
@@ -29,7 +44,7 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
         super(context);
         registerListener();
     }
-   private static final int MAX_ALPHA=255;
+    private static final int MAX_ALPHA=255;
     private HeaderAdapter mAdapter;
     /*
     * 用于在列表头显示的View,mHeaderViewVisible为true才可见
@@ -38,14 +53,14 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
     /*
     * 列表头是否可见
     * */
-   private boolean mHeaderViewVisible;
+    private boolean mHeaderViewVisible;
     private int mHeaderViewWidth;//列表头的宽度
     private int mHeaderViewHeight;//列表头的高度
 
     public void setHeaderView(View view){
         mHeaderView=view;
         //
-        AbsListView.LayoutParams lp=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        AbsListView.LayoutParams lp=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
 
         if(mHeaderView!=null)
@@ -66,7 +81,7 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
     private void headerViewClick()
     {
         long packedPosition =getExpandableListPosition(this.getFirstVisiblePosition());//
-        int groupPosition= ExpandableListView.getPackedPositionGroup(packedPosition);
+        int groupPosition=ExpandableListView.getPackedPositionGroup(packedPosition);
         if(mAdapter.getGroupClickStatus(groupPosition)==1){
             this.collapseGroup(groupPosition);
             mAdapter.setGroupClickStatus(groupPosition,0);
@@ -101,8 +116,8 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
                 case MotionEvent.ACTION_UP:
                     float x=ev.getX();
                     float y=ev.getY();
-                    float offsetX= Math.abs(x-mDownX);
-                    float  offsetY= Math.abs(y-mDownY);
+                    float offsetX=Math.abs(x-mDownX);
+                    float  offsetY=Math.abs(y-mDownY);
                     //假设HeaderView是可见的，点击在HeaderView内，那么触发headerClick()事件
                     if (x <= mHeaderViewWidth && y <= mHeaderViewHeight
                             && offsetX <= mHeaderViewWidth && offsetY <= mHeaderViewHeight) {
@@ -131,10 +146,10 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
      * 点击了 Group 触发的事件 , 要依据依据当前点击 Group 的状态来
      */
     @Override
-    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+    public boolean onGroupClick(ExpandableListView parent,View v,int groupPosition,long id) {
         if (mAdapter.getGroupClickStatus(groupPosition) == 0) {
             mAdapter.setGroupClickStatus(groupPosition, 1);
-            parent.expandGroup(groupPosition);
+            parent.expandGroup(groupPosition);//展开分组
             //Header自己主动置顶
             //parent.setSelectedGroup(groupPosition);
 

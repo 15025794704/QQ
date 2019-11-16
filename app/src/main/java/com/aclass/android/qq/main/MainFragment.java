@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralFragment;
@@ -75,6 +76,7 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         });
         mViews.mainToolbar.setOnMenuItemClickListener(this);
         mViews.mainToolbar.setOverflowIcon(getContext().getDrawable(R.drawable.ic_add_24));
+        mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
         // 显示消息页面
@@ -84,9 +86,13 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
     @Override
     protected void consumeInsets(Rect insets) {
         MyToolbar toolbar = mViews.mainToolbar;
-        toolbar.setPadding(toolbar.getPaddingStart(), insets.top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
+        int top=insets.top;
+        if(top==0)
+            top=40;
+        toolbar.setPadding(toolbar.getPaddingStart(), top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
         BottomNavigationView bottomNav= mViews.mainBottomNav;
         bottomNav.setPadding(bottomNav.getPaddingStart(), bottomNav.getPaddingTop(), bottomNav.getPaddingEnd(), insets.bottom);
+//        mViews.fragmentMainLinearTop.setPadding(0,40,0,0);
     }
 
     @Override

@@ -110,14 +110,9 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        View view = null;
-        if (convertView != null) {
-            view = convertView;
-        } else {
-            view = createGroupView();
-        }
-
-        ImageView iv = (ImageView)view.findViewById(R.id.groupIcon);
+        if (convertView == null)
+            convertView = View.inflate(mcontext, R.layout.group, null);
+        ImageView iv = (ImageView)convertView.findViewById(R.id.groupIcon);
 
         if (isExpanded) {
             iv.setImageResource(R.drawable.btn_browser2);
@@ -126,8 +121,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             iv.setImageResource(R.drawable.btn_browser);
         }
 
-        TextView text = (TextView)view.findViewById(R.id.groupto);
-        TextView groupFriendIsHide=view.findViewById(R.id.group_FriendIsHide);//好友在线人数
+        TextView text = (TextView)convertView.findViewById(R.id.groupto);
+        TextView groupFriendIsHide=convertView.findViewById(R.id.group_FriendIsHide);//好友在线人数
         text.setText(list.get(groupPosition).getQQGroupName());
         int counts=list.get(groupPosition).getInfo().size();//总人数
         int zaixian=0;
@@ -140,7 +135,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         }
         groupFriendIsHide.setText(zaixian+"/"+counts);
 
-        return view;
+
+        return convertView;
     }
 //当子条目ID相同时是否复用
     @Override

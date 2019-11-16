@@ -11,7 +11,7 @@ import com.aclass.android.qq.custom.GeneralActivity;
 
 public class SplashActivity extends GeneralActivity {
     private ImageView imageView;
-    private AnimationDrawable animationDrawable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +21,13 @@ public class SplashActivity extends GeneralActivity {
         View decor = getWindow().getDecorView();
         decor.setSystemUiVisibility(decor.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_FULLSCREEN);
         imageView = (ImageView) findViewById(R.id.img_show);
-        animationDrawable = (AnimationDrawable) imageView.getDrawable();
-        animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
                 finish();
             }
-        },3000);
+        },2500);
     }
 
     @Override
