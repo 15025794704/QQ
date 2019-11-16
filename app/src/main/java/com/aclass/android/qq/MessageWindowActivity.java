@@ -58,7 +58,6 @@ import java.net.InetAddress;
 import java.util.Date;
 import java.util.List;
 
-import kotlin.jvm.Throws;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
     private String QQFriend="1505249457";
@@ -131,7 +130,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     protected  void loadMessageList(){
         try {
-            FileInputStream fis = checkAndcreateNewFile(QQFriend);
+            FileInputStream fis = readFile(QQFriend);
             if(fis==null)
                 return;
 
@@ -165,7 +164,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         }
     }
 
-    protected FileInputStream checkAndcreateNewFile(String QQFriend){
+    protected FileInputStream readFile(String QQFriend){
         try {
             FileInputStream fis = openFileInput( QQFriend + ".json");
             return fis;
@@ -452,6 +451,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return false;
     }
 
+    /**
+     * Scroll回到底部
+     */
     private void fullScroll(){
         handler.post(new Runnable() {
             @Override
@@ -461,6 +463,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         });
     }
 
+    /**
+     * 改变底部表情等按钮颜色
+     */
     private int changeBg(int index){
         hideInputView();
         int rs=0;
@@ -483,6 +488,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return rs;
     }
 
+    /**
+     * 关闭底部所有按钮颜色
+     */
     private boolean closeAllBtnBG(){
         boolean rs=false;
         for(int i=0;i<listBtn.length;i++){
@@ -495,6 +503,10 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return rs;
     }
 
+    /**
+     * 表情里添加表情按钮
+     * 并设置按键事件
+     */
     private void fillPic(){
         final Bitmap[][] bitmaps=Attribute.emojiList;
         Screen screen=new Screen(this);

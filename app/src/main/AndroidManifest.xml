@@ -49,7 +49,6 @@
         <activity android:name=".LoginWindowActivity" />
         <activity android:name=".RegisterWindowActivity" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".main.contacts.CondactMain" />
         <activity android:name=".MainSideActivity" />
 
         <service
