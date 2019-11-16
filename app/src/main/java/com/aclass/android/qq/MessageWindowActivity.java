@@ -5,8 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.icu.text.DisplayContext;
-import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -23,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,12 +40,11 @@ import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.tools.MyDateBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,7 +55,6 @@ import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Proxy;
 import java.util.Date;
 import java.util.List;
 
@@ -137,8 +131,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     protected  void loadMessageList(){
         try {
-            //读取json数据
             FileInputStream fis = checkAndcreateNewFile(QQFriend);
+            if(fis==null)
+                return;
+
+            //读取json数据
             byte[] data = new byte[fis.available()];
             fis.read(data);
             String json=new String(data,0,data.length);
@@ -149,13 +146,19 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             List<Message> msgList = gson.fromJson(json, listType);
 
             //添加历史msg
-            if(msgList!=null)
-                for(Message msg:msgList) {
-                    if (msg.getReceiveNum().equals(QQFriend))
-                        addMsg(true, msg.getContext());
-                    else
-                        addMsg(false, msg.getContext());
-                }
+            int showIndex=0;
+            if(msgList == null)
+                return;
+            if( msgList.size()>20) {
+                showIndex=msgList.size()-20;
+            }
+                    for (int i=showIndex;i<msgList.size();i++ ) {
+                        Message msg = msgList.get(i);
+                        if (msg.getReceiveNum().equals(QQFriend))
+                            addMsg(false, msg.getContext());
+                        else
+                            addMsg(true, msg.getContext());
+                    }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -164,39 +167,13 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     protected FileInputStream checkAndcreateNewFile(String QQFriend){
         try {
-            FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
+            FileInputStream fis = openFileInput( QQFriend + ".json");
             return fis;
         }
         catch (FileNotFoundException e){
-            try {
-                File path = this.getFilesDir();
-                File dir=new File(path.toString(),"message/");
-                if(!dir.exists()){
-                    dir.mkdirs();
-                }
-                File file=new File(dir.toString(), QQFriend + ".json");
-                file.createNewFile();
-                FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
-                return fis;
-            }
-            catch (Exception e2){}
+
         }
         return null;
-    }
-
-    protected void writeFile(Message msg){
-        try {
-            Log.d("杰森","123");
-            System.out.print("13123");
-            FileOutputStream fos = openFileOutput("message/"+ QQFriend + ".json",MODE_APPEND);
-            String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
-                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
-            fos.write(json.getBytes());
-            fos.close();
-        }
-        catch (IOException e){
-            Log.e("错误",e.getMessage());
-        }
     }
 
     protected void init(){
@@ -295,11 +272,10 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                     });
                                 }
                             });
-                            writeFile(msg);
+                            Receiver.writeMessageToFile(MessageWindowActivity.this,msg,QQFriend);
                         }
                         catch (Exception e){
                             ActivityOpreation.updateUI(handler,0x12,"消息未发送成功");
-                            e.printStackTrace();
                             return;
                         }
                         finally {
@@ -316,6 +292,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             public boolean onTouch(View v, MotionEvent event) {
                 bottomView.setVisibility(View.GONE);
                 closeAllBtnBG();
+                fullScroll();
                 return false;
             }
         });
@@ -475,6 +452,15 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return false;
     }
 
+    private void fullScroll(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
     private int changeBg(int index){
         hideInputView();
         int rs=0;
@@ -493,6 +479,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                 }
             }
         }
+        fullScroll();
         return rs;
     }
 
@@ -545,6 +532,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     }
 
     private void loadEmoji(){
+        if(Attribute.emojiList!=null)
+            return;
         AssetsOperation ao=AssetsOperation.getInstance(this);
         Attribute.emojiList=new Bitmap[20][7];
         try {
@@ -584,7 +573,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                     receiveSocket = new DatagramSocket();
                     byte[] buf;
                     User user = new User();
-                    user.setQQNum(Attribute.QQ);
+                    String qq=Attribute.QQ;
+                    qq="1234567890";
+                    user.setQQNum(qq);
                     Request request = new Request(0,"",user);
                     buf=MyDateBase.toByteArray(request);
                     receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
@@ -609,14 +600,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                 @Override
                                 public void run() {
                                     Message msg=(Message) Attribute.friendMessageRequest.getObj();
-                                    writeFile(msg);
+                                    Receiver.writeMessageToFile(MessageWindowActivity.this,msg,msg.getSendQQ());
                                     addMsg(true,msg.getContext());
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
-                                        }
-                                    });
+                                    fullScroll();
                                 }
                             });
                         }
