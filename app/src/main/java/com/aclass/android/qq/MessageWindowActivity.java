@@ -45,12 +45,8 @@ import com.aclass.android.qq.tools.MyDateBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -389,7 +385,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     }
 
     /**
-     * 返回键隐藏
+     * 按返回键隐藏所有显示的
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -543,6 +539,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         }
     }
 
+    /**
+     * 加载表情图片到公共属性
+     */
     private void loadEmoji(){
         if(Attribute.emojiList!=null)
             return;
