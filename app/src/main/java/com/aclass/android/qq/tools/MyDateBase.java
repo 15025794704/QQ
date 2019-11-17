@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.aclass.android.qq.entity.*;
+import com.aclass.android.qq.internet.Attribute;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -342,7 +343,7 @@ public class MyDateBase {
 	* */
 	public List<Friend> getFriendsByqqGroup(String qqGroupName)
 	{
-		Request request=new Request(1,"select * from T_friends where QQgroup='"+qqGroupName+"'",new Friend());
+		Request request=new Request(1,"select * from T_friends where QQ1='"+ Attribute.QQ+"' and QQgroup='"+qqGroupName+"'",new Friend());
 		UDPsend(request);
 		List<Friend> list= (List<Friend>) receiveObject();
 		return list;
