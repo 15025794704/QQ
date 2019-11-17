@@ -1,6 +1,7 @@
 package com.aclass.android.qq.main.contacts;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +21,14 @@ import java.util.List;
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements HeaderAdapter {
     private List<GroupTitleInfo> list;
     private Context mcontext;
-    private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
-
+    private PinnedHeaderExpandableListView listView;
     public PinnedHeaderExpandableAdapter(List<GroupTitleInfo> list
-            , Context context, PinnedHeaderExpandableListView listView){
+            , Context context){
         this.list=list;
         this.mcontext = context;
-        this.listView = listView;
-        inflater = LayoutInflater.from(this.mcontext);
+        inflater=LayoutInflater.from(mcontext);
+
     }
 //子的对象
     @Override
@@ -153,13 +153,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         return inflater.inflate(R.layout.child, null);
     }
 
-    private View createGroupView() {
-        return inflater.inflate(R.layout.group, null);
-    }
+
 
     @Override
     public int getHeaderState(int groupPosition, int childPosition) {
-        final int childCount = getChildrenCount(groupPosition);
+        /*final int childCount = getChildrenCount(groupPosition);
         if (childPosition == childCount - 1) {
             return PINNED_HEADER_PUSHED_UP;
         } else if (childPosition == -1
@@ -167,7 +165,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             return PINNED_HEADER_GONE;
         } else {
             return PINNED_HEADER_VISIBLE;
-        }
+        }*/
+        return 0;
     }
 
     @Override
@@ -193,5 +192,19 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             return 0;
         }
     }
+
+   /* *//*
+    * 设置判断是否点击多个组对象的监听
+    * *//*
+    public void setOnGroupExPanded(OnGroupExpanded listenter)
+    {
+        this.listenter=listenter;
+    }
+
+        interface OnGroupExpanded{
+            void onGroupExpanded(int groupPosition);
+        }
+    OnGroupExpanded listenter;*/
+
 
 }

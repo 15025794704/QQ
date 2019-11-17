@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.main.MainActivity;
-import com.aclass.android.qq.main.contacts.CondactMain;
 import com.aclass.android.qq.tools.MyDateBase;
 
 public class LoginWindowActivity extends GeneralActivity implements View.OnClickListener {

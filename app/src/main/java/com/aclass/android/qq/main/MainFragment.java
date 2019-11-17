@@ -2,10 +2,12 @@ package com.aclass.android.qq.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -19,12 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.GraphicsUtil;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.FragmentMainBinding;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.main.contacts.MainContactsFragment;
 import com.aclass.android.qq.main.explore.MainExploreFragment;
 import com.aclass.android.qq.main.messages.MainMessagesFragment;
@@ -68,13 +71,21 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
         // 点击头像切换至抽屉页面
-        mViews.mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mViews.mainNavIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.setPagerItem(0);
             }
         });
         mViews.mainToolbar.setOnMenuItemClickListener(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Attribute.currentAccountProfilePhoto == null) return;
+                Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+                mViews.mainNavIcon.setImageBitmap(navIcon);
+            }
+        }, 600);
         mViews.mainToolbar.setOverflowIcon(getContext().getDrawable(R.drawable.ic_add_24));
         mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
@@ -86,13 +97,9 @@ public class MainFragment extends GeneralFragment implements Toolbar.OnMenuItemC
     @Override
     protected void consumeInsets(Rect insets) {
         MyToolbar toolbar = mViews.mainToolbar;
-        int top=insets.top;
-        if(top==0)
-            top=40;
-        toolbar.setPadding(toolbar.getPaddingStart(), top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
+        toolbar.setPadding(toolbar.getPaddingStart(), insets.top, toolbar.getPaddingEnd(), toolbar.getPaddingBottom());
         BottomNavigationView bottomNav= mViews.mainBottomNav;
         bottomNav.setPadding(bottomNav.getPaddingStart(), bottomNav.getPaddingTop(), bottomNav.getPaddingEnd(), insets.bottom);
-//        mViews.fragmentMainLinearTop.setPadding(0,40,0,0);
     }
 
     @Override

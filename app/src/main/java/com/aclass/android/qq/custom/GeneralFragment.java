@@ -1,10 +1,12 @@
 package com.aclass.android.qq.custom;
 
-import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * 实现状态栏透明
@@ -15,9 +17,16 @@ public abstract class GeneralFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Activity activity = getActivity();
+        FragmentActivity activity = getActivity();
         if (!(activity instanceof GeneralActivity)) return;
-        consumeInsets(((GeneralActivity) activity).getWindowInsets());
+        GeneralViewModel generalViewModel = ViewModelProviders.of(activity).get(GeneralViewModel.class);
+        generalViewModel.windowInsets.observe(this, new Observer<Rect>() {
+            @Override
+            public void onChanged(@Nullable Rect rect) {
+                if (rect == null) return;
+                consumeInsets(rect);
+            }
+        });
     }
 
     /**

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="top"
-    android:paddingTop="18dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="12dp"
     android:paddingLeft="52dp"
     android:layout_height="match_parent">
 

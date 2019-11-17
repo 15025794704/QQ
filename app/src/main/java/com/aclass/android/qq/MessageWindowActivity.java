@@ -5,8 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.icu.text.DisplayContext;
-import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -23,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,32 +38,25 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
-import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.tools.MyDateBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Proxy;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import kotlin.jvm.Throws;
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
-    private String QQFriend="1505249457";
+    private String QQFriend="0987654321";
     private TextView titleName;
     private EditText edit;
     private Button btn_send;
@@ -82,6 +71,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     private LinearLayout bottomViewContext;
     private LinearLayout bottomEmoji;
     private LinearLayout linearListView;
+    private Thread getMsgThread;
+    private boolean isExit=false;
 
     private int load=0;
     @Override
@@ -115,12 +106,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
+                                                                Receiver.startReceiver(this,this);
         init();
         click();
-        startThreadStartVideo();
         loadEmoji();
         fillPic();
-
         //询问获取权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.CAMERA
@@ -129,6 +119,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1 );
         }
         loadMessageList();
+        startMsgDidplayThread();
+        fullScroll();
     }
     @Override
     protected void consumeInsets(Rect insets) {
@@ -137,8 +129,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     protected  void loadMessageList(){
         try {
+            FileInputStream fis = readFile(QQFriend);
+            if(fis==null)
+                return;
+
             //读取json数据
-            FileInputStream fis = checkAndcreateNewFile(QQFriend);
             byte[] data = new byte[fis.available()];
             fis.read(data);
             String json=new String(data,0,data.length);
@@ -149,54 +144,34 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             List<Message> msgList = gson.fromJson(json, listType);
 
             //添加历史msg
-            if(msgList!=null)
-                for(Message msg:msgList) {
-                    if (msg.getReceiveNum().equals(QQFriend))
-                        addMsg(true, msg.getContext());
-                    else
-                        addMsg(false, msg.getContext());
-                }
+            int showIndex=0;
+            if(msgList == null)
+                return;
+            if( msgList.size()>20) {
+                showIndex=msgList.size()-20;
+            }
+                    for (int i=showIndex;i<msgList.size();i++ ) {
+                        Message msg = msgList.get(i);
+                        if (msg.getReceiveNum().equals(QQFriend))
+                            addMsg(false, msg.getContext());
+                        else
+                            addMsg(true, msg.getContext());
+                    }
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    protected FileInputStream checkAndcreateNewFile(String QQFriend){
+    protected FileInputStream readFile(String QQFriend){
         try {
-            FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
+            FileInputStream fis = openFileInput( QQFriend + ".json");
             return fis;
         }
         catch (FileNotFoundException e){
-            try {
-                File path = this.getFilesDir();
-                File dir=new File(path.toString(),"message/");
-                if(!dir.exists()){
-                    dir.mkdirs();
-                }
-                File file=new File(dir.toString(), QQFriend + ".json");
-                file.createNewFile();
-                FileInputStream fis = openFileInput("message/"+ QQFriend + ".json");
-                return fis;
-            }
-            catch (Exception e2){}
+
         }
         return null;
-    }
-
-    protected void writeFile(Message msg){
-        try {
-            Log.d("杰森","123");
-            System.out.print("13123");
-            FileOutputStream fos = openFileOutput("message/"+ QQFriend + ".json",MODE_APPEND);
-            String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
-                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
-            fos.write(json.getBytes());
-            fos.close();
-        }
-        catch (IOException e){
-            Log.e("错误",e.getMessage());
-        }
     }
 
     protected void init(){
@@ -216,6 +191,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Attribute.insertQQview="";
+                isExit=true;
                 finish();
             }
         });
@@ -295,11 +272,10 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                     });
                                 }
                             });
-                            writeFile(msg);
+                            Receiver.writeMessageToFile(MessageWindowActivity.this,msg,QQFriend);
                         }
                         catch (Exception e){
                             ActivityOpreation.updateUI(handler,0x12,"消息未发送成功");
-                            e.printStackTrace();
                             return;
                         }
                         finally {
@@ -316,6 +292,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             public boolean onTouch(View v, MotionEvent event) {
                 bottomView.setVisibility(View.GONE);
                 closeAllBtnBG();
+                fullScroll();
                 return false;
             }
         });
@@ -406,14 +383,15 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     @Override
     protected void onDestroy(){
         try {
-            Attribute.mainMessageReceive.stop();
-            Attribute.restartMessageReceive.stop();
+            Attribute.insertQQview="";
+            isExit=true;
+            getMsgThread.stop();
         }catch (Exception e){}
         super.onDestroy();
     }
 
     /**
-     * 返回键隐藏
+     * 按返回键隐藏所有显示的
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -475,6 +453,21 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return false;
     }
 
+    /**
+     * Scroll回到底部
+     */
+    private void fullScroll(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
+    /**
+     * 改变底部表情等按钮颜色
+     */
     private int changeBg(int index){
         hideInputView();
         int rs=0;
@@ -493,9 +486,13 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                 }
             }
         }
+        fullScroll();
         return rs;
     }
 
+    /**
+     * 关闭底部所有按钮颜色
+     */
     private boolean closeAllBtnBG(){
         boolean rs=false;
         for(int i=0;i<listBtn.length;i++){
@@ -508,6 +505,10 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         return rs;
     }
 
+    /**
+     * 表情里添加表情按钮
+     * 并设置按键事件
+     */
     private void fillPic(){
         final Bitmap[][] bitmaps=Attribute.emojiList;
         Screen screen=new Screen(this);
@@ -544,7 +545,12 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         }
     }
 
+    /**
+     * 加载表情图片到公共属性
+     */
     private void loadEmoji(){
+        if(Attribute.emojiList!=null)
+            return;
         AssetsOperation ao=AssetsOperation.getInstance(this);
         Attribute.emojiList=new Bitmap[20][7];
         try {
@@ -557,80 +563,43 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         }
     }
 
-    private void startThreadStartVideo(){
-        Attribute.restartMessageReceive=new Thread(new Runnable() {
+    /**
+     * 获取当前窗口发来消息并显示
+     */
+    private void startMsgDidplayThread(){
+        getMsgThread= new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true) {
-                    try {
-                        SystemClock.sleep(3*60*1000);
-                        Attribute.mainMessageReceive.stop();
-                    }
-                    catch (Exception e){}
-                    finally {
-                        Attribute.mainMessageReceive.start();
-                    }
-                }
-            }
-        });
-
-        Attribute.restartMessageReceive.start();
-
-      Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
-            @Override
-            public void run() {
-                DatagramSocket receiveSocket;
-                try {
-                    receiveSocket = new DatagramSocket();
-                    byte[] buf;
-                    User user = new User();
-                    user.setQQNum(Attribute.QQ);
-                    Request request = new Request(0,"",user);
-                    buf=MyDateBase.toByteArray(request);
-                    receiveSocket.send(new DatagramPacket(buf, buf.length, InetAddress.getByName("47.107.138.4"),890));
-                    DatagramPacket dpReceive;
-
-                    while (true) {
-                        buf = new byte[1024*60];
-                        dpReceive = new DatagramPacket(buf, buf.length);
-//                        lock.acquire();
-                        receiveSocket.receive(dpReceive);
-                        request = (Request) MyDateBase.toObject(buf, dpReceive.getLength());
-                        if (request.getRequestType() == 8) {
-                            if(!Attribute.isInVideo) {
-                                String send = ((Message) request.getObj()).getSendQQ();
-                                Attribute.friendVideoRequest = request;
-                                ActivityOpreation.jumpActivity(MessageWindowActivity.this, VideoWindowActivity.class, new String[]{"receive", send});
-                            }
-                        }
-                        else if(request.getRequestType()==5){
-                            Attribute.friendMessageRequest=request;
+                try{
+                    if(Attribute.msgArrayList==null)
+                        Attribute.msgArrayList=new ArrayList<>();
+                    Attribute.msgArrayList.clear();
+                    Attribute.insertQQview=QQFriend;
+                    while (true){
+                        if(isExit)
+                            return;
+                        if(!Attribute.msgArrayList.isEmpty()){
+                            final Message msgg=Attribute.msgArrayList.get(0);
+                            if(msgg==null)
+                                continue;
+                            Attribute.msgArrayList.remove(0);
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Message msg=(Message) Attribute.friendMessageRequest.getObj();
-                                    writeFile(msg);
-                                    addMsg(true,msg.getContext());
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
-                                        }
-                                    });
+                                    addMsg(true,msgg.getContext());
+                                    fullScroll();
                                 }
                             });
                         }
-//                        lock.release();
+                        SystemClock.sleep(300);
                     }
                 }
                 catch (Exception e){
-                    e.printStackTrace();
-                    ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
+                    return;
                 }
             }
         });
-
-        Attribute.mainMessageReceive.start();
+        getMsgThread.start();
     }
 
     /**
