@@ -5,11 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
-import com.aclass.android.qq.R;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.GeneralActivity;
