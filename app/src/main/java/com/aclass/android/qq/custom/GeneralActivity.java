@@ -1,5 +1,7 @@
 package com.aclass.android.qq.custom;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +16,7 @@ import android.view.WindowManager;
  * 使用方法：继承这个类并实现 {@link #consumeInsets(Rect) consumeInsets} 方法
  */
 public abstract class GeneralActivity extends AppCompatActivity {
-    private Rect mWindowInsets;
-
-    public Rect getWindowInsets(){
-        return new Rect(mWindowInsets);
-    }
+    private GeneralViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +25,14 @@ public abstract class GeneralActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         applyEdgeToEdge();
+        mViewModel = ViewModelProviders.of(this).get(GeneralViewModel.class);
+        mViewModel.windowInsets.observe(this, new Observer<Rect>() {
+            @Override
+            public void onChanged(@Nullable Rect rect) {
+                if (rect == null) return;
+                consumeInsets(rect);
+            }
+        });
         applyInsets();
     }
 
@@ -46,13 +52,12 @@ public abstract class GeneralActivity extends AppCompatActivity {
         root.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                mWindowInsets = new Rect(
+                mViewModel.windowInsets.setValue(new Rect(
                         insets.getSystemWindowInsetLeft(),
                         insets.getSystemWindowInsetTop(),
                         insets.getSystemWindowInsetRight(),
                         insets.getSystemWindowInsetBottom()
-                );
-                consumeInsets(getWindowInsets());
+                ));
                 return insets;
             }
         });

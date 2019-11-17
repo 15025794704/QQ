@@ -36,6 +36,7 @@ import com.aclass.android.qq.tools.MyDateBase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,21 +146,23 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                             public void run() {
                                 addCallBack();
                                 SystemClock.sleep(300);
-                                for(;;) {
-                                    if(!Attribute.isInVideo) {
-                                        receiveVideoDataBase.Destory();
-                                        return;
+                                try {
+                                    for (; ; ) {
+                                        if (!Attribute.isInVideo) {
+                                            receiveVideoDataBase.Destory();
+                                            return;
+                                        }
+                                        receiveVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
+                                        SystemClock.sleep(125);
                                     }
-                                    receiveVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
-                                    SystemClock.sleep(125);
                                 }
+                                catch (Exception e1){return;}
                             }
                         }).start();
 
                         receiveVideoDataBase.setTimeout(5000);
                         for (; ; ) {
                             if(!Attribute.isInVideo) {
-                                receiveVideoDataBase.Destory();
                                 return;
                             }
                             byte[] bt= receiveVideoDataBase.receiveData();
@@ -177,6 +180,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 catch (Exception e){
                     ActivityOpreation.updateUI(handler, 0x12,"已关闭");
                     Attribute.isInVideo=false;
+                    return;
                 }
             }
         });
@@ -223,15 +227,18 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                 public void run() {
                     addCallBack();
                     SystemClock.sleep(1375);
-                    for(;;) {
-                        if(!Attribute.isInVideo) {
-                            sendVideoDataBase.Destory();
-                            return;
+                    try {
+                        for(;;) {
+                            if(!Attribute.isInVideo) {
+                                sendVideoDataBase.Destory();
+                                return;
+                            }
+                            if(Attribute.video_bitmap_send!=null)
+                                sendVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
+                            SystemClock.sleep(125);
                         }
-                        if(Attribute.video_bitmap_send!=null)
-                            sendVideoDataBase.UDPsend(port, Attribute.video_bitmap_send);
-                        SystemClock.sleep(125);
-                    }
+                    }catch (Exception e1){return;}
+
 
                 }
             }).start();
@@ -257,6 +264,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         catch (Exception e){
             ActivityOpreation.updateUI(handler, 0x12, "已关闭");
             Attribute.isInVideo=false;
+            return;
         }
     }
 
@@ -426,8 +434,8 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             mCamera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
                 public void onPreviewFrame(byte[] data, Camera camera) {
-                    Camera.Size size = camera.getParameters().getPreviewSize();
                     try{
+                        Camera.Size size = camera.getParameters().getPreviewSize();
                         YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
                         if(image!=null){
                             if(!Attribute.isInVideo) {
@@ -442,6 +450,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                         }
                     }catch(Exception e){
                         e.printStackTrace();
+                        return;
                     }
                 }
             });

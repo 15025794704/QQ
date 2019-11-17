@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             tools:ignore="NestedWeights">
+
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
             android:layout_weight="6"
             android:orientation="horizontal"
             >
+
             <TextView
                 android:id="@+id/newFriendMark"
                 android:layout_width="wrap_content"
@@ -46,15 +48,17 @@
                 android:layout_weight="14"
 
                 />
+
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_keyboard_arrow_right_24"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
 
                 android:layout_weight="1"
 
-                tools:ignore="RtlHardcoded"
+                tools:ignore="ContentDescription,RtlHardcoded"
                 android:contentDescription="" />
         </LinearLayout>
 
@@ -65,7 +69,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:hint="好友"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white_gray"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:hint="分组"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/s2"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/s3"
+                android:textSize="16sp"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
 
         <com.aclass.android.qq.main.contacts.PinnedHeaderExpandableListView
             android:id="@+id/explistview"
@@ -80,7 +131,6 @@
             android:groupIndicator="@null"
             android:scrollbars="vertical"
             android:scrollingCache="true"
-
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

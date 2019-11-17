@@ -20,4 +20,6 @@
     <string name="mainBottomNavExplore">动态</string>
     <string name="textMore">更多</string>
     <string name="s1">新朋友</string>
+    <string name="s2">群聊</string>
+    <string name="s3">设备</string>
 </resources>

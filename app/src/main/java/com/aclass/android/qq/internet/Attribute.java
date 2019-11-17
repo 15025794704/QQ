@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.aclass.android.qq.entity.Friend;
+import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +27,15 @@ public class Attribute {
     // 当前账号是否完成初始化
     public static boolean isAccountInitialized = false;
     public static List<Friend> friendList;
+
+
+
+    //*****************************《《《《《《《《《《《《《《《
+    //消息、接收线程专用版
     public static Request friendVideoRequest;
     public static Request friendMessageRequest;
+    public static ArrayList<Message> msgArrayList;
+    public static String insertQQview;
     public static Boolean isInVideo=false;
     public static byte[] video_bitmap;
     public static byte[] video_bitmap_send;
@@ -35,4 +44,5 @@ public class Attribute {
 
     public static Thread mainMessageReceive;
     public static Thread restartMessageReceive;
+    //*****************************》》》》》》》》》》》》》》》》
 }

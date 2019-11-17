@@ -1,6 +1,7 @@
 package com.aclass.android.qq.internet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.widget.ScrollView;
@@ -13,9 +14,12 @@ import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.tools.MyDateBase;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2019/11/6.
@@ -26,15 +30,16 @@ import java.net.InetAddress;
  * 消息接收器
  */
 public class Receiver {
-    public static Thread ReceiverThread=null;
-    /*
-    public static void startReceiver(final Activity activity，Handler handler){
+
+    public static void startReceiver(final Context context,final Activity activity){
+        if(Attribute.restartMessageReceive!=null)
+            return;
         Attribute.restartMessageReceive=new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
                     try {
-                        SystemClock.sleep(3*60*1000);
+                        SystemClock.sleep(2*60*1000);
                         Attribute.mainMessageReceive.stop();
                     }
                     catch (Exception e){}
@@ -48,6 +53,8 @@ public class Receiver {
                 }
             }
         });
+
+        Attribute.msgArrayList=new ArrayList<>();
 
         Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
             @Override
@@ -78,26 +85,22 @@ public class Receiver {
                         }
                         else if(request.getRequestType()==5){
                             Attribute.friendMessageRequest=request;
-                            handler.post(new Runnable() {
+                            new Thread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Message msg=(Message) Attribute.friendMessageRequest.getObj();
-                                    addMsg(true,msg.getContext());
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
-                                        }
-                                    });
+                                    if(Attribute.insertQQview!=null && Attribute.insertQQview.equals(msg.getSendQQ())){
+                                        Attribute.msgArrayList.add(msg);
+                                    }
+                                    Receiver.writeMessageToFile(context,msg,msg.getSendQQ());
                                 }
-                            });
+                            }).start();
                         }
 //                        lock.release();
                     }
                 }
                 catch (Exception e){
                     e.printStackTrace();
-                    ActivityOpreation.updateUI(handler, 0x12, "开启端口失败");
                 }
             }
         });
@@ -105,5 +108,21 @@ public class Receiver {
         Attribute.restartMessageReceive.start();
         Attribute.mainMessageReceive.start();
     }
-    */
+
+
+
+
+    public  static void writeMessageToFile(Context context,Message msg,String QQFriend){
+        try {
+            FileOutputStream fos = context.openFileOutput(QQFriend + ".json", Context.MODE_APPEND);
+            String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
+                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
+            fos.write(json.getBytes());
+            fos.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }
