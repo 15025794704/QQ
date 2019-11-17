@@ -76,4 +76,22 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!--“打卡栏”-->
+    <style name="AppTheme.MainSideOption">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">@dimen/optionPaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
+        <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
+        <item name="android:drawableEnd">@drawable/main_side_close</item>
+        <item name="android:drawablePadding">13dp</item>
+        <item name="android:drawableTint">?mColorOptionGo</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?mColorSurface</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
 </resources>
