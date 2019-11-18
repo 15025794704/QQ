@@ -53,5 +53,5 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
 }
