@@ -150,6 +150,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         Fragment fragment = getNavFragment(item);
         MainPage page = (MainPage) fragment;
         page.onVisiblyClick();
+        // todo onVisiblyDoubleClick
     }
 
     public interface MainPage{
@@ -169,8 +170,9 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         /**
          * 当前页面时，双击 tab
          * 应当刷新等
+         * @return 是：已消化双击事件，否：调用 {@link #onVisiblyClick() onVisiblyClick}
          */
-        void onVisiblyDoubleClick();
+        boolean onVisiblyDoubleClick();
     }
 
 }

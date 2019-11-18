@@ -59,8 +59,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     @Override
-    public void onVisiblyDoubleClick() {
-
+    public boolean onVisiblyDoubleClick() {
+        return false;
     }
 
     @Override
