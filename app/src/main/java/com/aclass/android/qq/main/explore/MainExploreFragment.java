@@ -1,25 +1,20 @@
 package com.aclass.android.qq.main.explore;
 
-import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatEditText;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.custom.control.MyToolbar;
+import com.aclass.android.qq.main.MainFragment;
 
 /**
  * 应用“动态”页面
  */
-public class MainExploreFragment extends Fragment {
+public class MainExploreFragment extends Fragment implements MainFragment.MainPage {
 
     public static MainExploreFragment newInstance(){
         return new MainExploreFragment();
@@ -34,4 +29,18 @@ public class MainExploreFragment extends Fragment {
 
     }
 
+    @Override
+    public void onPageVisible(MyToolbar toolbar, TextView title) {
+        title.setText(R.string.mainBottomNavExplore);
+    }
+
+    @Override
+    public void onVisiblyClick() {
+
+    }
+
+    @Override
+    public void onVisiblyDoubleClick() {
+
+    }
 }

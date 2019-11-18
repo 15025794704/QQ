@@ -11,13 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ import java.util.List;
  * 应用“联系人”页面
  * 好友列表等
  */
-public class MainContactsFragment extends Fragment  {
+public class MainContactsFragment extends Fragment implements MainFragment.MainPage {
  private PinnedHeaderExpandableListView explistView;
     private PinnedHeaderExpandableAdapter adapter;
     private int expandFlag=-1;//控制列表的展开
@@ -56,6 +59,21 @@ public class MainContactsFragment extends Fragment  {
       explistView=view.findViewById(R.id.explistview);
         initData();
         return view;
+    }
+
+    @Override
+    public void onPageVisible(MyToolbar toolbar, TextView title) {
+        title.setText(R.string.mainBottomNavContacts);
+    }
+
+    @Override
+    public void onVisiblyClick() {
+
+    }
+
+    @Override
+    public void onVisiblyDoubleClick() {
+
     }
 
     /*

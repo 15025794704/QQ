@@ -10,7 +10,6 @@
         <com.aclass.android.qq.custom.control.MyToolbar
             android:id="@+id/mainToolbar"
             app:navigationIcon="@null"
-            app:menu="@menu/toolbar_main_messages"
             app:contentInsetStart="@dimen/optionPaddingHorizontal"
             style="@style/AppTheme.Toolbar">
 
@@ -24,28 +23,24 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
+                android:id="@+id/mainToolbarTitle"
                 tools:text="QQ"
                 style="@style/AppTheme.ToolbarTitle"/>
         </com.aclass.android.qq.custom.control.MyToolbar>
 
         <FrameLayout
-            android:layout_weight="1"
+            android:id="@+id/mainFragmentContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-            <FrameLayout
-                android:id="@+id/mainFragmentContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/mainBottomNav"
-                android:background="?mColorSurface"
-                app:itemTextColor="?mColorOnSurface"
-                app:menu="@menu/bottom_nav_main"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </FrameLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/mainBottomNav"
+            android:background="?mColorSurface"
+            app:itemTextColor="?mColorOnSurface"
+            app:menu="@menu/bottom_nav_main"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>
