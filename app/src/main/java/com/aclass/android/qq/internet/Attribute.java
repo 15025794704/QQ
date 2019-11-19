@@ -3,6 +3,7 @@ package com.aclass.android.qq.internet;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.Request;
@@ -29,6 +30,8 @@ public class Attribute {
     public static List<Friend> friendList;
 
 
+    //手机屏幕对象
+    public  static Screen screen;
 
     //*****************************《《《《《《《《《《《《《《《
     //消息、接收线程专用版

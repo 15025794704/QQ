@@ -53,11 +53,12 @@
 <!--    以单个 TextView 实现的“选项”控件-->
     <style name="AppTheme.SimpleOption">
         <item name="android:textColor">?mColorOnSurface</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:paddingTop">@dimen/optionPaddingVertical</item>
-        <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
-        <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
-        <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
         <item name="android:drawableEnd">@drawable/ic_keyboard_arrow_right_24</item>
         <item name="android:drawablePadding">13dp</item>
         <item name="android:drawableTint">?mColorOptionGo</item>
@@ -79,17 +80,10 @@
     <!--“打卡栏”-->
     <style name="AppTheme.MainSideOption">
         <item name="android:textColor">?mColorOnSurface</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:paddingTop">@dimen/optionPaddingVertical</item>
-        <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
-        <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
-        <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
-        <item name="android:drawableEnd">@drawable/ic_keyboard_close</item>
-        <item name="android:drawablePadding">13dp</item>
-        <item name="android:drawableTint">?mColorOptionGo</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="android:background">?mColorSurface</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 

@@ -1,42 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main_side"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:paddingBottom="15dp"
+        android:background="@color/color_white"
+        >
 
-        <android.support.constraint.Guideline
-            android:id="@+id/drawerGT"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintGuide_begin="10dp"
+        <RelativeLayout
+            android:background="@drawable/toolbar_bg_change_color"
+            android:id="@+id/message"
+            android:paddingTop="20dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/recordView"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="8"
+                    android:drawableStart="@drawable/main_side_record"
+                    android:drawableTint="#000000"
+                    android:text="打卡"
+                    style="@style/AppTheme.MainSideOption"
+                    />
+                <ImageView
+                    android:layout_weight="1"
+                    android:id="@+id/closeSide"
+                    android:src="@drawable/ic_keyboard_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp" />
+            </LinearLayout>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/drawerGB"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_end="10dp"
+
+            <LinearLayout
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recordView">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/main_side_icon"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/recordView"
+                android:layout_toEndOf="@id/icon"
+                android:text="Mizar"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:drawableTint="#000000"
+                android:drawableEnd="@drawable/main_side_ico"
+                android:layout_marginRight="17dp"
+                android:layout_marginLeft="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_toEndOf="@id/icon"
+                android:src="@drawable/main_side_moon"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/myMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/level"
+                android:layout_toEndOf="@id/icon"
+                android:drawableStart="@drawable/main_side_edit"
+                android:text="编辑签名，展示我的独特态度。"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginLeft="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:id="@+id/menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:background="@color/color_white"
+            android:layout_marginTop="20dp"
 
-        <ImageButton
-            android:id="@+id/drawerClose"
-            android:src="@drawable/ic_keyboard_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drawerGT"
-            android:layout_marginEnd="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            >
+            <LinearLayout
+                android:id="@+id/detailMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/vipText"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="了解会员特权 "
+                    android:drawableStart="@drawable/main_side_vip"/>
 
-        <ImageButton
-            android:id="@+id/drawerSettings"
-            android:src="@drawable/ic_keyboard_setting"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/drawerGB"
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/moneyText"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="我的钱包 "
+                    android:drawableStart="@drawable/main_side_money"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/decorationText"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="我的个性装扮 "
+                    android:drawableStart="@drawable/main_side_decoration"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/collectText"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="我的收藏 "
+                    android:drawableStart="@drawable/main_side_collect"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/pictureText"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="我的相册 "
+                    android:drawableStart="@drawable/main_side_pictures"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/fileText"
+                    android:text="我的文件"
+                    style="@style/AppTheme.SimpleOption"
+                    android:drawableStart="@drawable/main_side_file" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/noDateView"
+                    android:drawableStart="@drawable/main_side_no"
+                    android:text="免流量特权"
+                    style="@style/AppTheme.SimpleOption"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/install"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@id/menu"
+            android:gravity="bottom"
+            android:layout_marginLeft="33dp"
+            >
+            <ImageView
+                android:id="@+id/installLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/main_side_install"
+                android:tint="#8A8A8A"
+                />
+            <TextView
+                android:id="@+id/installText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/installLogo"
+                android:layout_marginTop="5dp"
+                android:text="设置"
+                android:textColor="#000000"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/model"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_toRightOf="@+id/install"
+            android:layout_marginLeft="40dp"
+            >
+
+            <ImageView
+                android:id="@+id/modelLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="#8A8A8A"
+                android:src="@drawable/main_side_model" />
+
+            <TextView
+                android:id="@+id/modelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/modelLogo"
+                android:layout_marginTop="5dp"
+                android:text="夜间"
+                android:textColor="#000000"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_toRightOf="@+id/model"
+            android:layout_marginLeft="40dp"
+            >
+            <ImageView
+                android:id="@+id/temperatureLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="#8A8A8A"
+                android:src="@drawable/main_side_temperature"
+                android:layout_marginLeft="12sp"
+                />
+            <ImageView
+                android:id="@+id/temperature1Logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="#8A8A8A"
+                android:layout_toRightOf="@+id/temperatureLogo"
+                android:src="@drawable/main_side_temperature1"
+                />
+            <TextView
+                android:id="@+id/temperatureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/temperatureLogo"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:text="渝北"
+                android:textColor="#000000"
+                />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
 </layout>

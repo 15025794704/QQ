@@ -141,8 +141,11 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new PinnedHeaderExpandableAdapter(groupListTemp, getActivity());
-                                explistView.setAdapter(adapter);
+                                try {
+                                    adapter = new PinnedHeaderExpandableAdapter(groupListTemp, getActivity());
+                                    explistView.setAdapter(adapter);
+                                }
+                                catch (Exception e){}
                             }
                         });
                     }

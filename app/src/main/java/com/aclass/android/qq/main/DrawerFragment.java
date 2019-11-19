@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.aclass.android.qq.common.Screen;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.settings.SettingsActivity;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
@@ -36,15 +39,20 @@ public class DrawerFragment extends GeneralFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+
         // 点击关闭按钮切换至应用主页面
-        mViews.drawerClose.setOnClickListener(new View.OnClickListener() {
+        mViews.closeSide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.setPagerItem(1);
             }
         });
+
+        mViews.recordView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(6.0/121))));
+        mViews.detailMenu.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(70.0/121))));
+
         // 进入设置页面
-        mViews.drawerSettings.setOnClickListener(new View.OnClickListener() {
+        mViews.install.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mActivity, SettingsActivity.class));
@@ -54,8 +62,7 @@ public class DrawerFragment extends GeneralFragment {
 
     @Override
     protected void consumeInsets(Rect insets) {
-        mViews.drawerGT.setGuidelineBegin(insets.top);
-        mViews.drawerGB.setGuidelineEnd(insets.bottom);
+
     }
 
 }

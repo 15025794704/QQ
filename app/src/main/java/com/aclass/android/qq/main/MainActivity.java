@@ -10,6 +10,7 @@ import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 import com.aclass.android.qq.entity.User;
@@ -35,6 +36,7 @@ public class MainActivity extends GeneralActivity {
         // 应用是否是冷启动
         boolean isColdStart = MainApplication.INSTANCE.isNew();
         super.onCreate(savedInstanceState);
+
 
         // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
@@ -74,6 +76,9 @@ public class MainActivity extends GeneralActivity {
     }
 
     private void init(){
+        //初始化屏幕窗体的宽高值
+        Attribute.screen=new Screen(this);
+
         if (!checkAccount()) return;
         Attribute.QQ = prefGeneral.getString("loginUserName", "");
         initAccount();
