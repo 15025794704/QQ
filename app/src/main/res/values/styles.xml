@@ -84,7 +84,7 @@
         <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
         <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
         <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
-        <item name="android:drawableEnd">@drawable/main_side_close</item>
+        <item name="android:drawableEnd">@drawable/ic_keyboard_close</item>
         <item name="android:drawablePadding">13dp</item>
         <item name="android:drawableTint">?mColorOptionGo</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
