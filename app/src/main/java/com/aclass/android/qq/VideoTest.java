@@ -42,23 +42,9 @@ package com.aclass.android.qq;
 
 public class VideoTest extends AppCompatActivity {
 
-    private Button button;
-    private ImageView videoView;
-    private DatagramSocket receiveSocket = null;
-    private static int receive_port = 9999;
-    private WifiManager.MulticastLock lock=null;
-    private SocketAddress friendAddrss;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_test);
-        TextView  t =(TextView) findViewById(R.id.editText2);
-
-        t.setSingleLine(false);
-        t.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        t.setGravity(Gravity.TOP);
-        //水平滚动设置为False
-        t.setHorizontallyScrolling(false);
-        t.setText("sssssbbsbssbbssssbsssssssbssssssbsss");
+        setContentView(R.layout.messages_list_layout);
     }
 }

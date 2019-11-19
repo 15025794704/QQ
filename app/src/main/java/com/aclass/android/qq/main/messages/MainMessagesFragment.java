@@ -41,9 +41,18 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main_messages, container, false);
+        View view =inflater.inflate(R.layout.fragment_main_messages, container, false);
+        init();
+        return  view;
     }
 
+    private  void init(){
+        loadMsgList();
+    }
+
+    private void loadMsgList(){
+
+    }
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
         title.setText(R.string.mainBottomNavMessages);
