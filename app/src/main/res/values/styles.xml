@@ -58,6 +58,7 @@
         <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
         <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
         <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:drawableEnd">@drawable/ic_keyboard_arrow_right_24</item>
         <item name="android:drawablePadding">13dp</item>
         <item name="android:drawableTint">?mColorOptionGo</item>

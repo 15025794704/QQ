@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.aclass.android.qq.custom.control.MyToolbar
+            android:id="@+id/chatSettingsContactToolbar"
+            style="@style/AppTheme.Toolbar">
+
+            <TextView
+                android:text="聊天设置"
+                style="@style/AppTheme.ToolbarTitle"/>
+        </com.aclass.android.qq.custom.control.MyToolbar>
+
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:id="@+id/chatSettingsContactContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/chatSettingsContactInfo"
+                    tools:text="好友昵称"
+                    android:drawableStart="@drawable/ic_menu_24"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    tools:text="发起群聊"
+                    android:drawableStart="@drawable/ic_add_24"
+                    android:drawableEnd="@null"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="一起听歌"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="查找聊天记录"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="聊天背景"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="设为置顶"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="特别关心"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="消息免打扰"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="消息通知设置"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="隐藏会话"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="屏蔽此人"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="删除聊天记录"
+                    android:textColor="?mColorAccent"
+                    android:drawableEnd="@null"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="删除好友"
+                    android:textColor="#FFF03030"
+                    android:gravity="center"
+                    android:drawableEnd="@null"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="被骚扰了？举报该用户"
+                    android:textColor="?mColorAccent"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:drawableEnd="@null"
+                    android:padding="0dp"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

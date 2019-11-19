@@ -69,7 +69,7 @@ public class NewFriendActivity extends GeneralActivity {
                     @Override
                     public void run() {
                         Friend friend = new Friend();
-                        friend.setQQ1(Attribute.QQ);
+                        friend.setQQ1(Attribute.currentAccount.getQQNum());
                         friend.setQQ2(getContact().getQQNum());
                         friend.setIsAgree(0);
                         MyDateBase dateBase = new MyDateBase();

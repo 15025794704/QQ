@@ -2,6 +2,7 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,9 +24,15 @@
             android:layout_height="0dp">
 
             <LinearLayout
+                android:id="@+id/chatSettingsGroupContainer"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    tools:text="群聊名称"
+                    android:drawableStart="@drawable/ic_menu_24"
+                    style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
                     android:text="群聊成员"
@@ -33,7 +40,69 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <LinearLayout
+                    android:background="?mColorSurface"
+                    android:paddingTop="@dimen/optionPaddingVertical"
+                    android:paddingBottom="@dimen/optionPaddingVertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="成员1"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="成员2"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="成员3"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="成员4"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="邀请"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <TextView
+                    android:text="群应用"
                     android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <LinearLayout
                     android:background="?mColorSurface"
                     android:paddingTop="@dimen/optionPaddingVertical"
                     android:paddingBottom="@dimen/optionPaddingVertical"
@@ -71,6 +140,16 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:text="投票"
+                        android:textSize="15sp"
+                        android:textColor="?mColorOnSurface"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
                         android:text="更多"
                         android:textSize="15sp"
                         android:textColor="?mColorOnSurface"
@@ -99,7 +178,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:text="查找聊天内容"
+                    android:text="查找聊天记录"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
@@ -109,7 +188,58 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="免打扰"
+                    android:text="消息免打扰"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="消息通知设置"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="隐藏会话"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="管理群"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="我的群昵称"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="一起听歌"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="群机器人"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="聊天背景"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="进场特效"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="删除聊天记录"
+                    android:textColor="?mColorAccent"
+                    android:drawableEnd="@null"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <TextView
+                    android:text="退出该群"
+                    android:textColor="#FFF03030"
+                    android:gravity="center"
+                    android:drawableEnd="@null"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     android:layout_marginBottom="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
             </LinearLayout>

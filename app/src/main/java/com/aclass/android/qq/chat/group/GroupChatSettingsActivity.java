@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -40,8 +41,10 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
 
     @Override
     protected void consumeInsets(Rect insets) {
-        Toolbar tb = mViews.chatSettingsGroupToolbar;
+        MyToolbar tb = mViews.chatSettingsGroupToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
+        LinearLayout container = mViews.chatSettingsGroupContainer;
+        container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
     }
 
     @Override
