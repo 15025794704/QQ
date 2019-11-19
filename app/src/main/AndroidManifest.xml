@@ -50,6 +50,7 @@
         <activity android:name=".RegisterWindowActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".MainSideActivity" />
+        <activity android:name=".MyDataActivity" />
 
         <service
             android:name=".internet.ReceiveService"
