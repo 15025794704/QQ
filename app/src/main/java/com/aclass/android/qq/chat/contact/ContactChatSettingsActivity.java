@@ -2,6 +2,7 @@ package com.aclass.android.qq.chat.contact;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
@@ -19,6 +21,9 @@ import com.aclass.android.qq.tools.MyDateBase;
  * QQ 好友聊天设置页面
  */
 public class ContactChatSettingsActivity extends GeneralActivity {
+
+    public static String ARG_NUM = "contactNum";
+
     private ActivityContactChatSettingsBinding mViews;
     private ContactChatSettingsViewModel mViewModel;
 
@@ -27,6 +32,9 @@ public class ContactChatSettingsActivity extends GeneralActivity {
         super.onCreate(savedInstanceState);
         mViews = ActivityContactChatSettingsBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
+
+        Intent intent = getIntent();
+        final String contactNum = BuildConfig.DEBUG ? "" : intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsContactToolbar;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -55,7 +63,7 @@ public class ContactChatSettingsActivity extends GeneralActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final ContactSettings contactSettings = ContactSettings.get("0987654321", null);
+                final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -19,7 +19,7 @@ public class GroupSettings {
      */
     String hostNum;
     /**
-     * 群昵称
+     * 个人群昵称
      */
     String memberName;
     /**
