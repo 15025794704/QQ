@@ -84,7 +84,9 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
         // 显示消息页面
-        onNavigationItemSelected(mViews.mainBottomNav.getMenu().findItem(R.id.mainBottomNavMessages));
+        int currentItemId = mViews.mainBottomNav.getSelectedItemId();
+        int targetItemId = currentItemId == 0 ? R.id.mainBottomNavMessages : currentItemId;
+        onNavigationItemSelected(mViews.mainBottomNav.getMenu().findItem(targetItemId));
     }
 
     @Override
@@ -136,16 +138,17 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         // 切换对应的页面
         FragmentManager manager = getFragmentManager();
         String manageableTag = ((ManageableFragment)fragment).getManageableTag();
-        Fragment stackedFragment = manager.findFragmentByTag(manageableTag);
-        if (stackedFragment != null){
-            manager.beginTransaction().show(fragment).commit();
-        } else {
-            FragmentTransaction transaction = manager.beginTransaction();
-            if (currentFragment != null){
-                transaction.hide(currentFragment);
-            }
-            transaction.add(R.id.mainFragmentContainer, fragment, manageableTag).commit();
+//        Fragment stackedFragment = manager.findFragmentByTag(manageableTag);
+        FragmentTransaction transaction = manager.beginTransaction();
+        if (currentFragment != null){
+            transaction.hide(currentFragment);
         }
+        if (fragment.isAdded()){
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.mainFragmentContainer, fragment, manageableTag);
+        }
+        transaction.commit();
         currentFragment = fragment;
         final MainPage page = (MainPage) fragment;
         Menu menu = mViews.mainToolbar.getMenu();
