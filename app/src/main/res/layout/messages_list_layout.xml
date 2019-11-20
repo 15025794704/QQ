@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearMsgP"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:background="#ddd"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.mcxtzhang.swipemenulib.SwipeMenuLayout
         android:layout_width="match_parent"
@@ -11,11 +11,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/LinearMsgC"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.aclass.android.qq.custom.control.RoundImageView
+                android:id="@+id/HeadMsg"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:src="#0023f2"
@@ -25,6 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp" />
             <TextView
+                android:id="@+id/NameMsg"
                 android:gravity="center_vertical"
                 android:textColor="#000"
                 android:layout_marginTop="10dp"
@@ -37,6 +40,7 @@
                 android:layout_height="match_parent" />
 
             <TextView
+                android:id="@+id/TimeMsg"
                 android:text="19:00"
                 android:textSize="16sp"
                 android:gravity="center_vertical"

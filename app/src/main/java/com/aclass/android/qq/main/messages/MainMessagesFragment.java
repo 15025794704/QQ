@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,21 +23,34 @@ import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
+import com.aclass.android.qq.custom.control.RoundImageView;
+import com.aclass.android.qq.databinding.FragmentDrawerBinding;
+import com.aclass.android.qq.entity.Message;
+import com.aclass.android.qq.entity.MsgList;
+import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.seek.SeekActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * 应用“消息”页面
  * 聊天消息列表
  */
-public class MainMessagesFragment extends Fragment implements MainFragment.MainPage,
-        Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
+public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
     private LinearLayout sm;
+    private LinearLayout msgListBox;
     private MainActivity mActivity;
 
     public static MainMessagesFragment newInstance(){
@@ -50,6 +64,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_main_messages, container, false);
         sm=view.findViewById(R.id.msgListTest);
+        msgListBox=view.findViewById(R.id.msgListBox);
+
         mActivity=(MainActivity) getActivity();
         init();
         return view;
@@ -64,6 +80,106 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             }
         });
     }
+
+    protected void readFile(){
+        try {
+            FileInputStream fis = mActivity.openFileInput("messageList.json");
+            if(fis==null)
+                return;
+
+            //读取json数据
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            String json=new String(data,0,data.length);
+            json="["+json.substring(0,json.length()-1)+"]";
+            //转换json数据
+            Attribute.msgList=null;
+            Gson gson = new Gson();
+            Type listType=new TypeToken<List<MsgList>>(){}.getType();
+            Attribute. msgList = gson.fromJson(json, listType);
+
+            //加载
+            msgListBox.removeAllViewsInLayout();
+            for (int i=0;i<Attribute.msgList.size();i++ ) {
+                MsgList msg =Attribute. msgList.get(i);
+                View view=fillValue(msg);
+                msgListBox.addView(view,i);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private View fillValue(final MsgList msgList){
+        View view= View.inflate(mActivity, R.layout.messages_list_layout, null);
+        final LinearLayout LinearMsgC=(LinearLayout) view.findViewById(R.id.LinearMsgC);
+        LinearLayout LinearMsgP=(LinearLayout) view.findViewById(R.id.LinearMsgP);
+        RoundImageView HeadMsg=(RoundImageView) view.findViewById(R.id.HeadMsg);
+        TextView NameMsg=(TextView) view.findViewById(R.id.NameMsg);
+        TextView TimeMsg=(TextView) view.findViewById(R.id.TimeMsg);
+        final Button btnTop=(Button) view.findViewById(R.id.btnTop);
+        Button btnDelete=(Button) view.findViewById(R.id.btnDelete);
+
+        NameMsg.setText( msgList.getQQFriend());
+        TimeMsg.setText(msgList.getTime());
+        if(msgList.isTop()) {
+            btnTop.setText("取消置顶");
+            LinearMsgC.setBackgroundColor(Color.parseColor("#eee"));
+        }
+        else{
+            btnTop.setText("置顶");
+            LinearMsgC.setBackgroundColor(Color.parseColor("#fff"));
+        }
+
+        LinearMsgC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class,new String[]{msgList.getQQFriend()});
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0;i<Attribute.msgList.size();i++){
+                    if(Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())){
+                        Attribute.msgList.remove(i);
+                        Receiver.writeMsgListToFile(mActivity);
+                        msgListBox.removeViewAt(i);
+                        break;
+                    }
+                }
+            }
+        });
+        btnTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    for (int i = 0; i < Attribute.msgList.size(); i++) {
+                            if (Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())) {
+                                int mc = Receiver.getMaxTopCount();
+                                MsgList msg = Attribute.msgList.get(i);
+                                if(btnTop.getText().equals("置顶")) {
+                                    LinearMsgC.setBackgroundColor(Color.parseColor("#eee"));
+                                    msg.setTop(true);
+                                }
+                                else {
+                                    LinearMsgC.setBackgroundColor(Color.parseColor("#fff"));
+                                    msg.setTop(false);
+                                }
+                                msg.setIndex(mc + 1);
+                                Attribute.msgList.remove(i);
+                                Attribute.msgList.add(mc + 1, msg);
+                                Receiver.writeMsgListToFile(mActivity);
+                                msgListBox.removeViewAt(i);
+                                break;
+                            }
+                    }
+            }
+        });
+        return view;
+    }
+
+
 
     private void loadMsgList(){
 
@@ -116,4 +232,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         }
         return true;
     }
+
 }
+
+

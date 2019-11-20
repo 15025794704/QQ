@@ -180,6 +180,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     }
 
     protected void init(){
+        String[] args=getIntent().getStringArrayExtra("args");
+        QQFriend=args[0];
+
         // 设置页面界面
         Toolbar toolbar = (Toolbar)findViewById(R.id.messageToolbar) ;
         // 工具栏选项

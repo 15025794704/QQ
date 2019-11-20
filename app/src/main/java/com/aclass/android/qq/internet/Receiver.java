@@ -9,7 +9,9 @@ import android.widget.ScrollView;
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.VideoWindowActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Message;
+import com.aclass.android.qq.entity.MsgList;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.tools.MyDateBase;
@@ -20,6 +22,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/11/6.
@@ -125,4 +129,69 @@ public class Receiver {
         }
     }
 
+
+    public  static void writeMsgListToFile(Context context){
+        try {
+            List<MsgList> msgList=Attribute.msgList;
+            FileOutputStream fos = context.openFileOutput("messageList.json", Context.MODE_PRIVATE);
+            for(int i=0;i<msgList.size();i++) {
+                if(msgList.get(i).getIndex()!=-1) {
+                    String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +
+                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() + "\",\"isTop\":\"" + msgList.get(i).isTop()
+                            + "\",\"index\":\"" + i + "\"},";
+                    fos.write(json.getBytes());
+                    fos.flush();
+                }
+            }
+            fos.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean changeIndex(String QQFriend){
+        int qqIndex= getIndexByQQ(QQFriend);
+        int topMc=getMaxTopCount();
+        Date d=new Date();
+        if(topMc+1==qqIndex){
+            return false;
+        }
+        if(qqIndex==-1){
+            Friend f= Attribute.friendList.get(QQFriend);
+            MsgList m= new MsgList(QQFriend,f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),topMc+1,false);
+            Attribute.msgList.add(topMc+1,m);
+        }
+        else{
+            MsgList m= Attribute.msgList.get(qqIndex);
+            m.setTime(d.getHours()+":"+d.getMinutes());
+            if(m.isTop())
+                return false;
+            m.setIndex(topMc+1);
+            Attribute.msgList.remove(qqIndex);
+            Attribute.msgList.add(topMc+1,m);
+        }
+        return true;
+    }
+
+    public static int getIndexByQQ(String QQFriend){
+        for(int i=0;i<Attribute.msgList.size();i++){
+            if(Attribute.msgList.get(i).getQQFriend().equals(QQFriend)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getMaxTopCount(){
+        int c=0;
+        for(int i=0;i<Attribute.msgList.size();i++){
+            if(Attribute.msgList.get(i).isTop()){
+                c++;
+            }
+            else
+                break;
+        }
+        return c;
+    }
 }

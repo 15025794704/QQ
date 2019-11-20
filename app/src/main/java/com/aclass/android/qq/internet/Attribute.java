@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Message;
+import com.aclass.android.qq.entity.MsgList;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2019/11/8.
@@ -27,8 +29,10 @@ public class Attribute {
     public static Bitmap currentAccountProfilePhoto;
     // 当前账号是否完成初始化
     public static boolean isAccountInitialized = false;
-    public static List<Friend> friendList;
+    public static Map<String,Friend> friendList;
 
+    //好友消息列表
+    public static List<MsgList> msgList;
 
     //手机屏幕对象
     public  static Screen screen;
