@@ -83,7 +83,12 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
-        // 显示消息页面
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // 显示当前选择的页面
         int currentItemId = mViews.mainBottomNav.getSelectedItemId();
         int targetItemId = currentItemId == 0 ? R.id.mainBottomNavMessages : currentItemId;
         onNavigationItemSelected(mViews.mainBottomNav.getMenu().findItem(targetItemId));
@@ -128,33 +133,36 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         return fragment;
     }
 
-    public interface ManageableFragment{
-        String getManageableTag();
+    private MainPage getNavPage(MenuItem item){
+        Fragment fragment = getNavFragment(item);
+        return (MainPage) fragment;
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = getNavFragment(item);
-        // 切换对应的页面
+        if (fragment == currentFragment) return true;
+
+        // 以下：切换对应的页面
         FragmentManager manager = getFragmentManager();
-        String manageableTag = ((ManageableFragment)fragment).getManageableTag();
-//        Fragment stackedFragment = manager.findFragmentByTag(manageableTag);
         FragmentTransaction transaction = manager.beginTransaction();
-        if (currentFragment != null){
-            transaction.hide(currentFragment);
-        }
-        if (fragment.isAdded()){
-            transaction.show(fragment);
-        } else {
-            transaction.add(R.id.mainFragmentContainer, fragment, manageableTag);
-        }
+        // 隐藏当前显示的页面
+        if (currentFragment != null) transaction.hide(currentFragment);
+        // 若已添加该 fragment 则将它显示出来；否则添加该 fragment
+        if (fragment.isAdded()) transaction.show(fragment);
+        else transaction.add(R.id.mainFragmentContainer, fragment);
+        // 执行操作
         transaction.commit();
+        // 当前显示的页面
         currentFragment = fragment;
-        final MainPage page = (MainPage) fragment;
+
         Menu menu = mViews.mainToolbar.getMenu();
+        // 清除工具栏选项
         menu.clear();
+        final MainPage page = (MainPage) fragment;
         page.onPageVisible(mViews.mainToolbar, mViews.mainToolbarTitle);
 
+        // 以下：将工具栏选项图标颜色设置为白色
         int mMenuIconTint = Color.WHITE;
         for (int i = 0; i < menu.size(); i++){
             MenuItem menuItem = menu.getItem(i);
@@ -164,13 +172,13 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         }
         Drawable overflowIcon = mViews.mainToolbar.getOverflowIcon();
         if (overflowIcon != null) overflowIcon.setTint(mMenuIconTint);
+
         return true;
     }
 
     @Override
     public void onNavigationItemReselected(@NonNull MenuItem item) {
-        Fragment fragment = getNavFragment(item);
-        MainPage page = (MainPage) fragment;
+        MainPage page = getNavPage(item);
         page.onVisiblyClick();
         // todo onVisiblyDoubleClick
     }
@@ -195,6 +203,12 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
          * @return 是：已消化双击事件，否：调用 {@link #onVisiblyClick() onVisiblyClick}
          */
         boolean onVisiblyDoubleClick();
+
+//        /**
+//         * 用于标识 fragment
+//         * @return tag
+//         */
+//        String getManageableTag();
     }
 
 }
