@@ -83,7 +83,12 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
-        // 显示消息页面
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // 显示当前选择的页面
         int currentItemId = mViews.mainBottomNav.getSelectedItemId();
         int targetItemId = currentItemId == 0 ? R.id.mainBottomNavMessages : currentItemId;
         onNavigationItemSelected(mViews.mainBottomNav.getMenu().findItem(targetItemId));
@@ -135,6 +140,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = getNavFragment(item);
+        if (fragment == currentFragment) return true;
         // 切换对应的页面
         FragmentManager manager = getFragmentManager();
         String manageableTag = ((ManageableFragment)fragment).getManageableTag();
