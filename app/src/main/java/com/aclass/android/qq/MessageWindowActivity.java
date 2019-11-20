@@ -111,7 +111,6 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_message);
-                                                                Receiver.startReceiver(this,this);
         init();
         click();
         loadEmoji();

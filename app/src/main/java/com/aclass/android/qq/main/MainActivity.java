@@ -15,6 +15,7 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.tools.MyDateBase;
 
 /**
@@ -76,6 +77,8 @@ public class MainActivity extends GeneralActivity {
     }
 
     private void init(){
+        //开启接收线程
+        Receiver.startReceiver(this,this);
         //初始化屏幕窗体的宽高值
         Attribute.screen=new Screen(this);
 

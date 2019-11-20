@@ -40,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +50,6 @@ import java.util.List;
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
-    private LinearLayout sm;
     private LinearLayout msgListBox;
     private MainActivity mActivity;
 
@@ -63,7 +63,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_main_messages, container, false);
-        sm=view.findViewById(R.id.msgListTest);
         msgListBox=view.findViewById(R.id.msgListBox);
 
         mActivity=(MainActivity) getActivity();
@@ -73,12 +72,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     private  void init(){
         loadMsgList();
-        sm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class);
-            }
-        });
     }
 
     protected void readFile(){
@@ -93,7 +86,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             String json=new String(data,0,data.length);
             json="["+json.substring(0,json.length()-1)+"]";
             //转换json数据
-            Attribute.msgList=null;
+            Attribute.msgList=new ArrayList<>();
             Gson gson = new Gson();
             Type listType=new TypeToken<List<MsgList>>(){}.getType();
             Attribute. msgList = gson.fromJson(json, listType);
@@ -182,7 +175,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
 
     private void loadMsgList(){
-
+        readFile();
     }
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
@@ -205,6 +198,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Receiver.writeMsgListToFile(mActivity);
         switch (item.getItemId()){
             case R.id.mainToolbarMessagesMore: // more options
                 Context popContext = new ContextThemeWrapper(getContext(), R.style.AppTheme_MainMorePop);

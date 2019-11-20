@@ -97,6 +97,7 @@ public class Receiver {
                                         Attribute.msgArrayList.add(msg);
                                     }
                                     Receiver.writeMessageToFile(context,msg,msg.getSendQQ());
+                                    changeIndex(msg.getSendQQ());
                                 }
                             }).start();
                         }
