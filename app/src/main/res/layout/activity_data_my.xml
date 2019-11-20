@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aclass.android.qq.MainSideActivity"
+    tools:context="com.aclass.android.qq.MyDataActivity"
     android:id="@+id/activity_data_my"
     android:background="@color/color_white">
     
@@ -44,8 +44,8 @@
             <ImageView
                 android:id="@+id/myIcon"
                 android:layout_margin="10dp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:src="@drawable/main_side_icon"
                 />
             <TextView
@@ -60,7 +60,7 @@
                 android:id="@+id/qq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/myIcon"
                 android:layout_below="@id/myName"
                 android:text="QQ:"
@@ -70,7 +70,7 @@
                 android:id="@+id/qqNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="3dp"
                 android:layout_toEndOf="@id/qq"
                 android:layout_below="@id/myName"
@@ -112,6 +112,7 @@
                 android:layout_height="wrap_content"
                 style="@style/AppTheme.MainSideSimpleOption"
                 android:text="编辑签名，展示我的独特态度"
+                android:textSize="18sp"
                 android:drawableStart="@drawable/ic_edit"
                 />
             <RelativeLayout
@@ -147,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/AppTheme.MainSideSimpleOption"
+                android:textSize="18sp"
                 android:text="还未开通任何服务特权"
                 android:drawableStart="@drawable/ic_vip"
                 android:layout_marginTop="10dp"
@@ -156,6 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/AppTheme.MainSideSimpleOption"
+                android:textSize="18sp"
                 android:text="我的空间"
                 android:drawableStart="@drawable/ic_space"
                 android:layout_marginTop="10dp"
@@ -172,6 +175,7 @@
         android:padding="10dp"
         >
         <Button
+            android:id="@+id/idBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
@@ -182,6 +186,7 @@
             android:drawableTint="#000000"
            />
         <Button
+            android:id="@+id/editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
@@ -194,11 +199,11 @@
 
 
         <Button
+            android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
             android:layout_weight="1"
-            android:id="@+id/radioButton"
             android:text="发消息"
             android:textSize="18sp"
             android:drawableTint="#000000"/>
