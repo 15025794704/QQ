@@ -19,7 +19,6 @@
                 android:text="打卡"
                 style="@style/AppTheme.MainSideOption"
                 />
-
         <LinearLayout
             android:id="@+id/icon"
             android:layout_width="wrap_content"
