@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +46,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     private MainContactsFragment fragmentContacts;
     // 动态页面的 fragment
     private MainExploreFragment fragmentExplore;
+    private Fragment currentFragment;
 
     public static MainFragment newInstance(){
         return new MainFragment();
@@ -123,11 +126,27 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         return fragment;
     }
 
+    public interface ManageableFragment{
+        String getManageableTag();
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = getNavFragment(item);
         // 切换对应的页面
-        getFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, fragment).commit();
+        FragmentManager manager = getFragmentManager();
+        String manageableTag = ((ManageableFragment)fragment).getManageableTag();
+        Fragment stackedFragment = manager.findFragmentByTag(manageableTag);
+        if (stackedFragment != null){
+            manager.beginTransaction().show(fragment).commit();
+        } else {
+            FragmentTransaction transaction = manager.beginTransaction();
+            if (currentFragment != null){
+                transaction.hide(currentFragment);
+            }
+            transaction.add(R.id.mainFragmentContainer, fragment, manageableTag).commit();
+        }
+        currentFragment = fragment;
         final MainPage page = (MainPage) fragment;
         Menu menu = mViews.mainToolbar.getMenu();
         menu.clear();

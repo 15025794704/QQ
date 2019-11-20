@@ -31,7 +31,10 @@ import java.util.List;
  * 应用“联系人”页面
  * 好友列表等
  */
-public class MainContactsFragment extends Fragment implements MainFragment.MainPage {
+public class MainContactsFragment extends Fragment implements MainFragment.MainPage, MainFragment.ManageableFragment {
+
+    public static String TAG = "MainContactsFragment";
+
  private PinnedHeaderExpandableListView explistView;
     private PinnedHeaderExpandableAdapter adapter;
     private int expandFlag=-1;//控制列表的展开
@@ -74,6 +77,11 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     @Override
     public boolean onVisiblyDoubleClick() {
         return false;
+    }
+
+    @Override
+    public String getManageableTag() {
+        return TAG;
     }
 
     /*

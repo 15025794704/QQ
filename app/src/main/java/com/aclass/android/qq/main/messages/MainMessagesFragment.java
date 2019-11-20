@@ -22,11 +22,9 @@ import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
-import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.seek.SeekActivity;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -34,7 +32,11 @@ import java.lang.reflect.InvocationTargetException;
  * 应用“消息”页面
  * 聊天消息列表
  */
-public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
+public class MainMessagesFragment extends Fragment implements MainFragment.MainPage,
+        Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener,
+        MainFragment.ManageableFragment {
+
+    public static String TAG = "MainMessagesFragment";
 
     private MyToolbar mainToolbar;
     private LinearLayout sm;
@@ -86,6 +88,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     @Override
     public boolean onVisiblyDoubleClick() {
         return false;
+    }
+
+    @Override
+    public String getManageableTag() {
+        return TAG;
     }
 
     @Override

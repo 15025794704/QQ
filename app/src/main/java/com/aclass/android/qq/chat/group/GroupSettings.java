@@ -40,6 +40,7 @@ public class GroupSettings {
         Qun groupAccount = mDateBase.getQun(groupNum);
         Member group = mDateBase.getMemberByQQAndID(groupNum, Attribute.currentAccount.getQQNum());
         if (dateBase == null) mDateBase.Destory();
+        if (group == null) return null;
         return new GroupSettings(groupAccount, group);
     }
 

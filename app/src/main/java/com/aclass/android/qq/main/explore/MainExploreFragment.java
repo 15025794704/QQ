@@ -14,7 +14,9 @@ import com.aclass.android.qq.main.MainFragment;
 /**
  * 应用“动态”页面
  */
-public class MainExploreFragment extends Fragment implements MainFragment.MainPage {
+public class MainExploreFragment extends Fragment implements MainFragment.MainPage, MainFragment.ManageableFragment {
+
+    public static String TAG = "MainExploreFragment";
 
     public static MainExploreFragment newInstance(){
         return new MainExploreFragment();
@@ -42,5 +44,10 @@ public class MainExploreFragment extends Fragment implements MainFragment.MainPa
     @Override
     public boolean onVisiblyDoubleClick() {
         return false;
+    }
+
+    @Override
+    public String getManageableTag() {
+        return TAG;
     }
 }

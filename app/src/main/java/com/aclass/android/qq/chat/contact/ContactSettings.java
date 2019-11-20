@@ -34,6 +34,7 @@ public class ContactSettings {
         MyDateBase mDateBase = dateBase == null ? new MyDateBase() : dateBase;
         Friend friend = mDateBase.getFriend(Attribute.currentAccount.getQQNum(), contactNum);
         if (dateBase == null) mDateBase.Destory();
+        if (friend == null) return null;
         return new ContactSettings(friend);
     }
 
