@@ -58,7 +58,7 @@ import java.util.List;
 
 
 public class MessageWindowActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
-    private String QQFriend="0987654321";
+    private String QQFriend="1234567890";
     private TextView titleName;
     private EditText edit;
     private Button btn_send;

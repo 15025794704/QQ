@@ -11,7 +11,6 @@
         <RelativeLayout
             android:background="@drawable/toolbar_bg_change_color"
             android:id="@+id/message"
-            android:paddingTop="20dp"
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="2dp"

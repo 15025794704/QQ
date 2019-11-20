@@ -77,7 +77,7 @@ public class DrawerFragment extends GeneralFragment {
 
     @Override
     protected void consumeInsets(Rect insets) {
-
+        mViews.message.setPadding(mViews.message.getPaddingLeft(),insets.top,mViews.message.getPaddingRight(),mViews.message.getPaddingBottom());
     }
 
 }
