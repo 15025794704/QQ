@@ -16,8 +16,22 @@
         <RelativeLayout
             android:id="@+id/myBackground"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="#9909">
+            android:layout_height="wrap_content"
+          >
+            <ImageView
+                android:id="@+id/myPicture"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:background="#9909"
+                />
+
+            <TextView
+                android:id="@+id/myReturn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.MyDataActivitySimpleOption"
+                android:text="设置"
+                />
 
         </RelativeLayout>
 
