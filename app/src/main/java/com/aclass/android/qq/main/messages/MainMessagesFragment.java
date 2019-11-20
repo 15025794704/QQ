@@ -33,10 +33,7 @@ import java.lang.reflect.InvocationTargetException;
  * 聊天消息列表
  */
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage,
-        Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener,
-        MainFragment.ManageableFragment {
-
-    public static String TAG = "MainMessagesFragment";
+        Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
     private LinearLayout sm;
@@ -88,11 +85,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     @Override
     public boolean onVisiblyDoubleClick() {
         return false;
-    }
-
-    @Override
-    public String getManageableTag() {
-        return TAG;
     }
 
     @Override
