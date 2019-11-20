@@ -34,7 +34,7 @@ public class ContactChatSettingsActivity extends GeneralActivity {
         setContentView(mViews.getRoot());
 
         Intent intent = getIntent();
-        final String contactNum = BuildConfig.DEBUG ? "" : intent.getStringExtra(ARG_NUM);
+        final String contactNum = BuildConfig.DEBUG ? "1234567890" : intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsContactToolbar;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
