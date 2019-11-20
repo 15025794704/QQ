@@ -2,6 +2,7 @@ package com.aclass.android.qq;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -30,6 +31,7 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aclass.android.qq.chat.contact.ContactChatSettingsActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.AssetsOperation;
 import com.aclass.android.qq.common.DisplayUtil;
@@ -82,6 +84,9 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                 ActivityOpreation.jumpActivity(this,VideoWindowActivity.class,new String[]{"send",QQFriend});
                 return true;
             case R.id.messageToolbarInfo: // 聊天详情
+                Intent intent=new Intent(this, ContactChatSettingsActivity.class);
+                intent.putExtra(ContactChatSettingsActivity.ARG_NUM,QQFriend);
+                startActivity(intent);
                 return true;
         }
         return true;

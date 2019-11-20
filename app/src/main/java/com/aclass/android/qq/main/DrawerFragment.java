@@ -1,15 +1,17 @@
 package com.aclass.android.qq.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.aclass.android.qq.common.Screen;
+import com.aclass.android.qq.common.GraphicsUtil;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.settings.SettingsActivity;
 import com.aclass.android.qq.custom.GeneralFragment;
@@ -32,6 +34,19 @@ public class DrawerFragment extends GeneralFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViews = FragmentDrawerBinding.inflate(inflater, container, false);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(Attribute.currentAccount!=null) {
+                    Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+                    mViews.sideHead.setImageBitmap(navIcon);
+                    mViews.name.setText(Attribute.currentAccount.getNiCheng());
+                    mViews.myMessage.setText(Attribute.currentAccount.getQianMing());
+                }
+            }
+        }, 600);
+
         return mViews.getRoot();
     }
 

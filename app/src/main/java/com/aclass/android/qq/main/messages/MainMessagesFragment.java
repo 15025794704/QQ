@@ -15,12 +15,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
+import com.aclass.android.qq.databinding.FragmentDrawerBinding;
+import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.seek.SeekActivity;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -31,6 +37,8 @@ import java.lang.reflect.InvocationTargetException;
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
+    private LinearLayout sm;
+    private MainActivity mActivity;
 
     public static MainMessagesFragment newInstance(){
         return new MainMessagesFragment();
@@ -42,12 +50,20 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_main_messages, container, false);
+        sm=view.findViewById(R.id.msgListTest);
+        mActivity=(MainActivity) getActivity();
         init();
-        return  view;
+        return view;
     }
 
     private  void init(){
         loadMsgList();
+        sm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class);
+            }
+        });
     }
 
     private void loadMsgList(){

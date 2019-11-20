@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recordView">
                 <ImageView
+                    android:id="@+id/sideHead"
                     android:layout_marginTop="10dp"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
@@ -60,7 +61,7 @@
                 android:layout_below="@id/recordView"
                 android:layout_toEndOf="@id/icon"
                 android:text="Mizar"
-                android:textSize="18sp"
+                android:textSize="19sp"
                 android:textColor="@android:color/black"
                 android:drawableTint="#000000"
                 android:drawableEnd="@drawable/main_side_ico"
@@ -86,8 +87,8 @@
                 android:layout_toEndOf="@id/icon"
                 android:drawableStart="@drawable/main_side_edit"
                 android:text="编辑签名，展示我的独特态度。"
-                android:textSize="18sp"
-                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp"
+                android:textColor="@color/color_white"
                 android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
