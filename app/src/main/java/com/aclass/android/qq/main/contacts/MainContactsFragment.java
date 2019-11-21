@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.tools.MyDateBase;
 
@@ -38,6 +40,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
  private PinnedHeaderExpandableListView explistView;
     private PinnedHeaderExpandableAdapter adapter;
     private int expandFlag=-1;//控制列表的展开
+    private MainActivity mActivity;
     public static MainContactsFragment newInstance(){
         return new MainContactsFragment();
     }
@@ -60,6 +63,14 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view =inflater.inflate(R.layout.fragment_main_contacts, container, false);
       explistView=view.findViewById(R.id.explistview);
+        mActivity=(MainActivity) getActivity();
+        view.findViewById(R.id.into_newFriend).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转好友申请页面
+//                ActivityOpreation.jumpActivity(mActivity,);
+            }
+        });
         initData();
         return view;
     }
@@ -148,6 +159,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     contentInfo.setQianming(qianming);
                                     contentInfo.setIcon(headImage);
                                     contentInfo.setIsHide(isHide);
+
                                     listContentInfos.add(contentInfo);
                                 }
                             }
@@ -180,6 +192,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
             }
         }).start();
     }
+
 
     class GroupClickListener implements ExpandableListView.OnGroupClickListener {
         @Override
