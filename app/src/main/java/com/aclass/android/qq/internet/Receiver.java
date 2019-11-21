@@ -98,7 +98,10 @@ public class Receiver {
                                         Attribute.msgArrayList.add(msg);
                                     }
                                     Receiver.writeMessageToFile(context,msg,msg.getSendQQ());
-                                    changeIndex(msg.getSendQQ());
+                                    if(changeIndex(msg.getSendQQ())) {
+                                        setPoint(msg.getSendQQ(),true);
+                                        writeMsgListToFile(context);
+                                    }
                                 }
                             }).start();
                         }
@@ -139,7 +142,9 @@ public class Receiver {
             for(int i=0;i<msgList.size();i++) {
                 if(msgList.get(i).getIndex()!=-1) {
                     String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +
-                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() + "\",\"top\":" + msgList.get(i).isTop()
+                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() +
+                            "\",\"point\":" + msgList.get(i).isPoint() +
+                            ",\"top\":" + msgList.get(i).isTop()
                             + ",\"index\":" + i + "},";
                     fos.write(json.getBytes());
                     fos.flush();
@@ -158,22 +163,22 @@ public class Receiver {
         int qqIndex= getIndexByQQ(QQFriend);
         int topMc=getMaxTopCount();
         Date d=new Date();
-        if(topMc+1==qqIndex){
+        if(topMc==qqIndex){
             return false;
         }
         if(qqIndex==-1){
             Friend f= Attribute.friendList.get(QQFriend);
             MsgList m= new MsgList(QQFriend,f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),topMc+1,false);
-            Attribute.msgList.add(topMc+1,m);
+            Attribute.msgList.add(topMc,m);
         }
         else{
             MsgList m= Attribute.msgList.get(qqIndex);
             m.setTime(d.getHours()+":"+d.getMinutes());
             if(m.isTop())
                 return false;
-            m.setIndex(topMc+1);
+            m.setIndex(topMc);
             Attribute.msgList.remove(qqIndex);
-            Attribute.msgList.add(topMc+1,m);
+            Attribute.msgList.add(topMc,m);
         }
         return true;
     }
@@ -201,5 +206,12 @@ public class Receiver {
                 break;
         }
         return c;
+    }
+
+    public static void setPoint(String QQ,boolean point){
+        int index= getIndexByQQ(QQ);
+       MsgList msg= Attribute.msgList.get(index);
+        msg.setPoint(point);
+        Attribute.msgList.set(index,msg);
     }
 }

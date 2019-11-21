@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -126,6 +127,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         RoundImageView HeadMsg=(RoundImageView) view.findViewById(R.id.HeadMsg);
         TextView NameMsg=(TextView) view.findViewById(R.id.NameMsg);
         TextView TimeMsg=(TextView) view.findViewById(R.id.TimeMsg);
+        final ImageView point=(ImageView) view.findViewById(R.id.point);
         final Button btnTop=(Button) view.findViewById(R.id.btnTop);
         Button btnDelete=(Button) view.findViewById(R.id.btnDelete);
 
@@ -142,10 +144,20 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
+        if(msgList.isPoint()){
+            point.setVisibility(View.VISIBLE);
+        }
+        else {
+            point.setVisibility(View.INVISIBLE);
+        }
+
         LinearMsgC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class,new String[]{msgList.getQQFriend()});
+                Receiver.setPoint(msgList.getQQFriend(),false);
+                Receiver.writeMsgListToFile(mActivity);
+                readFile();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {

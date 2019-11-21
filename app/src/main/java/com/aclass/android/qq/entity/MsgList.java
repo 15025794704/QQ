@@ -50,6 +50,16 @@ public class MsgList{
     private int index;
     private boolean top;
 
+    public boolean isPoint() {
+        return point;
+    }
+
+    public void setPoint(boolean point) {
+        this.point = point;
+    }
+
+    private boolean point;
+
     public boolean isTop() {
         return top;
     }
