@@ -209,7 +209,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         // 设置工具栏标题文字
         titleName=(TextView)findViewById(R.id.messageToolbarTitle_name);
         String title=Attribute.friendList.get(QQFriend).getBeiZhu();
-        if(title.equalsIgnoreCase(""))
+        if(title!=null && title.equalsIgnoreCase(""))
             title=Attribute.userInfoList.get(QQFriend).getNiCheng();
 
         titleName.setText(title);
@@ -293,7 +293,6 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                                 Attribute.msgList.remove(tempI);
                                                 Attribute.msgList.add(mc , msg);
                                                 Receiver.writeMsgListToFile(MessageWindowActivity.this);
-                                                MainMessagesFragment.readFile();
                                             }
                                         }
                                         else{
@@ -308,7 +307,6 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                                 MsgList msg = new MsgList(name, d.getHours() + ":" + d.getMinutes(), QQFriend, mc + 1, false);
                                                 Attribute.msgList.add(mc , msg);
                                                 Receiver.writeMsgListToFile(MessageWindowActivity.this);
-                                                MainMessagesFragment.readFile();
                                         }
                                     }
                                     catch (Exception e2){

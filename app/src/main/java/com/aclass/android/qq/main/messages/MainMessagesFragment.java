@@ -2,6 +2,7 @@ package com.aclass.android.qq.main.messages;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,8 +27,10 @@ import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
+import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.MsgList;
+import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.main.MainActivity;
@@ -40,6 +43,7 @@ import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,8 +53,8 @@ import java.util.List;
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
-    public static   LinearLayout msgListBox;
-    private static MainActivity mActivity;
+    public    LinearLayout msgListBox;
+    private  MainActivity mActivity;
 
     public static MainMessagesFragment newInstance(){
         return new MainMessagesFragment();
@@ -70,10 +74,16 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     private  void init(){
+        if(Attribute.userHeadList==null)
+            Attribute.userHeadList=new HashMap<String, Bitmap>();
+        if(Attribute.userInfoList==null)
+            Attribute.userInfoList=new HashMap<String, User>();
+        if(Attribute.friendList==null)
+            Attribute.friendList=new HashMap<String, Friend>();
         loadMsgList();
     }
 
-    public static void readFile(){
+    public  void readFile(){
         try {
             if(Attribute.msgList==null){
                 Attribute.msgList=new ArrayList<>();
@@ -87,7 +97,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             fis.read(data);
             String json=new String(data,0,data.length,"utf-8");
             json="["+json.substring(0,json.length()-1)+"]";
-
+            Log.d("TAG","加载json:"+json);
             //转换json数据
             Attribute.msgList=null;
             Gson gson = new Gson();
@@ -100,7 +110,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             for (int i=0;i<Attribute.msgList.size();i++ ) {
                 MsgList msg =Attribute. msgList.get(i);
                 View view=fillValue(msg);
-                Log.d("TAG","加载"+msg.isTop());
+                Log.d("TAG","isTop:"+msg.isTop());
                 msgListBox.addView(view,i);
             }
         }
@@ -109,7 +119,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         }
     }
 
-    private static View fillValue(final MsgList msgList){
+    private  View fillValue(final MsgList msgList){
         View view= View.inflate(mActivity, R.layout.messages_list_layout, null);
         final LinearLayout LinearMsgC=(LinearLayout) view.findViewById(R.id.LinearMsgC);
         LinearLayout LinearMsgP=(LinearLayout) view.findViewById(R.id.LinearMsgP);

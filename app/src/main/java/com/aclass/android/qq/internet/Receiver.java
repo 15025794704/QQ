@@ -139,7 +139,7 @@ public class Receiver {
             for(int i=0;i<msgList.size();i++) {
                 if(msgList.get(i).getIndex()!=-1) {
                     String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +
-                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() + "\",\"isTop\":" + msgList.get(i).isTop()
+                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() + "\",\"top\":" + msgList.get(i).isTop()
                             + ",\"index\":" + i + "},";
                     fos.write(json.getBytes());
                     fos.flush();
@@ -149,6 +149,7 @@ public class Receiver {
             fos.close();
         }
         catch (IOException e){
+            Log.e("TAG",e.toString());
             e.printStackTrace();
         }
     }
