@@ -109,8 +109,8 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         // 显示当前选择的页面
         int currentItemId = mViews.mainBottomNav.getSelectedItemId();
         // 好友列表初始化在“联系人”里面
-        int targetItemId = currentItemId == 0 ? R.id.mainBottomNavContacts : currentItemId;
-        onNavigationItemSelected(mViews.mainBottomNav.getMenu().findItem(targetItemId));
+        int targetItemId = mActivity.isColdStart ? R.id.mainBottomNavContacts : currentItemId;
+        mViews.mainBottomNav.setSelectedItemId(targetItemId);
     }
 
     @Override
