@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
@@ -13,6 +14,7 @@ import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
+import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.internet.Receiver;
@@ -111,16 +113,32 @@ public class MainActivity extends GeneralActivity {
     private void initAccount(){
         new Thread(new Runnable() {
             @Override
-            public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                final User myAccount = dateBase.getUser(Attribute.QQ);
-                if (myAccount == null) return;
-                final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
-                Attribute.currentAccount = myAccount;
-                Attribute.currentAccountProfilePhoto = profilePhoto;
-                Attribute.isAccountInitialized = true;
+            public void run() {  //-----吴（改）
+                try {
+                   getInfo();
+                }
+                catch (Exception e){
+                    try {
+                        getInfo();
+                    }
+                    catch (Exception e2){
+                        //两次没有访问到网络,给出提示
+                        Toast.makeText(MainActivity.this,"请检查网络连接",Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         }).start();
+    }
+
+    //访问网络获取个人信息----吴 （加）
+    private void getInfo(){
+        MyDateBase dateBase = new MyDateBase();
+        final User myAccount = dateBase.getUser(Attribute.QQ);
+        if (myAccount == null) return;
+        final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
+        Attribute.currentAccount = myAccount;
+        Attribute.currentAccountProfilePhoto = profilePhoto;
+        Attribute.isAccountInitialized = true;
     }
 
     private void initScreen(){
