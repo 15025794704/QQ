@@ -205,7 +205,11 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         });
         // 设置工具栏标题文字
         titleName=(TextView)findViewById(R.id.messageToolbarTitle_name);
-        titleName.setText("吴小吴");
+        String title=Attribute.friendList.get(QQFriend).getBeiZhu();
+        if(title.equalsIgnoreCase(""))
+            title=Attribute.userInfoList.get(QQFriend).getNiCheng();
+
+        titleName.setText(title);
 
         btn_send=(Button)findViewById(R.id.message_btn_sendmsg) ;
         edit=(EditText)findViewById(R.id.editText_message_send);

@@ -1,6 +1,7 @@
 package com.aclass.android.qq.main.contacts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.internet.Attribute;
 
 import java.util.List;
 
@@ -58,7 +62,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         else{
             view=createChildrenView();
         }
-        ContentInfo contentInfo=list.get(groupPosition).getInfo().get(childPosition);
+        final  ContentInfo contentInfo=list.get(groupPosition).getInfo().get(childPosition);
         TextView tv_beizhu= (TextView) view.findViewById(R.id.child_beizhu);
         TextView tv_isHide= (TextView) view.findViewById(R.id.child_isHide);
         TextView tv_qianming= (TextView) view.findViewById(R.id.child_qianming);
@@ -76,6 +80,14 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         tv_isHide.setText(isZaiXian);
         tv_qianming.setText(contentInfo.getQianming());
        iv_icon.setImageBitmap(contentInfo.getIcon());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mcontext, MyDataActivity.class);
+                intent.putExtra("qqNum", contentInfo.getQQ());
+                mcontext.startActivity(intent);
+            }
+        });
 
         return view;
     }

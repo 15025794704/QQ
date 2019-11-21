@@ -7,6 +7,15 @@ import android.graphics.Bitmap;
  */
 
 public class ContentInfo {
+    public String getQQ() {
+        return QQ;
+    }
+
+    public void setQQ(String QQ) {
+        this.QQ = QQ;
+    }
+
+    private String QQ;//QQ号
     private String beiZhu;//备注
     private String qianming;//个性签名
     private Bitmap icon;//头像

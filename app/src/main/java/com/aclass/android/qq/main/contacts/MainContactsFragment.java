@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -155,6 +156,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
 
                                     //给ContentInfo赋值
                                     ContentInfo contentInfo = new ContentInfo();
+                                    contentInfo.setQQ(user.getQQNum());
                                     contentInfo.setBeiZhu(beizhu);
                                     contentInfo.setQianming(qianming);
                                     contentInfo.setIcon(headImage);

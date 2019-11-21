@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.GraphicsUtil;
 import com.aclass.android.qq.common.MyButtonOperation;
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -35,15 +36,6 @@ public class MyDataActivity extends GeneralActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_my);
-
-        Button idBtn=(Button)findViewById(R.id.idBtn);
-        MyButtonOperation.changeButtonBG(this,idBtn,R.drawable.main_side_btn_down,R.drawable.main_side_btn_up);
-
-        Button editBtn=(Button)findViewById(R.id.editBtn);
-        MyButtonOperation.changeButtonBG(this,editBtn,R.drawable.main_side_btn_down,R.drawable.main_side_btn_up);
-
-        Button sendBtn=(Button)findViewById(R.id.sendBtn);
-        MyButtonOperation.changeButtonBG(this,sendBtn,R.drawable.main_side_btn_down,R.drawable.main_side_btn_up);
         init();
     }
 
@@ -70,12 +62,6 @@ public class MyDataActivity extends GeneralActivity {
         qianMing=(TextView)findViewById(R.id.myDetail);
         myReturn=(TextView)findViewById(R.id.myReturn);
 
-        myReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         //加数据
         Intent intent=getIntent();
@@ -110,5 +96,24 @@ public class MyDataActivity extends GeneralActivity {
             else
                 qianMing.setText("编辑签名，展示我的独特态度");
         }
+
+        setClick();
+    }
+
+    private void setClick(){
+        myReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!qq.getText().equals(Attribute.QQ)){
+                    ActivityOpreation.jumpActivity(MyDataActivity.this,MessageWindowActivity.class,new String[]{qq.getText().toString()});
+                }
+            }
+        });
     }
 }
