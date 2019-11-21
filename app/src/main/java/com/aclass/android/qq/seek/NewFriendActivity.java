@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityNewFriendBinding;
@@ -19,7 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 添加好友，填写验证消息
  */
-public class NewFriendActivity extends GeneralActivity {
+public class NewFriendActivity extends GeneralActivity implements View.OnClickListener {
     public static String ARG_CONTACT = "Contact";
 
     private ActivityNewFriendBinding mViews;
@@ -55,36 +56,40 @@ public class NewFriendActivity extends GeneralActivity {
                 });
             }
         }).start();
-
-        mViews.newFriendToolbarCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mViews.newFriendToolbarSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Friend friend = new Friend();
-                        friend.setQQ1(Attribute.currentAccount.getQQNum());
-                        friend.setQQ2(getContact().getQQNum());
-                        friend.setIsAgree(0);
-                        MyDateBase dateBase = new MyDateBase();
-                        int result = dateBase.insertEntity(friend);
-                        dateBase.Destory();
-                    }
-                }).start();
-                finish();
-            }
-        });
     }
 
     @Override
     protected void consumeInsets(Rect insets) {
         MyToolbar tb = mViews.newFriendToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == null) return;
+        switch (v.getId()){
+            case R.id.newFriendToolbarCancel:
+                finish();
+                break;
+            case R.id.newFriendToolbarSend:
+                sendRequest();
+                break;
+        }
+    }
+
+    private void sendRequest(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Friend friend = new Friend();
+                friend.setQQ1(Attribute.currentAccount.getQQNum());
+                friend.setQQ2(getContact().getQQNum());
+                friend.setIsAgree(0);
+                MyDateBase dateBase = new MyDateBase();
+                int result = dateBase.insertEntity(friend);
+                dateBase.Destory();
+            }
+        }).start();
+        finish();
     }
 }

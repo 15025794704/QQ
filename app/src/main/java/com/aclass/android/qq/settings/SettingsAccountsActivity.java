@@ -1,5 +1,6 @@
 package com.aclass.android.qq.settings;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -31,8 +32,6 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
         mViews.settingsAccountsProfilePhoto.setImageBitmap(Attribute.currentAccountProfilePhoto);
         mViews.settingsAccountsName.setText(currentAccount.getNiCheng());
         mViews.settingsAccountsInfo.setText(currentAccount.getQQNum());
-        mViews.settingsAccountsLogOut.setOnClickListener(this);
-        mViews.settingsAccountsQuit.setOnClickListener(this);
     }
 
     @Override
@@ -46,18 +45,19 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
     @Override
     public void onClick(View v) {
         if (v == null) return;
+        Context context = this;
         switch (v.getId()){
             case R.id.settingsAccountsLogOut:
-                logOut();
+                logOut(context);
                 break;
             case R.id.settingsAccountsQuit:
                 break;
         }
     }
 
-    private void logOut(){
+    private void logOut(Context context){
         getSharedPreferences("GeneralPrefs", MODE_PRIVATE).edit().putBoolean("isLogin", false).apply();
-        Toast.makeText(this, "You are logged out", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "You are logged out", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
     }

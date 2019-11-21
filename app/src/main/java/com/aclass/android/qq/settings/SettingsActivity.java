@@ -1,18 +1,20 @@
 package com.aclass.android.qq.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivitySettingsBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 
-public class SettingsActivity extends GeneralActivity {
+public class SettingsActivity extends GeneralActivity implements View.OnClickListener {
     private static int REQUEST_ACCOUNTS = 1;
     // DataBinding 对象
     private ActivitySettingsBinding mViews;
@@ -29,12 +31,6 @@ public class SettingsActivity extends GeneralActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-        mViews.settingsAccounts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(SettingsActivity.this, SettingsAccountsActivity.class), REQUEST_ACCOUNTS);
             }
         });
         new Thread(new Runnable() {
@@ -66,6 +62,17 @@ public class SettingsActivity extends GeneralActivity {
         // 退出账号
         if (requestCode == REQUEST_ACCOUNTS && resultCode == RESULT_OK){
             finish();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == null) return;
+        Context context = this;
+        switch (v.getId()){
+            case R.id.settingsAccounts:
+                startActivityForResult(new Intent(context, SettingsAccountsActivity.class), REQUEST_ACCOUNTS);
+                break;
         }
     }
 }

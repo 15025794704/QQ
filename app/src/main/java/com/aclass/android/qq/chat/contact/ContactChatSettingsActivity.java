@@ -2,6 +2,7 @@ package com.aclass.android.qq.chat.contact;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -12,15 +13,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.aclass.android.qq.BuildConfig;
+import com.aclass.android.qq.MyDataActivity;
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 /**
  * QQ 好友聊天设置页面
  */
-public class ContactChatSettingsActivity extends GeneralActivity {
+public class ContactChatSettingsActivity extends GeneralActivity implements View.OnClickListener {
 
     public static String ARG_NUM = "contactNum";
 
@@ -98,5 +102,28 @@ public class ContactChatSettingsActivity extends GeneralActivity {
             }
         }).start();
         mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == null) return;
+        Context context = this;
+        switch (v.getId()){
+            case R.id.chatSettingsContactInfo:
+                contactInfo(context);
+                break;
+            case R.id.chatSettingsContactRemoveContact:
+                removeContact();
+                break;
+        }
+    }
+
+    private void contactInfo(Context context) {
+        Intent intent = new Intent(context, MyDataActivity.class);
+        intent.putExtra("qqNum", Attribute.currentAccount.getQQNum());
+        startActivity(intent);
+    }
+
+    private void removeContact(){
     }
 }
