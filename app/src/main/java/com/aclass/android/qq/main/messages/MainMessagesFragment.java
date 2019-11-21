@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
@@ -36,11 +35,8 @@ import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.seek.SeekActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -53,8 +49,8 @@ import java.util.List;
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
-    private LinearLayout msgListBox;
-    private MainActivity mActivity;
+    public static   LinearLayout msgListBox;
+    private static MainActivity mActivity;
 
     public static MainMessagesFragment newInstance(){
         return new MainMessagesFragment();
@@ -77,8 +73,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         loadMsgList();
     }
 
-    protected void readFile(){
+    public static void readFile(){
         try {
+            if(Attribute.msgList==null){
+                Attribute.msgList=new ArrayList<>();
+            }
             FileInputStream fis = mActivity.openFileInput("messageList.json");
             if(fis==null)
                 return;
@@ -95,26 +94,22 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             Type listType=new TypeToken<List<MsgList>>(){}.getType();
             List<MsgList> lists = gson.fromJson(json, listType);
             Attribute.msgList=lists;
-            if(Attribute.msgList==null){
-                Attribute.msgList=new ArrayList<>();
-            }
 
-            Toast.makeText(mActivity,""+lists.size(),Toast.LENGTH_LONG).show();
             //加载
             msgListBox.removeAllViewsInLayout();
             for (int i=0;i<Attribute.msgList.size();i++ ) {
                 MsgList msg =Attribute. msgList.get(i);
                 View view=fillValue(msg);
+                Log.d("TAG","加载"+msg.isTop());
                 msgListBox.addView(view,i);
             }
-            Toast.makeText(mActivity,"2222",Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
             Log.e("TAG",""+e.getLocalizedMessage());
         }
     }
 
-    private View fillValue(final MsgList msgList){
+    private static View fillValue(final MsgList msgList){
         View view= View.inflate(mActivity, R.layout.messages_list_layout, null);
         final LinearLayout LinearMsgC=(LinearLayout) view.findViewById(R.id.LinearMsgC);
         LinearLayout LinearMsgP=(LinearLayout) view.findViewById(R.id.LinearMsgP);
@@ -126,6 +121,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
         NameMsg.setText( msgList.getQQFriend());
         TimeMsg.setText(msgList.getTime());
+        if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
+            HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
         if(msgList.isTop()) {
             btnTop.setText("取消置顶");
             LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
@@ -162,18 +159,18 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                                 int mc = Receiver.getMaxTopCount();
                                 MsgList msg = Attribute.msgList.get(i);
                                 if(btnTop.getText().equals("置顶")) {
-                                    LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
                                     msg.setTop(true);
+                                    Log.d("TAG","true");
                                 }
-                                else {
-                                    LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
+                                else if(btnTop.getText().equals("取消置顶")){
                                     msg.setTop(false);
+                                    Log.d("TAG","false");
                                 }
-                                msg.setIndex(mc + 1);
-                                Attribute.msgList.remove(i);
-                                Attribute.msgList.add(mc + 1, msg);
+                                msg.setIndex(mc);
+                                Attribute.msgList.set(i,msg);
                                 Receiver.writeMsgListToFile(mActivity);
-                                msgListBox.removeViewAt(i);
+                                readFile();
+                                Log.d("TAG","重新刷新"+msg.isTop());
                                 break;
                             }
                     }
@@ -208,7 +205,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Receiver.writeMsgListToFile(mActivity);
         switch (item.getItemId()){
             case R.id.mainToolbarMessagesMore: // more options
                 Context popContext = new ContextThemeWrapper(getContext(), R.style.AppTheme_MainMorePop);
