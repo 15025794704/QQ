@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -39,9 +40,11 @@ import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Message;
+import com.aclass.android.qq.entity.MsgList;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.internet.Receiver;
+import com.aclass.android.qq.main.messages.MainMessagesFragment;
 import com.aclass.android.qq.tools.MyDateBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -273,14 +276,46 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    addMsg(false,edit.getText().toString());
-                                    edit.setText("");
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+                                    try {
+                                        addMsg(false,edit.getText().toString());
+                                        edit.setText("");
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                scrollListView.fullScroll(ScrollView.FOCUS_DOWN);
+                                            }
+                                        });
+                                       int tempI= Receiver.getIndexByQQ(QQFriend);
+                                        int mc =Receiver.getMaxTopCount();
+                                        if(tempI!=-1){
+                                            if(tempI!=mc) {
+                                                MsgList msg = Attribute.msgList.get(tempI);
+                                                Attribute.msgList.remove(tempI);
+                                                Attribute.msgList.add(mc , msg);
+                                                Receiver.writeMsgListToFile(MessageWindowActivity.this);
+                                                MainMessagesFragment.readFile();
+                                            }
                                         }
-                                    });
+                                        else{
+                                                String name = "";
+                                                if (Attribute.friendList.get(QQFriend) != null)
+                                                    name = Attribute.friendList.get(QQFriend).getBeiZhu();
+                                                if (name.equals("")) {
+                                                    if (Attribute.userInfoList.get(QQFriend) != null)
+                                                        name = Attribute.userInfoList.get(QQFriend).getNiCheng();
+                                                }
+                                                Date d = new Date();
+                                                MsgList msg = new MsgList(name, d.getHours() + ":" + d.getMinutes(), QQFriend, mc + 1, false);
+                                                Attribute.msgList.add(mc , msg);
+                                                Receiver.writeMsgListToFile(MessageWindowActivity.this);
+                                                MainMessagesFragment.readFile();
+                                        }
+                                    }
+                                    catch (Exception e2){
+                                        e2.printStackTrace();
+                                        Log.e("TAG",e2.toString());
+                                    }
+
                                 }
                             });
                             Receiver.writeMessageToFile(MessageWindowActivity.this,msg,QQFriend);

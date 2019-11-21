@@ -186,6 +186,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
+        readFile();
         title.setText(R.string.mainBottomNavMessages);
         mainToolbar = toolbar;
         toolbar.setOverflowIcon(toolbar.getContext().getDrawable(R.drawable.ic_add_24));

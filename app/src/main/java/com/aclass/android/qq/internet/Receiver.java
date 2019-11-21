@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.ScrollView;
 
 import com.aclass.android.qq.MessageWindowActivity;
@@ -142,6 +143,7 @@ public class Receiver {
                             + ",\"index\":" + i + "},";
                     fos.write(json.getBytes());
                     fos.flush();
+                    Log.d("TAG",json);
                 }
             }
             fos.close();

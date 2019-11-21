@@ -112,6 +112,7 @@ public class MyDataActivity extends GeneralActivity {
             public void onClick(View v) {
                 if(!qq.getText().equals(Attribute.QQ)){
                     ActivityOpreation.jumpActivity(MyDataActivity.this,MessageWindowActivity.class,new String[]{qq.getText().toString()});
+                    finish();
                 }
             }
         });
