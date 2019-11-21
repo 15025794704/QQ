@@ -133,6 +133,7 @@ public class MainActivity extends GeneralActivity {
                     accountInitHandler.postDelayed(this, 100);
                     return;
                 }
+                accountInitHandler.removeCallbacks(this);
                 task.run();
             }
         }.run();
