@@ -34,7 +34,6 @@ public class MainActivity extends GeneralActivity {
 
     private SharedPreferences prefGeneral;
     private boolean isScreenInitialized = false;
-    boolean isColdStart = false;
 
     private ActivityMainBinding mViews;
     private MutableLiveData<Boolean> isAccountInitialized = new MutableLiveData<>();
@@ -42,7 +41,7 @@ public class MainActivity extends GeneralActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 应用是否是冷启动
-        isColdStart = MainApplication.INSTANCE.isNew();
+        boolean isColdStart = MainApplication.INSTANCE.isNew();
         super.onCreate(savedInstanceState);
 
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);

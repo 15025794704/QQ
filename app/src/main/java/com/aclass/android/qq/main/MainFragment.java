@@ -86,6 +86,8 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
+        // 好友列表初始化在“联系人”里面
+        mViews.mainBottomNav.setSelectedItemId(R.id.mainBottomNavContacts);
     }
 
     private void bindData(){
@@ -101,16 +103,6 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
                 });
             }
         }).start();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // 显示当前选择的页面
-        int currentItemId = mViews.mainBottomNav.getSelectedItemId();
-        // 好友列表初始化在“联系人”里面
-        int targetItemId = mActivity.isColdStart ? R.id.mainBottomNavContacts : currentItemId;
-        mViews.mainBottomNav.setSelectedItemId(targetItemId);
     }
 
     @Override
