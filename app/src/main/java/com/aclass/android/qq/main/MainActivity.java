@@ -1,10 +1,14 @@
 package com.aclass.android.qq.main;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.aclass.android.qq.BuildConfig;
@@ -14,7 +18,6 @@ import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
-import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.internet.Receiver;
@@ -33,6 +36,7 @@ public class MainActivity extends GeneralActivity {
     private boolean isScreenInitialized = false;
 
     private ActivityMainBinding mViews;
+    private MutableLiveData<Boolean> isAccountInitialized = new MutableLiveData<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,6 @@ public class MainActivity extends GeneralActivity {
         boolean isColdStart = MainApplication.INSTANCE.isNew();
         super.onCreate(savedInstanceState);
 
-
-        // 默认的 MainActivity
         prefGeneral = getSharedPreferences("GeneralPrefs", MODE_PRIVATE);
         if (isColdStart) {
             startActivityForResult(new Intent(this,SplashActivity.class), REQUEST_SPLASH);// SplashActivity.class
@@ -79,26 +81,61 @@ public class MainActivity extends GeneralActivity {
     }
 
     private void init(){
-        //开启接收线程
-        Receiver.startReceiver(this,this);
-        //初始化屏幕窗体的宽高值
-        Attribute.screen=new Screen(this);
+        // 开启接收线程
+        Receiver.startReceiver(this, this);
+        // 初始化屏幕窗体的宽高值
+        Attribute.screen = new Screen(this);
 
         if (!checkAccount()) return;
-        Attribute.QQ = prefGeneral.getString("loginUserName", "");
-        initAccount();
+        final boolean shouldTest = BuildConfig.DEBUG && shouldTestMyActivity();
+        // 保证账号信息加载完成后才加载测试 activity，否则容易引起异常
+        isAccountInitialized.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean == null || isScreenInitialized || !aBoolean) return;
 
-        // 测试某个 Activity
-        if (BuildConfig.DEBUG) {
-            boolean canEnterTest = testMyActivity();
-            if (canEnterTest) {
+                // 测试某个 activity
+                if (shouldTest) {
+                    boolean canEnterTest = testMyActivity();
+                    if (canEnterTest) {
+                        isScreenInitialized = true;
+                        return;
+                    }
+                }
+
+                if (isScreenInitialized) return;
                 isScreenInitialized = true;
-                return;
+                initScreen();
             }
+        });
+        if (!Attribute.isAccountInitialized){
+            Attribute.QQ = prefGeneral.getString("loginUserName", "");
+            initAccount();
+        } else {
+            isAccountInitialized.setValue(true);
         }
+        if (!shouldTest){
+            isScreenInitialized = true;
+            initScreen();
+        }
+    }
 
-        initScreen();
-        isScreenInitialized = true;
+    /**
+     * 保证在账号信息加载完成后运行
+     * @param task 任务
+     */
+    public static void endowAccount(final Runnable task){
+        final Handler accountInitHandler = new Handler();
+        new Runnable() {
+            @Override
+            public void run() {
+                if (!Attribute.isAccountInitialized){
+                    accountInitHandler.postDelayed(this, 100);
+                    return;
+                }
+                task.run();
+            }
+        }.run();
     }
 
     private boolean checkAccount(){
@@ -110,27 +147,25 @@ public class MainActivity extends GeneralActivity {
         return isLoggedIn;
     }
 
-    private void initAccount(){
+    private void initAccount() {
         new Thread(new Runnable() {
             @Override
-            public void run() {  //-----吴（改）
+            public void run() {  // -----吴（改）
                 try {
-                   getInfo();
-                }
-                catch (Exception e){
+                    getInfo();
+                } catch (Exception e) {
                     try {
                         getInfo();
-                    }
-                    catch (Exception e2){
-                        //两次没有访问到网络,给出提示
-                        Toast.makeText(MainActivity.this,"请检查网络连接",Toast.LENGTH_LONG).show();
+                    } catch (Exception e2) {
+                        // 两次没有访问到网络,给出提示
+                        Toast.makeText(MainActivity.this, "请检查网络连接", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }).start();
     }
 
-    //访问网络获取个人信息----吴 （加）
+    // 访问网络获取个人信息----吴 （加）
     private void getInfo(){
         MyDateBase dateBase = new MyDateBase();
         final User myAccount = dateBase.getUser(Attribute.QQ);
@@ -139,6 +174,12 @@ public class MainActivity extends GeneralActivity {
         Attribute.currentAccount = myAccount;
         Attribute.currentAccountProfilePhoto = profilePhoto;
         Attribute.isAccountInitialized = true;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                isAccountInitialized.setValue(true);
+            }
+        });
     }
 
     private void initScreen(){
@@ -167,6 +208,12 @@ public class MainActivity extends GeneralActivity {
         super.onBackPressed();
     }
 
+    private boolean shouldTestMyActivity(){
+        String testActivityName = BuildConfig.TEST_ACTIVITY_NAME;
+        if (testActivityName == null || testActivityName.isEmpty()) return false;
+        return true;
+    }
+
     /**
      * 测试某个 Activity，而不修改会上传到 Github 的文件
      * 在 local.properties 文件里新增一行：testActivityName=com.aclass.android.qq.MyActivity
@@ -174,10 +221,8 @@ public class MainActivity extends GeneralActivity {
      * @return 是否能够成功进入测试
      */
     private boolean testMyActivity(){
-        String testActivityName = BuildConfig.TEST_ACTIVITY_NAME;
-        if (testActivityName == null || testActivityName.isEmpty()) return false;
         try {
-            Class klass = Class.forName(testActivityName);
+            Class klass = Class.forName(BuildConfig.TEST_ACTIVITY_NAME);
             ActivityOpreation.jumpActivity(this, klass);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
