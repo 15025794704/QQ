@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -93,6 +95,13 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
             @Override
             public void run() {
                 try {
+                    if(Attribute.userHeadList==null)
+                        Attribute.userHeadList=new HashMap<String, Bitmap>();
+                    if(Attribute.userInfoList==null)
+                        Attribute.userInfoList=new HashMap<String, User>();
+                    if(Attribute.friendList==null)
+                        Attribute.friendList=new HashMap<String, Friend>();
+
                     List<GroupTitleInfo> groupList = new ArrayList<>();
                     List<String> list = new ArrayList<>();
                     List<Friend> specificFriends;
@@ -121,8 +130,18 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     String beizhu = specificFriends.get(j).getBeiZhu();
                                     int isHide = specificFriends.get(j).getIsHide();
                                     User user = myDateBase.getUser(specificFriends.get(j).getQQ2());
+                                    //添加 好友信息 到公共集合
+                                    if(!Attribute.userInfoList.containsKey(user.getQQNum())){
+                                        Attribute.userInfoList.put(user.getQQNum(),user);
+                                    }
+
                                     String qianming = user.getQianMing();
                                     Bitmap headImage = myDateBase.getImageByQQ(user.getQQNum());
+                                    //添加 好友头像 到公共集合
+                                    if(!Attribute.userHeadList.containsKey(user.getQQNum())){
+                                        Attribute.userHeadList.put(user.getQQNum(),headImage);
+                                    }
+
                                     //给ContentInfo赋值
                                     ContentInfo contentInfo = new ContentInfo();
                                     contentInfo.setBeiZhu(beizhu);
@@ -153,6 +172,9 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                 }
                 catch (Exception e){
                     e.printStackTrace();
+                }
+                finally {
+                    Log.d("TAG","朋友："+Attribute.friendList.size()+",用户："+Attribute.userInfoList.size()+",头像:"+Attribute.userHeadList.size());
                 }
 
             }
