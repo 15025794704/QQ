@@ -119,7 +119,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         final Button btnTop=(Button) view.findViewById(R.id.btnTop);
         Button btnDelete=(Button) view.findViewById(R.id.btnDelete);
 
-        NameMsg.setText( msgList.getQQFriend());
+        NameMsg.setText( msgList.getName());
         TimeMsg.setText(msgList.getTime());
         if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
             HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
