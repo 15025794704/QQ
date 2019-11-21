@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
+        tools:context=".settings.SettingsAccountsActivity"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -93,12 +94,14 @@
 
                     <TextView
                         android:id="@+id/settingsAccountsLogOut"
+                        android:onClick="onClick"
                         android:text="退出当前账号"
                         android:drawableEnd="@null"
                         style="@style/AppTheme.SimpleOption"/>
 
                     <TextView
                         android:id="@+id/settingsAccountsQuit"
+                        android:onClick="onClick"
                         android:text="退出 QQ"
                         android:drawableEnd="@null"
                         style="@style/AppTheme.SimpleOption"/>

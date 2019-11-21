@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -65,6 +64,18 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+
+        if (Attribute.isAccountInitialized){
+            bindData();
+        } else {
+            MainActivity.endowAccount(new Runnable() {
+                @Override
+                public void run() {
+                    bindData();
+                }
+            });
+        }
+
         // 点击头像切换至抽屉页面
         mViews.mainNavIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,17 +83,24 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
                 mActivity.setPagerItem(0);
             }
         });
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Attribute.currentAccountProfilePhoto == null) return;
-                Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
-                mViews.mainNavIcon.setImageBitmap(navIcon);
-            }
-        }, 600);
         mViews.mainBottomNav.setItemIconTintList(null);
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
+    }
+
+    private void bindData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mViews.mainNavIcon.setImageBitmap(navIcon);
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override

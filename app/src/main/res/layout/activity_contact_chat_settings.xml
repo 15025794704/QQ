@@ -3,6 +3,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".chat.contact.ContactChatSettingsActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -29,6 +30,7 @@
 
                 <TextView
                     android:id="@+id/chatSettingsContactInfo"
+                    android:onClick="onClick"
                     tools:text="好友昵称"
                     android:drawableStart="@drawable/ic_menu_24"
                     style="@style/AppTheme.SimpleOption"/>
@@ -86,6 +88,8 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
+                    android:id="@+id/chatSettingsContactRemoveContact"
+                    android:onClick="onClick"
                     android:text="删除好友"
                     android:textColor="#FFF03030"
                     android:gravity="center"

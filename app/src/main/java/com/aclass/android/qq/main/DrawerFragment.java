@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,11 @@ import android.widget.RelativeLayout;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.custom.GeneralFragment;
+import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.settings.SettingsActivity;
-import com.aclass.android.qq.custom.GeneralFragment;
-import com.aclass.android.qq.databinding.FragmentDrawerBinding;
-import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.HashMap;
 
@@ -39,24 +37,6 @@ public class DrawerFragment extends GeneralFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViews = FragmentDrawerBinding.inflate(inflater, container, false);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //初始化-吴
-                Attribute.userInfoList=new HashMap<String, User>();
-                Attribute.userHeadList=new HashMap<String, Bitmap>();
-                Attribute.userInfoList.put(Attribute.QQ,Attribute.currentAccount);
-                Attribute.userHeadList.put(Attribute.QQ,Attribute.currentAccountProfilePhoto);
-                if(Attribute.currentAccount!=null) {
-                    Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
-                    mViews.sideHead.setImageBitmap(navIcon);
-                    mViews.name.setText(Attribute.currentAccount.getNiCheng());
-                    mViews.myMessage.setText(Attribute.currentAccount.getQianMing());
-                }
-            }
-        }, 800);
-
         return mViews.getRoot();
     }
 
@@ -64,6 +44,17 @@ public class DrawerFragment extends GeneralFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+
+        if (Attribute.isAccountInitialized){
+            initData();
+        } else {
+            MainActivity.endowAccount(new Runnable() {
+                @Override
+                public void run() {
+                    initData();
+                }
+            });
+        }
 
         // 点击关闭按钮切换至应用主页面
         mViews.closeSide.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +82,19 @@ public class DrawerFragment extends GeneralFragment {
                 startActivity(new Intent(mActivity, SettingsActivity.class));
             }
         });
+    }
+
+    private void initData() {
+        //初始化-吴
+        User account = Attribute.currentAccount;
+        Attribute.userInfoList = new HashMap<>();
+        Attribute.userHeadList = new HashMap<>();
+        Attribute.userInfoList.put(Attribute.QQ, account);
+        Attribute.userHeadList.put(Attribute.QQ, Attribute.currentAccountProfilePhoto);
+        Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+        mViews.sideHead.setImageBitmap(navIcon);
+        mViews.name.setText(account.getNiCheng());
+        mViews.myMessage.setText(account.getQianMing());
     }
 
     @Override
