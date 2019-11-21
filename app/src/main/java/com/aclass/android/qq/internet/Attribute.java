@@ -30,6 +30,11 @@ public class Attribute {
     // 当前账号是否完成初始化
     public static boolean isAccountInitialized = false;
     public static Map<String,Friend> friendList;
+    //所有qq对应的信息
+    public static Map<String,User> userInfoList;
+    //所有qq的头像
+    public static Map<String,Bitmap> userHeadList;
+
 
     //好友消息列表
     public static List<MsgList> msgList;

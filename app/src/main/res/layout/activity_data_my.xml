@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context="com.aclass.android.qq.MyDataActivity"
     android:id="@+id/activity_data_my"
     android:background="@color/color_white">
@@ -14,33 +15,30 @@
         android:layout_above="@+id/bottomNavigation">
 
         <RelativeLayout
+            android:background="@drawable/toolbar_bg_change_color"
             android:id="@+id/myBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
           >
-            <ImageView
-                android:id="@+id/myPicture"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:background="#9909"
-                />
 
             <TextView
                 android:id="@+id/myReturn"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/AppTheme.MyDataActivitySimpleOption"
-                android:text="设置"
                 />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:background="@drawable/toolbar_bg_change_color"
             android:id="@+id/iconBlock"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/myDetailMessage"
-            >
+            android:layout_below="@+id/myBackground"
+            android:layout_alignParentStart="true">
             <ImageView
                 android:id="@+id/myIcon"
                 android:layout_margin="10dp"
@@ -101,13 +99,15 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:paddingTop="10dp"
             android:id="@+id/myDetailMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_centerInParent="true"
-            >
+            android:layout_below="@+id/iconBlock"
+            android:layout_alignParentStart="true">
             <TextView
+                android:id="@+id/myDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/AppTheme.MainSideSimpleOption"

@@ -11,11 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.settings.SettingsActivity;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
+import com.aclass.android.qq.tools.MyDateBase;
+
+import java.util.HashMap;
 
 /**
  * 应用抽屉页面，从主页面右滑进入
@@ -38,6 +43,11 @@ public class DrawerFragment extends GeneralFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //初始化-吴
+                Attribute.userInfoList=new HashMap<String, User>();
+                Attribute.userHeadList=new HashMap<String, Bitmap>();
+                Attribute.userInfoList.put(Attribute.QQ,Attribute.currentAccount);
+                Attribute.userHeadList.put(Attribute.QQ,Attribute.currentAccountProfilePhoto);
                 if(Attribute.currentAccount!=null) {
                     Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
                     mViews.sideHead.setImageBitmap(navIcon);
@@ -45,7 +55,7 @@ public class DrawerFragment extends GeneralFragment {
                     mViews.myMessage.setText(Attribute.currentAccount.getQianMing());
                 }
             }
-        }, 600);
+        }, 800);
 
         return mViews.getRoot();
     }
@@ -66,6 +76,14 @@ public class DrawerFragment extends GeneralFragment {
         mViews.recordView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(6.0/121))));
         mViews.detailMenu.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(70.0/121))));
 
+        mViews.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mActivity, MyDataActivity.class);
+                intent.putExtra("qqNum",Attribute.QQ);
+                startActivity(intent);
+            }
+        });
         // 进入设置页面
         mViews.install.setOnClickListener(new View.OnClickListener() {
             @Override

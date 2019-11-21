@@ -1,10 +1,17 @@
 package com.aclass.android.qq.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2019/11/20.
  */
 
 public class MsgList{
+
+
     public String getName() {
         return name;
     }
@@ -21,22 +28,6 @@ public class MsgList{
         this.time = time;
     }
 
-    public String getQQFriend() {
-        return QQFriend;
-    }
-
-    public void setQQFriend(String QQFriend) {
-        this.QQFriend = QQFriend;
-    }
-
-    public boolean isTop() {
-        return isTop;
-    }
-
-    public void setTop(boolean top) {
-        isTop = top;
-    }
-
     public int getIndex() {
         return index;
     }
@@ -45,20 +36,37 @@ public class MsgList{
         this.index = index;
     }
 
-    public MsgList(){}
-
-    public MsgList(String QQFriend, String name, String time, int index, boolean isTop) {
-        this.QQFriend = QQFriend;
-        this.name = name;
-        this.time = time;
-        this.index = index;
-        this.isTop = isTop;
+    public String getQQFriend() {
+        return QQFriend;
     }
 
-    String name;
-    String time;
-    String QQFriend;
-    int index;
-    boolean isTop=false;
+    public void setQQFriend(String QQFriend) {
+        this.QQFriend = QQFriend;
+    }
+
+    private String name;
+    private String time;
+    private String QQFriend;
+    private int index;
+    private boolean top;
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
+    }
+
+
+    public MsgList(String name, String time, String QQFriend, int index, boolean isTop) {
+        this.name = name;
+        this.time = time;
+        this.QQFriend = QQFriend;
+        this.index = index;
+        this.top = isTop;
+    }
+
+    public MsgList(){}
 
 }

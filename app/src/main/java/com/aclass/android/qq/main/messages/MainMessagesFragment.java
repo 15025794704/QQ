@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
@@ -38,6 +40,7 @@ import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -83,14 +86,20 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             //读取json数据
             byte[] data = new byte[fis.available()];
             fis.read(data);
-            String json=new String(data,0,data.length);
+            String json=new String(data,0,data.length,"utf-8");
             json="["+json.substring(0,json.length()-1)+"]";
+
             //转换json数据
-            Attribute.msgList=new ArrayList<>();
+            Attribute.msgList=null;
             Gson gson = new Gson();
             Type listType=new TypeToken<List<MsgList>>(){}.getType();
-            Attribute. msgList = gson.fromJson(json, listType);
+            List<MsgList> lists = gson.fromJson(json, listType);
+            Attribute.msgList=lists;
+            if(Attribute.msgList==null){
+                Attribute.msgList=new ArrayList<>();
+            }
 
+            Toast.makeText(mActivity,""+lists.size(),Toast.LENGTH_LONG).show();
             //加载
             msgListBox.removeAllViewsInLayout();
             for (int i=0;i<Attribute.msgList.size();i++ ) {
@@ -98,9 +107,10 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                 View view=fillValue(msg);
                 msgListBox.addView(view,i);
             }
+            Toast.makeText(mActivity,"2222",Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
-            e.printStackTrace();
+            Log.e("TAG",""+e.getLocalizedMessage());
         }
     }
 
@@ -118,11 +128,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         TimeMsg.setText(msgList.getTime());
         if(msgList.isTop()) {
             btnTop.setText("取消置顶");
-            LinearMsgC.setBackgroundColor(Color.parseColor("#eee"));
+            LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
         else{
             btnTop.setText("置顶");
-            LinearMsgC.setBackgroundColor(Color.parseColor("#fff"));
+            LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         LinearMsgC.setOnClickListener(new View.OnClickListener() {
@@ -152,11 +162,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                                 int mc = Receiver.getMaxTopCount();
                                 MsgList msg = Attribute.msgList.get(i);
                                 if(btnTop.getText().equals("置顶")) {
-                                    LinearMsgC.setBackgroundColor(Color.parseColor("#eee"));
+                                    LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
                                     msg.setTop(true);
                                 }
                                 else {
-                                    LinearMsgC.setBackgroundColor(Color.parseColor("#fff"));
+                                    LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
                                     msg.setTop(false);
                                 }
                                 msg.setIndex(mc + 1);
