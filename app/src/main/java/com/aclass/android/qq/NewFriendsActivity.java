@@ -110,6 +110,6 @@ public class NewFriendsActivity extends GeneralActivity {
 
     @Override
     protected void consumeInsets(Rect insets) {
-        findViewById(R.id.newFriendToolbar).setPadding(0,insets.top,0,0);
+        findViewById(R.id.new_friend_item_bar).setPadding(0,insets.top,0,0);
     }
 }

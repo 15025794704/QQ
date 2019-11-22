@@ -79,6 +79,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     private Thread getMsgThread;
     private boolean isExit=false;
 
+    private Bitmap friendHead;
+
     private int load=0;
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -213,6 +215,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             title=Attribute.userInfoList.get(QQFriend).getNiCheng();
 
         titleName.setText(title);
+
+        friendHead=Attribute.userHeadList.get(QQFriend);
 
         btn_send=(Button)findViewById(R.id.message_btn_sendmsg) ;
         edit=(EditText)findViewById(R.id.editText_message_send);
