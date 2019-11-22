@@ -662,11 +662,14 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             view = View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item, null);
             textView = (TextView) view.findViewById(R.id.window_message_list_item_textView);
             head = (RoundImageView) view.findViewById(R.id.window_message_list_item_head);
+            if(friendHead!=null)
+                head.setImageBitmap(friendHead);
         }
         else{
             view = View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item_right, null);
             textView = (TextView) view.findViewById(R.id.window_message_list_item_textView_right);
             head = (RoundImageView) view.findViewById(R.id.window_message_list_item_head_right);
+            head.setImageBitmap(Attribute.currentAccountProfilePhoto);
         }
         textView.setText("");
         int indexStart=0;
