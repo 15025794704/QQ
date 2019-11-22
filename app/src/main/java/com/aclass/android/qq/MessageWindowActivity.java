@@ -172,7 +172,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
 
     protected FileInputStream readFile(String QQFriend){
         try {
-            FileInputStream fis = openFileInput( QQFriend + ".json");
+            FileInputStream fis = openFileInput(Attribute.QQ+ QQFriend + ".json");
             return fis;
         }
         catch (FileNotFoundException e){

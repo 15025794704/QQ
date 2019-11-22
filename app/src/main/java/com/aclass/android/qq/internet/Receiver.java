@@ -123,7 +123,7 @@ public class Receiver {
 
     public  static void writeMessageToFile(Context context,Message msg,String QQFriend){
         try {
-            FileOutputStream fos = context.openFileOutput(QQFriend + ".json", Context.MODE_APPEND);
+            FileOutputStream fos = context.openFileOutput(Attribute.QQ+QQFriend + ".json", Context.MODE_APPEND);
             String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
                     "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
             fos.write(json.getBytes());
@@ -138,7 +138,7 @@ public class Receiver {
     public  static void writeMsgListToFile(Context context){
         try {
             List<MsgList> msgList=Attribute.msgList;
-            FileOutputStream fos = context.openFileOutput("messageList.json", Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(Attribute.QQ+"messageList.json", Context.MODE_PRIVATE);
             for(int i=0;i<msgList.size();i++) {
                 if(msgList.get(i).getIndex()!=-1) {
                     String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +

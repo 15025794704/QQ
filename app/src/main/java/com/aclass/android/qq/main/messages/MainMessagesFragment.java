@@ -89,7 +89,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             if(Attribute.msgList==null){
                 Attribute.msgList=new ArrayList<>();
             }
-            FileInputStream fis = mActivity.openFileInput("messageList.json");
+            FileInputStream fis = mActivity.openFileInput(Attribute.QQ+"messageList.json");
             if(fis==null)
                 return;
 
