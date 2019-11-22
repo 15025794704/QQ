@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/AppTheme.WaitingAgree"
+        >
+
+        <ImageView
+            style="@style/AppTheme.NewFriendsIconOption"/>
+
+        <TextView
+            android:id="@+id/new_friend_item_name"
+            style="@style/AppTheme.NewFriendsNameOption"
+            android:text="Mourn"/>
+
+        <ImageView
+            style="@style/AppTheme.NewFriendsSexOption"
+            />
+
+        <TextView
+            style="@style/AppTheme.NewFriendsAgeOption"
+            android:text="21"
+            />
+
+        <TextView
+            android:id="@+id/new_friend_item_des"
+            style="@style/AppTheme.NewFriendsMessageOption"
+            android:text="我是Mourn"
+            />
+
+        <TextView
+            style="@style/AppTheme.NewFriendsQQFromOption"
+            android:text="QQ来源："
+            />
+
+        <TextView
+            style="@style/AppTheme.NewFriendsFromOption"
+            android:text="QQ号查找"
+            />
+
+        <Button
+            android:id="@+id/new_friend_item_btn"
+            android:background="@drawable/data_my_button"
+            style="@style/AppTheme.WaitingAgreeBtn"
+            android:text="同意"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

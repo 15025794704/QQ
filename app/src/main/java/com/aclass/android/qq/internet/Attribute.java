@@ -35,6 +35,9 @@ public class Attribute {
     //所有qq的头像
     public static Map<String,Bitmap> userHeadList;
 
+    //点击同意好友
+    public static int agreeFriendClick=0;
+
 
     //好友消息列表
     public static List<MsgList> msgList;

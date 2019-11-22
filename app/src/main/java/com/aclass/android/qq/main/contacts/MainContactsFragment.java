@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
+import com.aclass.android.qq.NewFriendsActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
@@ -69,7 +70,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
             @Override
             public void onClick(View v) {
                 //跳转好友申请页面
-//                ActivityOpreation.jumpActivity(mActivity,);
+                ActivityOpreation.jumpActivity(mActivity, NewFriendsActivity.class);
             }
         });
         initData();
@@ -79,6 +80,11 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
         title.setText(R.string.mainBottomNavContacts);
+        if(Attribute.agreeFriendClick==1)
+        {
+            Attribute.agreeFriendClick=0;
+            initData();
+        }
     }
 
     @Override
@@ -137,7 +143,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
 
                             specificFriends = myDateBase.getFriendsByqqGroup(newList.get(i));//获取特定组名下的好友列表
                             for (int j = 0; j < specificFriends.size(); j++) {
-                                if (!specificFriends.isEmpty()) {
+                                if (!specificFriends.isEmpty() && specificFriends.get(j).getIsAgree()!=0) {
                                     //从数据库中获取好友信息
                                     String beizhu = specificFriends.get(j).getBeiZhu();
                                     int isHide = specificFriends.get(j).getIsHide();
@@ -153,6 +159,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     if(!Attribute.userHeadList.containsKey(user.getQQNum())){
                                         Attribute.userHeadList.put(user.getQQNum(),headImage);
                                     }
+
 
                                     //给ContentInfo赋值
                                     ContentInfo contentInfo = new ContentInfo();

@@ -2,6 +2,7 @@ package com.aclass.android.qq.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.UnicodeSet;
 import android.util.Log;
 
 import com.aclass.android.qq.entity.*;
@@ -320,6 +321,29 @@ public class MyDateBase {
 		Request request=new Request(1, "select * from T_friends where QQ1='"+qqNum+"'", new Friend());
 		UDPsend(request);
 		return (List<Friend>)receiveObject();
+	}
+
+	/**
+	 * 通过qq号获取请求添加好友实体的集合
+	 * @param qqNum
+	 * @return
+	 */
+	public  List<User> getFriendsUser(String qqNum){
+		Request request=new Request(1, "select * from T_friends where QQ2='"+qqNum+"' and isAgree=0", new Friend());
+		UDPsend(request);
+		List<Friend> l= (List<Friend>)receiveObject();
+
+		String sql="";
+		for(Friend f:l){
+			sql+="'"+f.getQQ1()+"',";
+		}
+		if(sql.length()==0)
+			return null;
+		sql=sql.substring(0,sql.length()-1);
+		request=new Request(1, "select * from T_user where QQNum in("+sql+")", new User());
+		UDPsend(request);
+		List<User> u= (List<User>)receiveObject();
+		return u;
 	}
 	
 	/**
