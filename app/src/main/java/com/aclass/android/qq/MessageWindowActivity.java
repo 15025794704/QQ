@@ -293,7 +293,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                                        int tempI= Receiver.getIndexByQQ(QQFriend);
                                         int mc =Receiver.getMaxTopCount();
                                         if(tempI!=-1){
-                                            if(tempI!=mc) {
+                                            if(tempI!=mc && tempI>mc) {
                                                 MsgList msg = Attribute.msgList.get(tempI);
                                                 Attribute.msgList.remove(tempI);
                                                 Attribute.msgList.add(mc , msg);
