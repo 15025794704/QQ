@@ -1,5 +1,6 @@
 package com.aclass.android.qq.main.messages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -84,12 +85,9 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         loadMsgList();
     }
 
-    public  void readFile(){
+    public static  void readFile(Activity activity){
         try {
-            if(Attribute.msgList==null){
-                Attribute.msgList=new ArrayList<>();
-            }
-            FileInputStream fis = mActivity.openFileInput(Attribute.QQ+"messageList.json");
+            FileInputStream fis = activity.openFileInput(Attribute.QQ+"messageList.json");
             if(fis==null)
                 return;
 
@@ -100,25 +98,16 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             if(json.equals(""))
                 return;
             json="["+json.substring(0,json.length()-1)+"]";
-            Log.d("TAG","加载json:"+json);
             //转换json数据
-            Attribute.msgList=null;
+            Attribute.msgList=new ArrayList<>();
             Gson gson = new Gson();
             Type listType=new TypeToken<List<MsgList>>(){}.getType();
             List<MsgList> lists = gson.fromJson(json, listType);
             Attribute.msgList=lists;
-
-            //加载
-            msgListBox.removeAllViewsInLayout();
-            for (int i=0;i<Attribute.msgList.size();i++ ) {
-                MsgList msg =Attribute. msgList.get(i);
-                View view=fillValue(msg);
-                msgListBox.addView(view,i);
-            }
+            System.out.println(Attribute.msgList.size());
         }
         catch (Exception e){
             e.printStackTrace();
-            Log.e("TAG",""+e.getLocalizedMessage());
         }
     }
 
@@ -159,7 +148,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                 ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class,new String[]{msgList.getQQFriend()});
                 Receiver.setPoint(msgList.getQQFriend(),false);
                 Receiver.writeMsgListToFile(mActivity);
-                readFile();
+                loadMsgList();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -189,9 +178,13 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                                     msg.setTop(false);
                                 }
                                 msg.setIndex(mc);
-                                Attribute.msgList.set(mc,msg);
+                                Attribute.msgList.add(mc,msg);
+                                if(mc<i)
+                                    Attribute.msgList.remove(i+1);
+                                else
+                                    Attribute.msgList.remove(i);
                                 Receiver.writeMsgListToFile(mActivity);
-                                readFile();
+                                loadMsgList();
                                 break;
                             }
                     }
@@ -201,7 +194,14 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     private void loadMsgList(){
-        readFile();
+        readFile(mActivity);
+        //加载
+        msgListBox.removeAllViewsInLayout();
+        for (int i=0;i<Attribute.msgList.size();i++ ) {
+            MsgList msg =Attribute. msgList.get(i);
+            View view=fillValue(msg);
+            msgListBox.addView(view,i);
+        }
     }
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {

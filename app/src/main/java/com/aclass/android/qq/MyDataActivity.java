@@ -67,6 +67,11 @@ public class MyDataActivity extends GeneralActivity {
         Intent intent=getIntent();
         String qqNum=intent.getStringExtra("qqNum");
         User user= Attribute.userInfoList.get(qqNum);
+        if(!Attribute.QQ.equals(qqNum))
+            editBtn.setText("好友设置");
+        else
+            editBtn.setText("编辑资料");
+
         if(user!=null){
             Bitmap bitmap=Attribute.userHeadList.get(qqNum);
                if( bitmap!=null) {
@@ -114,6 +119,15 @@ public class MyDataActivity extends GeneralActivity {
                     ActivityOpreation.jumpActivity(MyDataActivity.this,MessageWindowActivity.class,new String[]{qq.getText().toString()});
                     finish();
                 }
+            }
+        });
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if(!Attribute.QQ.equals(qq.getText()))
+//                    ActivityOpreation.jumpActivity();
+//                else
+//                    ActivityOpreation.jumpActivity();
             }
         });
     }

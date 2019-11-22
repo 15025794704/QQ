@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 import android.widget.ScrollView;
 
 import com.aclass.android.qq.MessageWindowActivity;
@@ -16,10 +17,15 @@ import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.MsgList;
 import com.aclass.android.qq.entity.Request;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.main.messages.MainMessagesFragment;
 import com.aclass.android.qq.tools.MyDateBase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -38,32 +44,46 @@ import java.util.List;
 public class Receiver {
 
     public static void startReceiver(final Context context,final Activity activity){
-        if(Attribute.restartMessageReceive!=null)
-            return;
+
+        Attribute.msgArrayList=new ArrayList<>();
+
         Attribute.restartMessageReceive=new Thread(new Runnable() {
             @Override
             public void run() {
+                SystemClock.sleep(3000);
+                try {
+                    MainMessagesFragment.readFile(activity);
+                }
+                catch (Exception e){e.printStackTrace();}
+
+                receive(context,activity);
                 while(true) {
                     try {
-                        SystemClock.sleep(3*1000);
                         getLastMsg(context);
                         SystemClock.sleep(2*60*1000);
-                        Attribute.mainMessageReceive.stop();
+//                        SystemClock.sleep(20*1000);
+                        Attribute.mainMessageReceive.destroy();
                     }
-                    catch (Exception e){}
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     finally {
                         try {
-                            Attribute.mainMessageReceive.start();
+                            receive(context,activity);
                         }
                         catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
                 }
             }
         });
 
-        Attribute.msgArrayList=new ArrayList<>();
+        Attribute.restartMessageReceive.start();
 
+    }
+
+    private static void receive(final Context context,final Activity activity){
         Attribute.mainMessageReceive=new Thread(new Runnable() {//发送服务器登录信息
             @Override
             public void run() {
@@ -110,9 +130,9 @@ public class Receiver {
                                         }
                                         Receiver.writeMessageToFile(context, msg, msg.getSendQQ());
                                         if (changeIndex(msg.getSendQQ())) {
-                                            setPoint(msg.getSendQQ(), true);
                                             writeMsgListToFile(context);
                                         }
+                                        setPoint(msg.getSendQQ(), true);
                                     }
                                 }
                             }).start();
@@ -125,26 +145,31 @@ public class Receiver {
                 }
             }
         });
-
-        Attribute.restartMessageReceive.start();
         Attribute.mainMessageReceive.start();
     }
 
+
+
+    //获取历史消息
     private static void getLastMsg(Context context){
         try {
             MyDateBase myDateBase = new MyDateBase();
             List<Message> msgList = myDateBase.getMessages(Attribute.QQ);
             for (Message msg : msgList) {
                 writeMessageToFile(context, msg, msg.getSendQQ());
-                msg.setState(1);
+                changeIndex(msg.getSendQQ());
+                setPoint(msg.getSendQQ(), true);
             }
-            myDateBase.updateMessage(Attribute.QQ);
+            if(msgList!=null && msgList.size()!=0)
+                myDateBase.updateMessage(Attribute.QQ);
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        finally {
+            writeMsgListToFile(context);
+        }
     }
-
 
 
     public  static void writeMessageToFile(Context context,Message msg,String QQFriend){
@@ -167,20 +192,22 @@ public class Receiver {
     public  static void writeMsgListToFile(Context context){
         try {
             List<MsgList> msgList=Attribute.msgList;
-            FileOutputStream fos = context.openFileOutput(Attribute.QQ+"messageList.json", Context.MODE_PRIVATE);
-            for(int i=0;i<msgList.size();i++) {
-                if(msgList.get(i).getIndex()!=-1) {
-                    String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +
-                            "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() +
-                            "\",\"point\":" + msgList.get(i).isPoint() +
-                            ",\"top\":" + msgList.get(i).isTop()
-                            + ",\"index\":" + i + "},";
-                    fos.write(json.getBytes());
-                    fos.flush();
-                    Log.d("TAG",json);
+            if(msgList!=null) {
+                FileOutputStream fos = context.openFileOutput(Attribute.QQ + "messageList.json", Context.MODE_PRIVATE);
+                for (int i = 0; i < msgList.size(); i++) {
+                    if (msgList.get(i).getIndex() != -1) {
+                        String json = "{\"name\":\"" + msgList.get(i).getName() + "\",\"time\":\"" + msgList.get(i).getTime() +
+                                "\",\"QQFriend\":\"" + msgList.get(i).getQQFriend() +
+                                "\",\"point\":" + msgList.get(i).isPoint() +
+                                ",\"top\":" + msgList.get(i).isTop()
+                                + ",\"index\":" + i + "},";
+                        fos.write(json.getBytes());
+                        fos.flush();
+                        Log.d("TAG", json);
+                    }
                 }
+                fos.close();
             }
-            fos.close();
         }
         catch (IOException e){
             Log.e("TAG",e.toString());
@@ -197,12 +224,13 @@ public class Receiver {
         }
         if(qqIndex==-1){
             Friend f= Attribute.friendList.get(QQFriend);
-            MsgList m= new MsgList(QQFriend,f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),topMc+1,false);
+            MsgList m= new MsgList(QQFriend,f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),topMc,false);
             Attribute.msgList.add(topMc,m);
         }
         else{
             MsgList m= Attribute.msgList.get(qqIndex);
             m.setTime(d.getHours()+":"+d.getMinutes());
+            Attribute.msgList.set(qqIndex,m);
             if(m.isTop())
                 return false;
             m.setIndex(topMc);
@@ -237,10 +265,14 @@ public class Receiver {
         return c;
     }
 
+
+
     public static void setPoint(String QQ,boolean point){
         int index= getIndexByQQ(QQ);
-       MsgList msg= Attribute.msgList.get(index);
-        msg.setPoint(point);
-        Attribute.msgList.set(index,msg);
+        if(index!=-1) {
+            MsgList msg = Attribute.msgList.get(index);
+            msg.setPoint(point);
+            Attribute.msgList.set(index, msg);
+        }
     }
 }

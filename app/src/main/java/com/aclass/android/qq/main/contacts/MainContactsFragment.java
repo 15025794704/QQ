@@ -110,6 +110,8 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
      * 初始化数据
      */
     private void initData() {
+        if(Attribute.msgList==null)
+            Attribute.msgList=new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -143,7 +145,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     for (int i = 0; i < newList.size(); i++) {
                         List<ContentInfo> listContentInfos = new ArrayList<>();
                         if (!newList.isEmpty()) {
-
+                            SystemClock.sleep(100);
                             specificFriends = myDateBase.getFriendsByqqGroup(newList.get(i));//获取特定组名下的好友列表
                             for (int j = 0; j < specificFriends.size(); j++) {
                                 if (!specificFriends.isEmpty() && specificFriends.get(j).getIsAgree()!=0) {
@@ -157,6 +159,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     }
 
                                     String qianming = user.getQianMing();
+                                    SystemClock.sleep(20);
                                     Bitmap headImage = myDateBase.getImageByQQ(user.getQQNum());
                                     //添加 好友头像 到公共集合
                                     if(!Attribute.userHeadList.containsKey(user.getQQNum())){
@@ -189,7 +192,9 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     adapter = new PinnedHeaderExpandableAdapter(groupListTemp, getActivity());
                                     explistView.setAdapter(adapter);
                                 }
-                                catch (Exception e){}
+                                catch (Exception e){
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     }

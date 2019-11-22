@@ -35,7 +35,7 @@ public class Attribute {
     //所有qq的头像
     public static Map<String,Bitmap> userHeadList;
 
-    //点击同意好友
+    //点击同意好友,列表更新
     public static int agreeFriendClick=0;
 
 
@@ -50,7 +50,7 @@ public class Attribute {
     public static Request friendVideoRequest;
     public static Request friendMessageRequest;
     public static ArrayList<Message> msgArrayList;
-    public static String insertQQview;
+    public static String insertQQview;//当前所处qq聊天窗口的好友qq
     public static Boolean isInVideo=false;
     public static byte[] video_bitmap;
     public static byte[] video_bitmap_send;
