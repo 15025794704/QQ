@@ -1,6 +1,6 @@
 package com.aclass.android.qq.main;
 
-import android.graphics.Bitmap;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -46,6 +46,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     // 动态页面的 fragment
     private MainExploreFragment fragmentExplore;
     private Fragment currentFragment;
+    private MainFragmentViewModel mViewModel;
 
     public static MainFragment newInstance(){
         return new MainFragment();
@@ -64,6 +65,8 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+
+        mViewModel = ViewModelProviders.of(this).get(MainFragmentViewModel.class);
 
         if (Attribute.isAccountInitialized){
             bindData();
@@ -87,22 +90,27 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         // 导航栏点击事件监听器，进行页面切换
         mViews.mainBottomNav.setOnNavigationItemSelectedListener(this);
         // 好友列表初始化在“联系人”里面
-        mViews.mainBottomNav.setSelectedItemId(R.id.mainBottomNavContacts);
+        if (mViewModel.itemId == 0) mViewModel.itemId = R.id.mainBottomNavContacts;
+        mViews.mainBottomNav.setSelectedItemId(mViewModel.itemId);
     }
 
     private void bindData(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViews.mainNavIcon.setImageBitmap(navIcon);
-                    }
-                });
-            }
-        }).start();
+        if (mViewModel.accountProfilePhoto != null) {
+            mViews.mainNavIcon.setImageBitmap(mViewModel.accountProfilePhoto);
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mViewModel.accountProfilePhoto = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mViews.mainNavIcon.setImageBitmap(mViewModel.accountProfilePhoto);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     @Override
@@ -151,6 +159,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mViewModel.itemId = item.getItemId();
         Fragment fragment = getNavFragment(item);
         if (fragment == currentFragment) return true;
 
