@@ -18,4 +18,6 @@
     <color name="color_tool_bar_blue_start">#00D7FE</color>
     <color name="color_tool_bar_blue_end">#00A7FF</color>
 
+    <color name="wait_agree_yellow">#F4F4B5</color>
+
 </resources>

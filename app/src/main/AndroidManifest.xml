@@ -51,6 +51,7 @@
         <activity android:name=".SplashActivity" />
         <activity android:name=".MainSideActivity" />
         <activity android:name=".MyDataActivity" />
+        <activity android:name=".NewFriendsActivity" />
 
         <service
             android:name=".internet.ReceiveService"

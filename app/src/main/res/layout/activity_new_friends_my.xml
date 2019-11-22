@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aclass.android.qq.NewFriendsActivity"
+    android:id="@+id/activity_new_friends_my"
+    android:background="@color/color_white"
+    >
+
+    <com.aclass.android.qq.custom.control.MyToolbar
+        android:id="@+id/newFriendToolbar"
+        app:contentInsetStart="@dimen/optionPaddingHorizontal"
+        app:contentInsetEnd="@dimen/optionPaddingHorizontal"
+        app:navigationIcon="@null"
+        style="@style/AppTheme.Toolbar">
+
+        <ImageView
+            android:src="@drawable/ic_return"
+            android:layout_gravity="start"
+            style="@style/AppTheme.ToolbarTitle"
+             />
+        <TextView
+            android:text="新朋友"
+            style="@style/AppTheme.ToolbarTitle"/>
+
+        <TextView
+            android:id="@+id/newFriendToolbarSend"
+            android:text="添加"
+            android:textSize="19sp"
+            android:layout_gravity="end"
+            style="@style/AppTheme.ToolbarTitle"/>
+    </com.aclass.android.qq.custom.control.MyToolbar>
+
+    <TextView
+        android:id="@+id/friendsMessage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/newFriendToolbar"
+        android:background="@color/color_white_gray"
+        android:text="好友通知"
+        android:textSize="18sp"
+        android:padding="15dp"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/friendsListing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/friendsMessage"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+           style="@style/AppTheme.WaitingAgree"
+            >
+
+            <ImageView
+                style="@style/AppTheme.NewFriendsIconOption"/>
+
+            <TextView
+                style="@style/AppTheme.NewFriendsNameOption"
+                android:text="Mourn"/>
+
+            <ImageView
+                style="@style/AppTheme.NewFriendsSexOption"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsAgeOption"
+                android:text="21"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsMessageOption"
+                android:text="我是Mourn"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsQQFromOption"
+                android:text="QQ来源："
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsFromOption"
+                android:text="QQ号查找"
+                />
+
+            <Button
+                android:background="@drawable/data_my_button"
+                style="@style/AppTheme.WaitingAgreeBtn"
+                android:text="同意"
+               />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            style="@style/AppTheme.Others"
+            >
+
+            <ImageView
+                style="@style/AppTheme.NewFriendsIconOption"/>
+
+            <TextView
+                style="@style/AppTheme.NewFriendsNameOption"
+                android:text="Cici"/>
+
+            <ImageView
+                style="@style/AppTheme.NewFriendsSexOption"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsAgeOption"
+                android:text="20"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsMessageOption"
+                android:text="我是Cici"
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsQQFromOption"
+                android:text="QQ来源："
+                />
+
+            <TextView
+                style="@style/AppTheme.NewFriendsFromOption"
+                android:text="QQ号查找"
+                />
+
+            <TextView
+                style="@style/AppTheme.AgreedAndCheckText"
+                android:text="已同意"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/AppTheme.Others"
+            >
+
+            <ImageView
+                style="@style/AppTheme.NewFriendsIconOption"/>
+
+            <TextView
+                style="@style/AppTheme.AddNameOption"
+                android:text="Apple"/>
+
+            <TextView
+                style="@style/AppTheme.RequestCheckingOption"
+                android:text="已发送验证消息"
+                />
+
+            <TextView
+                style="@style/AppTheme.AgreedAndCheckText"
+                android:text="等待验证"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/moreMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/friendsListing"
+        android:background="@drawable/data_my_button_group"
+
+        android:gravity="center"
+        android:padding="15dp"
+        >
+
+        <TextView
+            android:id="@+id/searchMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="查看更多"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            style="@style/AppTheme.SearchMore"
+            android:layout_toRightOf="@id/searchMore"
+            />
+        >
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/othersMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/moreMenu"
+        android:background="@color/color_white_gray">
+    </RelativeLayout>
+</RelativeLayout>

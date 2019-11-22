@@ -122,4 +122,141 @@
     </style>
 
 
+    <!--“新朋友的头像”-->
+    <style name="AppTheme.NewFriendsIconOption">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:src">@drawable/main_side_icon</item>
+    </style>
+
+    <!--“新朋友名字”-->
+    <style name="AppTheme.NewFriendsNameOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:drawableTint">#000000</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginStart">90dp</item>
+    </style>
+
+    <!--“新朋友的性别”-->
+    <style name="AppTheme.NewFriendsSexOption">
+        <item name="android:src">@drawable/ic_boy</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">90dp</item>
+        <item name="android:layout_marginTop">35dp</item>
+    </style>
+
+    <!--“新朋友的年龄”-->
+    <style name="AppTheme.NewFriendsAgeOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">120dp</item>
+        <item name="android:layout_marginTop">33dp</item>
+    </style>
+
+    <!--“新朋友的验证消息”-->
+    <style name="AppTheme.NewFriendsMessageOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">145dp</item>
+        <item name="android:layout_marginTop">33dp</item>
+    </style>
+
+    <!--“QQ来源”-->
+    <style name="AppTheme.NewFriendsQQFromOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">90dp</item>
+        <item name="android:layout_marginTop">65dp</item>
+    </style>
+
+    <!--“新朋友的来源”-->
+    <style name="AppTheme.NewFriendsFromOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">173dp</item>
+        <item name="android:layout_marginTop">65dp</item>
+
+    </style>
+
+    <!--“所加好友名字”-->
+    <style name="AppTheme.AddNameOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:drawableTint">#000000</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:layout_marginStart">90dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <!--“已同意文本”-->
+    <style name="AppTheme.AgreedAndCheckText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:layout_margin">30dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!--“发送验证请求”-->
+    <style name="AppTheme.RequestCheckingOption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorOptionGo</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">90dp</item>
+        <item name="android:layout_marginTop">55dp</item>
+    </style>
+
+
+
+    <!--“待同意按钮”-->
+    <style name="AppTheme.WaitingAgreeBtn">
+        <item name="android:drawableEnd">@drawable/data_my_button</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">25dp</item>
+    </style>
+
+    <!--“待同意好友列表”-->
+    <style name="AppTheme.WaitingAgree">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/wait_agree_yellow</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingBottom">13dp</item>
+    </style>
+
+    <!--“已同意好友和待验证通过列表列表”-->
+    <style name="AppTheme.Others">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/color_white</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingBottom">13dp</item>
+    </style>
+
+    <!--“已同意好友和待验证通过列表列表”-->
+    <style name="AppTheme.SearchMore">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+      <item name="android:src">@drawable/ic_keyboard_arrow_right_24</item>
+    </style>
+
+
 </resources>
