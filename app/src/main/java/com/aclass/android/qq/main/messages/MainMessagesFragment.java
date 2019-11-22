@@ -97,6 +97,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             byte[] data = new byte[fis.available()];
             fis.read(data);
             String json=new String(data,0,data.length,"utf-8");
+            if(json.equals(""))
+                return;
             json="["+json.substring(0,json.length()-1)+"]";
             Log.d("TAG","加载json:"+json);
             //转换json数据
