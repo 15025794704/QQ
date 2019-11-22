@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
+import android.widget.EditText;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
-import com.aclass.android.qq.databinding.ActivityNewFriendBinding;
+import com.aclass.android.qq.databinding.ActivityNewContactBinding;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
@@ -20,10 +22,10 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 添加好友，填写验证消息
  */
-public class NewFriendActivity extends GeneralActivity implements View.OnClickListener {
+public class NewContactActivity extends GeneralActivity implements View.OnClickListener {
     public static String ARG_CONTACT = "Contact";
 
-    private ActivityNewFriendBinding mViews;
+    private ActivityNewContactBinding mViews;
 
     private AtomicReference<User> mContactRef = new AtomicReference<>();
 
@@ -34,7 +36,7 @@ public class NewFriendActivity extends GeneralActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViews = ActivityNewFriendBinding.inflate(getLayoutInflater());
+        mViews = ActivityNewContactBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
 
         new Thread(new Runnable() {
@@ -49,9 +51,9 @@ public class NewFriendActivity extends GeneralActivity implements View.OnClickLi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mViews.newFriendProfilePhoto.setImageBitmap(profilePhoto);
-                        mViews.newFriendName.setText(contact.getNiCheng());
-                        mViews.newFriendInfo.setText(contact.getSex() + " " + contact.getAge() + "岁 " + contact.getAddress());
+                        mViews.newContactProfilePhoto.setImageBitmap(profilePhoto);
+                        mViews.newContactName.setText(contact.getNiCheng());
+                        mViews.newContactInfo.setText(contact.getSex() + " " + contact.getAge() + "岁 " + contact.getAddress());
                     }
                 });
             }
@@ -60,7 +62,7 @@ public class NewFriendActivity extends GeneralActivity implements View.OnClickLi
 
     @Override
     protected void consumeInsets(Rect insets) {
-        MyToolbar tb = mViews.newFriendToolbar;
+        MyToolbar tb = mViews.newContactToolbar;
         tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
     }
 
@@ -68,10 +70,10 @@ public class NewFriendActivity extends GeneralActivity implements View.OnClickLi
     public void onClick(View v) {
         if (v == null) return;
         switch (v.getId()){
-            case R.id.newFriendToolbarCancel:
+            case R.id.newContactToolbarCancel:
                 finish();
                 break;
-            case R.id.newFriendToolbarSend:
+            case R.id.newContactToolbarSend:
                 sendRequest();
                 break;
         }
@@ -81,15 +83,25 @@ public class NewFriendActivity extends GeneralActivity implements View.OnClickLi
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String remark = getText(mViews.newContactRemark);
+                String groupTag = getText(mViews.newContactGroupTag);
                 Friend friend = new Friend();
                 friend.setQQ1(Attribute.currentAccount.getQQNum());
                 friend.setQQ2(getContact().getQQNum());
                 friend.setIsAgree(0);
+                friend.setBeiZhu(remark.isEmpty() ? null : remark);
+                friend.setQQgroup(groupTag.isEmpty() ? null : groupTag);
                 MyDateBase dateBase = new MyDateBase();
                 int result = dateBase.insertEntity(friend);
                 dateBase.Destory();
             }
         }).start();
         finish();
+    }
+
+    private String getText(EditText editText) {
+        Editable editable = editText.getText();
+        if (editable == null) return "";
+        return editable.toString();
     }
 }

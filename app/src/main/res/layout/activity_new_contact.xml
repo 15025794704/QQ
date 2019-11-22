@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        tools:context=".seek.NewFriendActivity"
+        tools:context=".seek.newContactActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.aclass.android.qq.custom.control.MyToolbar
-            android:id="@+id/newFriendToolbar"
+            android:id="@+id/newContactToolbar"
             app:contentInsetStart="@dimen/optionPaddingHorizontal"
             app:contentInsetEnd="@dimen/optionPaddingHorizontal"
             app:navigationIcon="@null"
             style="@style/AppTheme.Toolbar">
 
             <TextView
-                android:id="@+id/newFriendToolbarCancel"
+                android:id="@+id/newContactToolbarCancel"
                 android:onClick="onClick"
                 android:text="取消"
                 android:textSize="19sp"
@@ -29,7 +29,7 @@
                 style="@style/AppTheme.ToolbarTitle"/>
 
             <TextView
-                android:id="@+id/newFriendToolbarSend"
+                android:id="@+id/newContactToolbarSend"
                 android:onClick="onClick"
                 android:text="发送"
                 android:textSize="19sp"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/newFriendProfilePhoto"
+                        android:id="@+id/newContactProfilePhoto"
                         android:layout_width="108dp"
                         android:layout_height="108dp"
                         android:padding="@dimen/optionPaddingHorizontal"
@@ -62,24 +62,24 @@
                         tools:src="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/newFriendName"
+                        android:id="@+id/newContactName"
                         tools:text="MADNESS"
                         android:textSize="25sp"
                         android:textColor="@android:color/black"
                         app:layout_constraintVertical_chainStyle="packed"
-                        app:layout_constraintStart_toEndOf="@id/newFriendProfilePhoto"
+                        app:layout_constraintStart_toEndOf="@id/newContactProfilePhoto"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/newFriendInfo"
+                        app:layout_constraintBottom_toTopOf="@+id/newContactInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/newFriendInfo"
+                        android:id="@+id/newContactInfo"
                         tools:text="男 20岁 重庆 渝北"
                         android:textSize="18sp"
                         android:layout_marginTop="3dp"
-                        app:layout_constraintStart_toEndOf="@id/newFriendProfilePhoto"
-                        app:layout_constraintTop_toBottomOf="@id/newFriendName"
+                        app:layout_constraintStart_toEndOf="@id/newContactProfilePhoto"
+                        app:layout_constraintTop_toBottomOf="@id/newContactName"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -117,14 +117,63 @@
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOptionGroup">
 
-                    <TextView
-                        android:text="备注"
-                        android:drawableEnd="@null"
-                        style="@style/AppTheme.SimpleOption"/>
+                    <LinearLayout
+                        android:paddingTop="@dimen/optionPaddingVertical"
+                        android:paddingBottom="@dimen/optionPaddingVertical"
+                        android:paddingStart="@dimen/optionPaddingHorizontal"
+                        android:paddingEnd="@dimen/optionPaddingHorizontal"
+                        android:orientation="horizontal"
+                        android:background="?mColorSurface"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:text="分组"
-                        style="@style/AppTheme.SimpleOption"/>
+                        <TextView
+                            android:text="备注"
+                            android:textColor="?mColorOnSurface"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <EditText
+                            android:id="@+id/newContactRemark"
+                            android:background="@null"
+                            android:layout_marginStart="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/optionPaddingVertical"
+                        android:paddingBottom="@dimen/optionPaddingVertical"
+                        android:paddingStart="@dimen/optionPaddingHorizontal"
+                        android:paddingEnd="@dimen/optionPaddingHorizontal"
+                        android:orientation="horizontal"
+                        android:background="?mColorSurface"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="分组"
+                            android:textColor="?mColorOnSurface"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <EditText
+                            android:id="@+id/newContactGroupTag"
+                            android:background="@null"
+                            android:layout_marginStart="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView

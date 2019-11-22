@@ -62,8 +62,8 @@ public class SeekPersonFragment extends Fragment {
                     Qun group = dateBase.getQun(input);
                     dateBase.Destory();
                     if (user != null){
-                        final Intent intent = new Intent(context, NewFriendActivity.class);
-                        intent.putExtra(NewFriendActivity.ARG_CONTACT, (Parcelable) user);
+                        final Intent intent = new Intent(context, NewContactActivity.class);
+                        intent.putExtra(NewContactActivity.ARG_CONTACT, (Parcelable) user);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
