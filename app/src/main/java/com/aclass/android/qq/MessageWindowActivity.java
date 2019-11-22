@@ -261,6 +261,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_send.setClickable(false);
                 if(edit.getText().toString().equals(""))
                     return;
                 new Thread(new Runnable() {
@@ -269,7 +270,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                         MyDateBase myDateBase=null;
                         try {
                             myDateBase = new MyDateBase();
-                            myDateBase.setTimeout(600);
+                            myDateBase.setTimeout(1000);
                             Message msg = new Message();
                             msg.setSendQQ(Attribute.QQ);
                             msg.setReceiveNum(QQFriend);
@@ -327,6 +328,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                             return;
                         }
                         finally {
+                            btn_send.setClickable(true);
                             myDateBase.Destory();
                             myDateBase=null;
                         }

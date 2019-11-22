@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -80,7 +81,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
         title.setText(R.string.mainBottomNavContacts);
-        if(Attribute.agreeFriendClick==1)
+        if(Attribute.agreeFriendClick!=0)
         {
             Attribute.agreeFriendClick=0;
             initData();
@@ -112,6 +113,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
         new Thread(new Runnable() {
             @Override
             public void run() {
+                MyDateBase myDateBase=null;
                 try {
                     if(Attribute.userHeadList==null)
                         Attribute.userHeadList=new HashMap<String, Bitmap>();
@@ -120,11 +122,12 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     if(Attribute.friendList==null)
                         Attribute.friendList=new HashMap<String, Friend>();
 
+                    SystemClock.sleep(300);
                     List<GroupTitleInfo> groupList = new ArrayList<>();
                     List<String> list = new ArrayList<>();
                     List<Friend> specificFriends;
 
-                    MyDateBase myDateBase = new MyDateBase();
+                    myDateBase = new MyDateBase();
                     List<Friend> friends = myDateBase.getFriends(Attribute.QQ);
                     if (friends != null)
                         Attribute.friendList.clear();
@@ -192,10 +195,12 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     }
                 }
                 catch (Exception e){
+                    Attribute.agreeFriendClick=2;
                     e.printStackTrace();
                 }
                 finally {
-                    Log.d("TAG","朋友："+Attribute.friendList.size()+",用户："+Attribute.userInfoList.size()+",头像:"+Attribute.userHeadList.size());
+                    myDateBase.Destory();
+                    Log.d("system","朋友："+Attribute.friendList.size()+",用户："+Attribute.userInfoList.size()+",头像:"+Attribute.userHeadList.size());
                 }
 
             }

@@ -379,7 +379,7 @@ public class MyDateBase {
 	 * @return
 	 */
 	public  List<Message> getMessages(String qqNum){
-		Request request=new Request(1, "select * from T_msg where receiveNum='"+qqNum+"'", new Message());
+		Request request=new Request(1, "select * from T_msg where receiveNum='"+qqNum+"' and state=0", new Message());
 		UDPsend(request);
 		return (List<Message>)receiveObject();
 	}
@@ -487,12 +487,23 @@ public class MyDateBase {
 			}
 			Request request=new Request(2, sql, null);
 			UDPsend(request);
-			return (int)receiveObject();
+			return (Integer)receiveObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
+
+	/**
+	 * 更新消息
+	 */
+	public int updateMessage(String receiveQQ){
+		String sql="update T_msg set state=1 where receiveNum='"+receiveQQ+"'";
+		Request request=new Request(2, sql, null);
+		UDPsend(request);
+		return (Integer) receiveObject();
+	}
+
 
 	/**
 	 * 新加实体对象
@@ -531,7 +542,7 @@ public class MyDateBase {
 			sql=sql+feildStr+" VALUES "+valueStr;
 			Request request=new Request(4, sql, null);
 			UDPsend(request);
-			return (int)receiveObject();
+			return (Integer)receiveObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

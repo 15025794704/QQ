@@ -2,6 +2,7 @@ package com.aclass.android.qq.internet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class Receiver {
             public void run() {
                 while(true) {
                     try {
+                        SystemClock.sleep(3*1000);
+                        getLastMsg(context);
                         SystemClock.sleep(2*60*1000);
                         Attribute.mainMessageReceive.stop();
                     }
@@ -93,14 +96,23 @@ public class Receiver {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Message msg=(Message) Attribute.friendMessageRequest.getObj();
-                                    if(Attribute.insertQQview!=null && Attribute.insertQQview.equals(msg.getSendQQ())){
-                                        Attribute.msgArrayList.add(msg);
+                                    try {
+                                        int port = Integer.parseInt(Attribute.friendMessageRequest.getSql());
+                                        MyDateBase dateBase=new MyDateBase();
+                                        dateBase.UDPsend(port,new byte[0]);
+                                        dateBase.Destory();
                                     }
-                                    Receiver.writeMessageToFile(context,msg,msg.getSendQQ());
-                                    if(changeIndex(msg.getSendQQ())) {
-                                        setPoint(msg.getSendQQ(),true);
-                                        writeMsgListToFile(context);
+                                    catch (Exception e){e.printStackTrace();
+                                    }finally {
+                                        Message msg = (Message) Attribute.friendMessageRequest.getObj();
+                                        if (Attribute.insertQQview != null && Attribute.insertQQview.equals(msg.getSendQQ())) {
+                                            Attribute.msgArrayList.add(msg);
+                                        }
+                                        Receiver.writeMessageToFile(context, msg, msg.getSendQQ());
+                                        if (changeIndex(msg.getSendQQ())) {
+                                            setPoint(msg.getSendQQ(), true);
+                                            writeMsgListToFile(context);
+                                        }
                                     }
                                 }
                             }).start();
@@ -118,14 +130,31 @@ public class Receiver {
         Attribute.mainMessageReceive.start();
     }
 
+    private static void getLastMsg(Context context){
+        try {
+            MyDateBase myDateBase = new MyDateBase();
+            List<Message> msgList = myDateBase.getMessages(Attribute.QQ);
+            for (Message msg : msgList) {
+                writeMessageToFile(context, msg, msg.getSendQQ());
+                msg.setState(1);
+            }
+            myDateBase.updateMessage(Attribute.QQ);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 
     public  static void writeMessageToFile(Context context,Message msg,String QQFriend){
         try {
+            String time="null";
+            if(msg.getTime()!=null)
+                time=msg.getTime().toLocaleString();
             FileOutputStream fos = context.openFileOutput(Attribute.QQ+QQFriend + ".json", Context.MODE_APPEND);
             String json="{\"sendQQ\":\""+msg.getSendQQ()+"\",\"receiveNum\":\""+msg.getReceiveNum()+
-                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+msg.getTime().toLocaleString()+"\"},";
+                    "\",\"context\":\""+msg.getContext()+"\",\"sendTime\":\""+time+"\"},";
             fos.write(json.getBytes());
             fos.close();
         }

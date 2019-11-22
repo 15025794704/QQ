@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
@@ -68,7 +69,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_main_messages, container, false);
         msgListBox=view.findViewById(R.id.msgListBox);
-
         mActivity=(MainActivity) getActivity();
         init();
         return view;
@@ -111,11 +111,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             for (int i=0;i<Attribute.msgList.size();i++ ) {
                 MsgList msg =Attribute. msgList.get(i);
                 View view=fillValue(msg);
-                Log.d("TAG","isTop:"+msg.isTop());
                 msgListBox.addView(view,i);
             }
         }
         catch (Exception e){
+            e.printStackTrace();
             Log.e("TAG",""+e.getLocalizedMessage());
         }
     }
@@ -182,17 +182,14 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                                 MsgList msg = Attribute.msgList.get(i);
                                 if(btnTop.getText().equals("置顶")) {
                                     msg.setTop(true);
-                                    Log.d("TAG","true");
                                 }
                                 else if(btnTop.getText().equals("取消置顶")){
                                     msg.setTop(false);
-                                    Log.d("TAG","false");
                                 }
                                 msg.setIndex(mc);
-                                Attribute.msgList.set(i,msg);
+                                Attribute.msgList.set(mc,msg);
                                 Receiver.writeMsgListToFile(mActivity);
                                 readFile();
-                                Log.d("TAG","重新刷新"+msg.isTop());
                                 break;
                             }
                     }
@@ -201,19 +198,20 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         return view;
     }
 
-
-
     private void loadMsgList(){
         readFile();
     }
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
-        readFile();
+
         title.setText(R.string.mainBottomNavMessages);
         mainToolbar = toolbar;
         toolbar.setOverflowIcon(toolbar.getContext().getDrawable(R.drawable.ic_add_24));
         toolbar.inflateMenu(R.menu.toolbar_main_messages);
         toolbar.setOnMenuItemClickListener(this);
+
+        if(mActivity!=null)
+            init();
     }
 
     @Override
