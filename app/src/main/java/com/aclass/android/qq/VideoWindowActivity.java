@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aclass.android.qq.common.ActivityOpreation;
@@ -373,6 +374,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         btn_accept_come=(ImageButton)findViewById(R.id.image_btn_come_accept);
         headImg=(RoundImageView)findViewById(R.id.RoundImageView_video_head);
         textureView=(TextureView) findViewById(R.id.texture_video_ImageView);
+        TextView name=(TextView) findViewById(R.id.textView);
         videoView=(ImageView) findViewById(R.id.video_ImageView);
         info=(LinearLayout)findViewById(R.id.LinearLayout_video_window_info);
         //videoView.setRotation(270);
@@ -382,7 +384,10 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         int width=(int)(screen.getposWidth()*0.38);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,width);
         headImg.setLayoutParams(params);
-        headImg.setImageBitmap(assetsOperation.getImage("image/qq.png"));
+        if(Attribute.userHeadList.get(QQfriend)!=null)
+            headImg.setImageBitmap(Attribute.userHeadList.get(QQfriend));
+        if(Attribute.friendList.get(QQfriend)!=null)
+            name.setText(Attribute.friendList.get(QQfriend).getBeiZhu());
         //设置拒绝按钮按下和弹起效果
         MyButtonOperation.changeImageButton(this,btn_refuse,R.drawable.btn_refuse_2,R.drawable.btn_refuse_1);
         //设置小化按钮按下和弹起效果
