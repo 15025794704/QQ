@@ -131,10 +131,10 @@ public class Receiver {
                                             Attribute.msgArrayList.add(msg);
                                         }
                                         Receiver.writeMessageToFile(context, msg, msg.getSendQQ());
+                                        setPoint(msg.getSendQQ(), true);
                                         if (changeIndex(msg.getSendQQ())) {
                                             writeMsgListToFile(context);
                                         }
-                                        setPoint(msg.getSendQQ(), true);
                                     }
                                 }
                             }).start();
