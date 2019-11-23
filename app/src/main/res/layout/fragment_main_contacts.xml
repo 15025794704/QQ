@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_keyboard_arrow_right_24"
+                android:src="@drawable/ic_option_go_24"
                 android:layout_marginRight="6dp"
                 android:layout_marginTop="10dp"
 

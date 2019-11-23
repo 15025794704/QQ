@@ -262,7 +262,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                 startActivity(new Intent(getActivity(), SeekActivity.class));
                 return true;
         }
-        return true;
+        return false;
     }
 
 }

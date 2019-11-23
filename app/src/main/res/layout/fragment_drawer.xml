@@ -32,7 +32,7 @@
                 <ImageView
                     android:layout_weight="1"
                     android:id="@+id/closeSide"
-                    android:src="@drawable/ic_keyboard_close"
+                    android:src="@drawable/ic_close"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp" />
             </LinearLayout>

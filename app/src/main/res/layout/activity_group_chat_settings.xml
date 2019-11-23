@@ -53,6 +53,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -63,6 +64,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -73,6 +75,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -83,6 +86,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -90,9 +94,10 @@
                     <TextView
                         android:text="邀请"
                         android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
+                        android:textColor="?mColorOptionGo"
                         android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
+                        android:drawableTop="@drawable/chat_settings_add"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -116,6 +121,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -126,6 +132,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -136,6 +143,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -146,6 +154,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
@@ -156,6 +165,7 @@
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
                         android:drawableTop="@mipmap/ic_launcher"
+                        android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>

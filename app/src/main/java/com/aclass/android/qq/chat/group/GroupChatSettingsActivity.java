@@ -112,7 +112,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
             case R.id.chatSettingsGroupToolbar: // more options
                 return true;
         }
-        return true;
+        return false;
     }
 
     private void bindData(final GroupSettings groupSettings){

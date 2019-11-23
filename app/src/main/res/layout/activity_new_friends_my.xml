@@ -13,15 +13,8 @@
         android:id="@+id/new_friend_item_bar"
         app:contentInsetStart="@dimen/optionPaddingHorizontal"
         app:contentInsetEnd="@dimen/optionPaddingHorizontal"
-        app:navigationIcon="@null"
         style="@style/AppTheme.Toolbar">
 
-        <ImageView
-            android:id="@+id/newFriend_back"
-            android:src="@drawable/ic_return"
-            android:layout_gravity="start"
-            style="@style/AppTheme.ToolbarTitle"
-             />
         <TextView
             android:text="新朋友"
             style="@style/AppTheme.ToolbarTitle"/>

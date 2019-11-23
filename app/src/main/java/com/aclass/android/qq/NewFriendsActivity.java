@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aclass.android.qq.custom.GeneralActivity;
+import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
@@ -35,7 +36,8 @@ public class NewFriendsActivity extends GeneralActivity {
     }
 
     private void init(){
-        findViewById(R.id.newFriend_back).setOnClickListener(new View.OnClickListener() {
+        MyToolbar toolbar = findViewById(R.id.new_friend_item_bar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

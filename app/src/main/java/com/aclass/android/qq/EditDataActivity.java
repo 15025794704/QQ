@@ -49,7 +49,7 @@ public class EditDataActivity extends GeneralActivity {
         // 设置页面界面
         Toolbar toolbar = (Toolbar)findViewById(R.id.edit_Toolbar) ;
         // 设置工具栏导航图标
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_24);
+        toolbar.setNavigationIcon(R.drawable.ic_navigate_back_24);
         toolbar.getNavigationIcon().setTint(Color.WHITE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

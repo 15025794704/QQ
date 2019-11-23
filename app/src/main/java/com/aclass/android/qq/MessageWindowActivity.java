@@ -94,7 +94,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
                 startActivity(intent);
                 return true;
         }
-        return true;
+        return false;
     }
 
     public Handler handler = new Handler() {
@@ -194,7 +194,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         // 工具栏选项点击监听器
         toolbar.setOnMenuItemClickListener(this);
         // 设置工具栏导航图标
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_24);
+        toolbar.setNavigationIcon(R.drawable.ic_navigate_back_24);
 
         toolbar.getNavigationIcon().setTint(Color.WHITE);
         for(int i=0;i<toolbar.getMenu().size();i++)

@@ -36,8 +36,10 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    tools:text="发起群聊"
-                    android:drawableStart="@drawable/ic_add_24"
+                    android:id="@+id/chatSettingsContactGroupChat"
+                    android:onClick="onClick"
+                    android:text="发起群聊"
+                    android:drawableStart="@drawable/chat_settings_add"
                     android:drawableEnd="@null"
                     style="@style/AppTheme.SimpleOption"/>
 

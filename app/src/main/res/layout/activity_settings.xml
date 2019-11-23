@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -17,187 +18,194 @@
                 style="@style/AppTheme.ToolbarTitle"/>
         </com.aclass.android.qq.custom.control.MyToolbar>
 
-        <ScrollView
+        <android.support.design.widget.CoordinatorLayout
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <LinearLayout
-                android:id="@+id/settingsContainer"
-                android:orientation="vertical"
+            <android.support.v4.widget.NestedScrollView
+                app:layout_behavior="com.aclass.android.qq.common.OverScrollBounceBehavior"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    style="@style/AppTheme.SimpleOptionGroup"
-                    android:layout_marginTop="@dimen/optionGroupMargin">
+                    android:id="@+id/settingsContainer"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/settingsAccounts"
-                        android:onClick="onClick"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingStart="@dimen/optionPaddingHorizontal"
-                        android:paddingEnd="@dimen/optionPaddingHorizontal"
-                        android:orientation="horizontal"
-                        android:background="?mColorSurface"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:text="账号管理"
-                            android:textColor="?mColorOnSurface"
-                            android:textSize="18sp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                        style="@style/AppTheme.SimpleOptionGroup"
+                        android:layout_marginTop="@dimen/optionGroupMargin">
 
                         <LinearLayout
+                            android:id="@+id/settingsAccounts"
+                            android:onClick="onClick"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="@dimen/optionPaddingHorizontal"
+                            android:paddingEnd="@dimen/optionPaddingHorizontal"
                             android:orientation="horizontal"
-                            android:layoutDirection="rtl"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:background="?mColorSurface"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/settingsProfilePhoto"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                tools:src="@tools:sample/avatars" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:paddingTop="@dimen/optionPaddingVertical"
-                        android:paddingBottom="@dimen/optionPaddingVertical"
-                        android:paddingStart="@dimen/optionPaddingHorizontal"
-                        android:paddingEnd="@dimen/optionPaddingHorizontal"
-                        android:orientation="horizontal"
-                        android:background="?mColorSurface"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:text="手机号码"
-                            android:textColor="?mColorOnSurface"
-                            android:textSize="18sp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layoutDirection="rtl"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:src="@drawable/ic_keyboard_arrow_right_24"
-                                android:tint="?mColorOptionGo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"/>
 
                             <TextView
-                                android:id="@+id/settingsPhone"
-                                android:layoutDirection="locale"
-                                tools:text="132****4176"
-                                android:gravity="center_vertical"
+                                android:text="账号管理"
+                                android:textColor="?mColorOnSurface"
+                                android:textSize="18sp"
+                                android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="wrap_content"/>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layoutDirection="rtl"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/settingsProfilePhoto"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    tools:src="@tools:sample/avatars" />
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-
-                    <TextView
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="账号安全"/>
-
-                    <LinearLayout
-                        android:paddingTop="@dimen/optionPaddingVertical"
-                        android:paddingBottom="@dimen/optionPaddingVertical"
-                        android:paddingStart="@dimen/optionPaddingHorizontal"
-                        android:paddingEnd="@dimen/optionPaddingHorizontal"
-                        android:orientation="horizontal"
-                        android:background="?mColorSurface"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:text="QQ达人"
-                            android:textColor="?mColorOnSurface"
-                            android:textSize="18sp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
 
                         <LinearLayout
+                            android:paddingTop="@dimen/optionPaddingVertical"
+                            android:paddingBottom="@dimen/optionPaddingVertical"
+                            android:paddingStart="@dimen/optionPaddingHorizontal"
+                            android:paddingEnd="@dimen/optionPaddingHorizontal"
                             android:orientation="horizontal"
-                            android:layoutDirection="rtl"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:background="?mColorSurface"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:src="@drawable/ic_keyboard_arrow_right_24"
-                                android:tint="?mColorOptionGo"
+                            <TextView
+                                android:text="手机号码"
+                                android:textColor="?mColorOnSurface"
+                                android:textSize="18sp"
+                                android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="wrap_content"/>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layoutDirection="rtl"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:src="@drawable/ic_option_go_24"
+                                    android:tint="?mColorOptionGo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"/>
+
+                                <TextView
+                                    android:id="@+id/settingsPhone"
+                                    android:layoutDirection="locale"
+                                    tools:text="132****4176"
+                                    android:gravity="center_vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/AppTheme.SimpleOption"
+                            android:text="账号安全"/>
+
+                        <LinearLayout
+                            android:paddingTop="@dimen/optionPaddingVertical"
+                            android:paddingBottom="@dimen/optionPaddingVertical"
+                            android:paddingStart="@dimen/optionPaddingHorizontal"
+                            android:paddingEnd="@dimen/optionPaddingHorizontal"
+                            android:orientation="horizontal"
+                            android:background="?mColorSurface"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                             <TextView
-                                android:layoutDirection="locale"
-                                android:text="1024天"
-                                android:textColor="#FFF0A040"
-                                android:gravity="center_vertical"
-                                android:drawableStart="@drawable/ic_menu_24"
-                                android:drawablePadding="8dp"
-                                android:drawableTint="#FFF0A040"
+                                android:text="QQ达人"
+                                android:textColor="?mColorOnSurface"
+                                android:textSize="18sp"
+                                android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="wrap_content"/>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layoutDirection="rtl"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:src="@drawable/ic_option_go_24"
+                                    android:tint="?mColorOptionGo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"/>
+
+                                <TextView
+                                    android:layoutDirection="locale"
+                                    android:text="1024天"
+                                    android:textColor="#FFF0A040"
+                                    android:gravity="center_vertical"
+                                    android:drawableStart="@drawable/ic_menu_24"
+                                    android:drawablePadding="8dp"
+                                    android:drawableTint="#FFF0A040"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/AppTheme.SimpleOptionGroup"
+                        android:layout_marginTop="@dimen/optionGroupMargin">
+
+                        <TextView
+                            style="@style/AppTheme.SimpleOption"
+                            android:text="消息通知"/>
+
+                        <TextView
+                            style="@style/AppTheme.SimpleOption"
+                            android:text="隐私"/>
+
+                        <TextView
+                            style="@style/AppTheme.SimpleOption"
+                            android:text="通用"/>
+
+                        <TextView
+                            style="@style/AppTheme.SimpleOption"
+                            android:text="辅助功能"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_marginTop="@dimen/optionGroupMargin"
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="免流量特权"/>
+
+                    <TextView
+                        android:layout_marginTop="@dimen/optionGroupMargin"
+                        android:layout_marginBottom="@dimen/optionGroupMargin"
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="关于QQ与帮助"/>
+
                 </LinearLayout>
 
-                <LinearLayout
-                    style="@style/AppTheme.SimpleOptionGroup"
-                    android:layout_marginTop="@dimen/optionGroupMargin">
+            </android.support.v4.widget.NestedScrollView>
 
-                    <TextView
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="消息通知"/>
-
-                    <TextView
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="隐私"/>
-
-                    <TextView
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="通用"/>
-
-                    <TextView
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="辅助功能"/>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_marginTop="@dimen/optionGroupMargin"
-                    style="@style/AppTheme.SimpleOption"
-                    android:text="免流量特权"/>
-
-                <TextView
-                    android:layout_marginTop="@dimen/optionGroupMargin"
-                    android:layout_marginBottom="@dimen/optionGroupMargin"
-                    style="@style/AppTheme.SimpleOption"
-                    android:text="关于QQ与帮助"/>
-
-            </LinearLayout>
-
-        </ScrollView>
+        </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
 

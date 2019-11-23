@@ -29,6 +29,7 @@ public class ContactSettings {
      * 屏蔽
      */
     boolean isBlocked;
+    private Friend mData;
 
     public static ContactSettings get(String contactNum, MyDateBase dateBase){
         MyDateBase mDateBase = dateBase == null ? new MyDateBase() : dateBase;
@@ -45,5 +46,16 @@ public class ContactSettings {
         isPinnedTop = friend.getIsTop() == 1;
         isDND = friend.getIsDisturb() == 1;
         isBlocked = friend.getIsHide() == 1;
+        mData = friend;
+    }
+
+    Friend toFriend(){
+        mData.setQQ2(contactNum);
+        mData.setBeiZhu(contactName);
+        mData.setQQgroup(groupTag);
+        mData.setIsTop(isPinnedTop ? 1 : 0);
+        mData.setIsDisturb(isDND ? 1 : 0);
+        mData.setIsHide(isBlocked ? 1 : 0);
+        return mData;
     }
 }

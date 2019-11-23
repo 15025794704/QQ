@@ -12,7 +12,8 @@
         android:layout_height="50dp"
         android:contentDescription="@null"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/btn_browser2"
+        android:src="@drawable/ic_arrow_down_24"
+        android:tint="#FFC5C5C5"
         tools:ignore="RtlHardcoded" />
     <LinearLayout
         android:layout_width="match_parent"

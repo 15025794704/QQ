@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
@@ -22,11 +24,12 @@ import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.tools.MyDateBase;
 
 /**
  * QQ 好友聊天设置页面
  */
-public class ContactChatSettingsActivity extends GeneralActivity implements View.OnClickListener {
+public class ContactChatSettingsActivity extends GeneralActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static String ARG_NUM = "contactNum";
 
@@ -86,6 +89,14 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
     }
 
     private void bindData(Context context, final ContactSettings contactSettings){
+        Switch[] switches = new Switch[]{
+                mViews.chatSettingsContactPinnedTop,
+                mViews.chatSettingsContactDND,
+                mViews.chatSettingsContactHidden,
+                mViews.chatSettingsContactBlocked
+        };
+        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(null);
+
         Bitmap bitmap = Attribute.userHeadList.get(contactSettings.contactNum);
         if (bitmap == null) return;
         int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
@@ -96,6 +107,12 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         profilePhoto.setBounds(0, 0, length, length);
         mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
         mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
+        mViews.chatSettingsContactPinnedTop.setChecked(contactSettings.isPinnedTop);
+        mViews.chatSettingsContactDND.setChecked(contactSettings.isDND);
+        mViews.chatSettingsContactHidden.setChecked(contactSettings.isBlocked); // todo
+        mViews.chatSettingsContactBlocked.setChecked(contactSettings.isBlocked);
+
+        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -106,8 +123,30 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
             case R.id.chatSettingsContactInfo:
                 contactInfo(context);
                 break;
+            case R.id.chatSettingsContactGroupChat:
+                newGroupChat();
+                break;
             case R.id.chatSettingsContactRemoveContact:
                 removeContact();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == null) return;
+        switch (buttonView.getId()){
+            case R.id.chatSettingsContactPinnedTop:
+                changePinnedTop(isChecked);
+                break;
+            case R.id.chatSettingsContactDND:
+                changeDND(isChecked);
+                break;
+            case R.id.chatSettingsContactHidden:
+                changeHidden(isChecked);
+                break;
+            case R.id.chatSettingsContactBlocked:
+                changeBlocked(isChecked);
                 break;
         }
     }
@@ -118,6 +157,50 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         startActivity(intent);
     }
 
+    private void newGroupChat(){
+    }
+
     private void removeContact(){
+    }
+
+    private void changePinnedTop(boolean newValue){
+        ContactSettings settings = mViewModel.contactSettings.getValue();
+        if (settings == null) return;
+        settings.isPinnedTop = newValue;
+        updateData();
+    }
+
+    private void changeDND(boolean newValue){
+        ContactSettings settings = mViewModel.contactSettings.getValue();
+        if (settings == null) return;
+        settings.isDND = newValue;
+        updateData();
+    }
+
+    private void changeHidden(boolean newValue){
+        ContactSettings settings = mViewModel.contactSettings.getValue();
+        if (settings == null) return;
+        settings.isBlocked = newValue; // todo
+        updateData();
+    }
+
+    private void changeBlocked(boolean newValue){
+        ContactSettings settings = mViewModel.contactSettings.getValue();
+        if (settings == null) return;
+        settings.isBlocked = newValue;
+        updateData();
+    }
+
+    private void updateData(){
+        final ContactSettings settings = mViewModel.contactSettings.getValue();
+        if (settings == null) return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyDateBase dateBase = new MyDateBase();
+                int result = dateBase.updateEntity(settings.toFriend());
+                dateBase.Destory();
+            }
+        }).start();
     }
 }

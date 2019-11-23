@@ -1,5 +1,6 @@
 package com.aclass.android.qq.main.contacts;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -8,8 +9,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +30,7 @@ import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
+import com.aclass.android.qq.seek.SeekActivity;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.ArrayList;
@@ -38,7 +42,7 @@ import java.util.List;
  * 应用“联系人”页面
  * 好友列表等
  */
-public class MainContactsFragment extends Fragment implements MainFragment.MainPage {
+public class MainContactsFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener {
 
  private PinnedHeaderExpandableListView explistView;
     private PinnedHeaderExpandableAdapter adapter;
@@ -82,6 +86,9 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
         title.setText(R.string.mainBottomNavContacts);
+        toolbar.inflateMenu(R.menu.toolbar_main_contacts);
+        toolbar.setOnMenuItemClickListener(this);
+
         if(Attribute.agreeFriendClick!=0)
         {
             initData();
@@ -270,4 +277,13 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     }
 
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mainToolbarContactsSeek:
+                startActivity(new Intent(getContext(), SeekActivity.class));
+                return true;
+        }
+        return false;
+    }
 }

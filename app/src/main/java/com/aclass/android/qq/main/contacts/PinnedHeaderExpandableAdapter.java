@@ -2,6 +2,8 @@ package com.aclass.android.qq.main.contacts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -126,12 +128,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             convertView = View.inflate(mcontext, R.layout.group, null);
         ImageView iv = (ImageView)convertView.findViewById(R.id.groupIcon);
 
-        if (isExpanded) {
-            iv.setImageResource(R.drawable.btn_browser2);
-        }
-        else{
-            iv.setImageResource(R.drawable.btn_browser);
-        }
+        int expandIconResId = isExpanded ? R.drawable.ic_arrow_down_24 : R.drawable.ic_arrow_right_24;
+        Drawable expandIcon = mcontext.getDrawable(expandIconResId);
+        if (expandIcon != null) expandIcon.setTint(Color.parseColor("#FFC5C5C5"));
+        iv.setImageDrawable(expandIcon);
 
         TextView text = (TextView)convertView.findViewById(R.id.groupto);
         TextView groupFriendIsHide=convertView.findViewById(R.id.group_FriendIsHide);//好友在线人数
