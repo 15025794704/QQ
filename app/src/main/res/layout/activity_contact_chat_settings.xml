@@ -32,7 +32,7 @@
                     android:id="@+id/chatSettingsContactInfo"
                     android:onClick="onClick"
                     tools:text="好友昵称"
-                    android:drawableStart="@drawable/ic_menu_24"
+                    android:drawableTint="@null"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
@@ -55,16 +55,20 @@
                     android:text="聊天背景"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
-                    android:text="设为置顶"
+                <Switch
+                    android:id="@+id/chatSettingsContactPinnedTop"
                     android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:drawableEnd="@null"
+                    android:text="设为置顶"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
                     android:text="特别关心"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsContactDND"
+                    android:drawableEnd="@null"
                     android:text="消息免打扰"
                     style="@style/AppTheme.SimpleOption"/>
 
@@ -72,11 +76,15 @@
                     android:text="消息通知设置"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsContactHidden"
+                    android:drawableEnd="@null"
                     android:text="隐藏会话"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsContactBlocked"
+                    android:drawableEnd="@null"
                     android:text="屏蔽此人"
                     style="@style/AppTheme.SimpleOption"/>
 

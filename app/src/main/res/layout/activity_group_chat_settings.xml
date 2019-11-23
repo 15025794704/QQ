@@ -32,7 +32,7 @@
                 <TextView
                     android:id="@+id/chatSettingsGroupInfo"
                     tools:text="群聊名称"
-                    android:drawableStart="@drawable/ic_menu_24"
+                    android:drawableTint="@null"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
