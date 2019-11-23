@@ -6,5 +6,4 @@ import android.graphics.Bitmap;
 
 public class ContactChatSettingsViewModel extends ViewModel {
     MutableLiveData<ContactSettings> contactSettings = new MutableLiveData<>();
-    MutableLiveData<Bitmap> contactProfilePhoto = new MutableLiveData<>();
 }

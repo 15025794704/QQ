@@ -82,19 +82,20 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
                 mViews.chatSettingsGroupInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
             }
         });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final GroupSettings groupSettings = GroupSettings.get(groupNum, null);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViewModel.groupSettings.setValue(groupSettings);
-                    }
-                });
-            }
-        }).start();
+        if (mViewModel.groupSettings.getValue() == null){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final GroupSettings groupSettings = GroupSettings.get(groupNum, null);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mViewModel.groupSettings.setValue(groupSettings);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     @Override

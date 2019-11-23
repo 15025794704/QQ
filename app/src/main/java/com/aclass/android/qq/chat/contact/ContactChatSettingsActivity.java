@@ -58,35 +58,23 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
             public void onChanged(@Nullable ContactSettings contactSettings) {
                 if (contactSettings == null) return;
                 contactNum = contactSettings.contactNum;
-                bindData(contactSettings);
+                bindData(context, contactSettings);
             }
         });
-        mViewModel.contactProfilePhoto.observe(this, new Observer<Bitmap>() {
-            @Override
-            public void onChanged(@Nullable Bitmap bitmap) {
-                if (bitmap == null) return;
-                int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
-                Drawable[] drawables = mViews.chatSettingsContactInfo.getCompoundDrawablesRelative();
-                drawables[2].setTint(colorOption);
-                int length = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, context.getResources().getDisplayMetrics()));
-                Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
-                profilePhoto.setBounds(0, 0, length, length);
-                mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
-            }
-        });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViewModel.contactSettings.setValue(contactSettings);
-                    }
-                });
-            }
-        }).start();
+        if (mViewModel.contactSettings.getValue() == null){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mViewModel.contactSettings.setValue(contactSettings);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     @Override
@@ -97,9 +85,16 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
     }
 
-    private void bindData(final ContactSettings contactSettings){
-        Bitmap profilePhoto = Attribute.userHeadList.get(contactSettings.contactNum);
-        mViewModel.contactProfilePhoto.setValue(profilePhoto);
+    private void bindData(Context context, final ContactSettings contactSettings){
+        Bitmap bitmap = Attribute.userHeadList.get(contactSettings.contactNum);
+        if (bitmap == null) return;
+        int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
+        Drawable[] drawables = mViews.chatSettingsContactInfo.getCompoundDrawablesRelative();
+        drawables[2].setTint(colorOption);
+        int length = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, context.getResources().getDisplayMetrics()));
+        Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
+        profilePhoto.setBounds(0, 0, length, length);
+        mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
         mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
     }
 
