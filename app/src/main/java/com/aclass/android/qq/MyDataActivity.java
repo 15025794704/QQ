@@ -124,10 +124,12 @@ public class MyDataActivity extends GeneralActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(!Attribute.QQ.equals(qq.getText()))
-//                    ActivityOpreation.jumpActivity();
-//                else
-//                    ActivityOpreation.jumpActivity();
+                if(!Attribute.QQ.equals(qq.getText())) {
+//                    ActivityOpreation.jumpActivity(MyDataActivity.this, EditDataActivity.class);
+                }
+                else {
+                    ActivityOpreation.jumpActivity(MyDataActivity.this, EditDataActivity.class);
+                }
             }
         });
     }
