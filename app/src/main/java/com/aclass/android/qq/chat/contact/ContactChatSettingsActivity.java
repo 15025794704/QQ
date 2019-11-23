@@ -89,14 +89,6 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
     }
 
     private void bindData(Context context, final ContactSettings contactSettings){
-        Switch[] switches = new Switch[]{
-                mViews.chatSettingsContactPinnedTop,
-                mViews.chatSettingsContactDND,
-                mViews.chatSettingsContactHidden,
-                mViews.chatSettingsContactBlocked
-        };
-        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(null);
-
         Bitmap bitmap = Attribute.userHeadList.get(contactSettings.contactNum);
         if (bitmap == null) return;
         int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
@@ -107,11 +99,18 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         profilePhoto.setBounds(0, 0, length, length);
         mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
         mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
+
+        Switch[] switches = new Switch[]{
+                mViews.chatSettingsContactPinnedTop,
+                mViews.chatSettingsContactDND,
+                mViews.chatSettingsContactHidden,
+                mViews.chatSettingsContactBlocked
+        };
+        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(null);
         mViews.chatSettingsContactPinnedTop.setChecked(contactSettings.isPinnedTop);
         mViews.chatSettingsContactDND.setChecked(contactSettings.isDND);
         mViews.chatSettingsContactHidden.setChecked(contactSettings.isBlocked); // todo
         mViews.chatSettingsContactBlocked.setChecked(contactSettings.isBlocked);
-
         for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(this);
     }
 
