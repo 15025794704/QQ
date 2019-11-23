@@ -343,7 +343,6 @@
             android:orientation="horizontal"
             android:background="@color/color_white"
             android:paddingTop="10dp"
-            android:paddingBottom="100dp"
             >
 
             <ImageView
