@@ -74,6 +74,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                 ActivityOpreation.jumpActivity(mActivity, NewFriendsActivity.class);
             }
         });
+        Attribute.agreeFriendClick=1;
         initData();
         return view;
     }
@@ -83,7 +84,6 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
         title.setText(R.string.mainBottomNavContacts);
         if(Attribute.agreeFriendClick!=0)
         {
-            Attribute.agreeFriendClick=0;
             initData();
         }
     }
@@ -157,13 +157,23 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     if(!Attribute.userInfoList.containsKey(user.getQQNum())){
                                         Attribute.userInfoList.put(user.getQQNum(),user);
                                     }
+                                    else{
+                                        Attribute.userInfoList.remove(user.getQQNum());
+                                        Attribute.userInfoList.put(user.getQQNum(),user);
+                                    }
 
                                     String qianming = user.getQianMing();
-                                    SystemClock.sleep(20);
+                                    SystemClock.sleep(50);
                                     Bitmap headImage = myDateBase.getImageByQQ(user.getQQNum());
                                     //添加 好友头像 到公共集合
                                     if(!Attribute.userHeadList.containsKey(user.getQQNum())){
                                         Attribute.userHeadList.put(user.getQQNum(),headImage);
+                                    }
+                                    else{
+                                       if( headImage.getByteCount()>Attribute.userHeadList.get(user.getQQNum()).getByteCount()){
+                                           Attribute.userHeadList.remove(user.getQQNum());
+                                           Attribute.userHeadList.put(user.getQQNum(),headImage);
+                                       }
                                     }
 
 
@@ -176,6 +186,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     contentInfo.setIsHide(isHide);
 
                                     listContentInfos.add(contentInfo);
+                                    SystemClock.sleep(30);
                                 }
                             }
                             //单个组名和其成员信息存入到groupTitleInfo中
@@ -184,23 +195,27 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                             groupTitleInfo.setInfo(listContentInfos);
                             groupList.add(groupTitleInfo);
                         }
-                        final List<GroupTitleInfo> groupListTemp = groupList;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    adapter = new PinnedHeaderExpandableAdapter(groupListTemp, getActivity());
-                                    explistView.setAdapter(adapter);
-                                }
-                                catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
                     }
+                    final List<GroupTitleInfo> groupListTemp = groupList;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                adapter = new PinnedHeaderExpandableAdapter(groupListTemp, getActivity());
+                                explistView.setAdapter(adapter);
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Attribute.agreeFriendClick=0;
                 }
                 catch (Exception e){
-                    Attribute.agreeFriendClick=2;
+                    if(Attribute.agreeFriendClick!=0){
+                        Attribute.agreeFriendClick=0;
+                        initData();
+                    }
                     e.printStackTrace();
                 }
                 finally {
