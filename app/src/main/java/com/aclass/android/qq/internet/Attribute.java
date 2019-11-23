@@ -38,6 +38,10 @@ public class Attribute {
     //点击同意好友,列表更新
     public static int agreeFriendClick=0;
 
+    //是否需要从消息列表文件里读取
+    public static boolean  isReadMsgListFile=true;
+
+
 
     //好友消息列表
     public static List<MsgList> msgList;

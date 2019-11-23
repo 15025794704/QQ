@@ -88,6 +88,9 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     public static  void readFile(Activity activity){
         try {
+            if(!Attribute.isReadMsgListFile){
+                return;
+            }
             FileInputStream fis=null;
             try {
                 fis = activity.openFileInput(Attribute.QQ + "messageList.json");
@@ -111,7 +114,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             Type listType=new TypeToken<List<MsgList>>(){}.getType();
             List<MsgList> lists = gson.fromJson(json, listType);
             Attribute.msgList=lists;
-            System.out.println(Attribute.msgList.size());
         }
         catch (Exception e){
             e.printStackTrace();

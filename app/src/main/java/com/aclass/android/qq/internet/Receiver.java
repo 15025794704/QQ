@@ -132,6 +132,7 @@ public class Receiver {
                                         }
                                         Receiver.writeMessageToFile(context, msg, msg.getSendQQ());
                                         setPoint(msg.getSendQQ(), true);
+                                        Attribute.isReadMsgListFile=false;
                                         if (changeIndex(msg.getSendQQ())) {
                                             writeMsgListToFile(context);
                                         }
@@ -193,6 +194,7 @@ public class Receiver {
 
     public  static void writeMsgListToFile(Context context){
         try {
+            Attribute.isReadMsgListFile=true;
             List<MsgList> msgList=Attribute.msgList;
             if(msgList!=null) {
                 FileOutputStream fos = context.openFileOutput(Attribute.QQ + "messageList.json", Context.MODE_PRIVATE);
