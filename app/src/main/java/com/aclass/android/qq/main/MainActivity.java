@@ -81,8 +81,6 @@ public class MainActivity extends GeneralActivity {
     }
 
     private void init(){
-        // 开启接收线程
-        Receiver.startReceiver(this, this);
         // 初始化屏幕窗体的宽高值
         Attribute.screen = new Screen(this);
 
@@ -118,6 +116,9 @@ public class MainActivity extends GeneralActivity {
             isScreenInitialized = true;
             initScreen();
         }
+
+        // 开启接收线程
+        Receiver.startReceiver(this, this);
     }
 
     /**

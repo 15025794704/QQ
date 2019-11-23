@@ -2,19 +2,24 @@ package com.aclass.android.qq.chat.group;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.common.ThemeUtil;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;
@@ -27,6 +32,7 @@ import com.aclass.android.qq.tools.MyDateBase;
 public class GroupChatSettingsActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
 
     public static String ARG_NUM = "groupNum";
+    private String groupNum;
 
     // DataBinding 对象
     private ActivityGroupChatSettingsBinding mViews;
@@ -39,9 +45,10 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
         mViews = ActivityGroupChatSettingsBinding.inflate(getLayoutInflater());
         // 设置页面界面
         setContentView(mViews.getRoot());
+        final Context context = this;
 
         Intent intent = getIntent();
-        final String groupNum = BuildConfig.DEBUG ? "" : intent.getStringExtra(ARG_NUM);
+        groupNum = BuildConfig.DEBUG ? "" : intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsGroupToolbar;
         // 工具栏选项点击监听器
@@ -58,6 +65,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
             @Override
             public void onChanged(@Nullable GroupSettings groupSettings) {
                 if (groupSettings == null) return;
+                groupNum = groupSettings.groupNum;
                 bindData(groupSettings);
             }
         });
@@ -65,22 +73,29 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
             @Override
             public void onChanged(@Nullable Bitmap bitmap) {
                 if (bitmap == null) return;
-                mViews.chatSettingsGroupInfo.setCompoundDrawables(new BitmapDrawable(getResources(), bitmap), null, null, null);
+                int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
+                Drawable[] drawables = mViews.chatSettingsGroupInfo.getCompoundDrawablesRelative();
+                drawables[2].setTint(colorOption);
+                int length = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, context.getResources().getDisplayMetrics()));
+                Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
+                profilePhoto.setBounds(0, 0, length, length);
+                mViews.chatSettingsGroupInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
             }
         });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final GroupSettings groupSettings = GroupSettings.get(groupNum, null);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViewModel.groupSettings.setValue(groupSettings);
-                    }
-                });
-            }
-        }).start();
+        if (mViewModel.groupSettings.getValue() == null){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final GroupSettings groupSettings = GroupSettings.get(groupNum, null);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mViewModel.groupSettings.setValue(groupSettings);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     @Override

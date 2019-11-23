@@ -50,7 +50,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-<!--    以单个 TextView 实现的“选项”控件-->
+<!--    以单个 View(Switch, TextView) 实现的“选项”控件-->
     <style name="AppTheme.SimpleOption">
         <item name="android:textColor">?mColorOnSurface</item>
         <item name="android:gravity">center_vertical</item>

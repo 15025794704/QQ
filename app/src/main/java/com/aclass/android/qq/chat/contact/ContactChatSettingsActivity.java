@@ -7,19 +7,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.common.ThemeUtil;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
 import com.aclass.android.qq.internet.Attribute;
-import com.aclass.android.qq.tools.MyDateBase;
 
 /**
  * QQ 好友聊天设置页面
@@ -30,15 +32,17 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
 
     private ActivityContactChatSettingsBinding mViews;
     private ContactChatSettingsViewModel mViewModel;
+    private String contactNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViews = ActivityContactChatSettingsBinding.inflate(getLayoutInflater());
         setContentView(mViews.getRoot());
+        final Context context = this;
 
         Intent intent = getIntent();
-        final String contactNum = BuildConfig.DEBUG ? "1234567890" : intent.getStringExtra(ARG_NUM);
+        contactNum = intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsContactToolbar;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -53,29 +57,24 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
             @Override
             public void onChanged(@Nullable ContactSettings contactSettings) {
                 if (contactSettings == null) return;
-                bindData(contactSettings);
+                contactNum = contactSettings.contactNum;
+                bindData(context, contactSettings);
             }
         });
-        mViewModel.friendProfilePhoto.observe(this, new Observer<Bitmap>() {
-            @Override
-            public void onChanged(@Nullable Bitmap bitmap) {
-                if (bitmap == null) return;
-                mViews.chatSettingsContactInfo.setCompoundDrawables(new BitmapDrawable(getResources(), bitmap), null, null, null);
-            }
-        });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViewModel.contactSettings.setValue(contactSettings);
-                    }
-                });
-            }
-        }).start();
+        if (mViewModel.contactSettings.getValue() == null){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mViewModel.contactSettings.setValue(contactSettings);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     @Override
@@ -86,21 +85,16 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
     }
 
-    private void bindData(final ContactSettings contactSettings){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                final Bitmap profilePhoto = dateBase.getImageByQQ(contactSettings.contactNum);
-                dateBase.Destory();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mViewModel.friendProfilePhoto.setValue(profilePhoto);
-                    }
-                });
-            }
-        }).start();
+    private void bindData(Context context, final ContactSettings contactSettings){
+        Bitmap bitmap = Attribute.userHeadList.get(contactSettings.contactNum);
+        if (bitmap == null) return;
+        int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
+        Drawable[] drawables = mViews.chatSettingsContactInfo.getCompoundDrawablesRelative();
+        drawables[2].setTint(colorOption);
+        int length = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, context.getResources().getDisplayMetrics()));
+        Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
+        profilePhoto.setBounds(0, 0, length, length);
+        mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
         mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
     }
 
@@ -120,7 +114,7 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
 
     private void contactInfo(Context context) {
         Intent intent = new Intent(context, MyDataActivity.class);
-        intent.putExtra("qqNum", Attribute.currentAccount.getQQNum());
+        intent.putExtra("qqNum", contactNum);
         startActivity(intent);
     }
 

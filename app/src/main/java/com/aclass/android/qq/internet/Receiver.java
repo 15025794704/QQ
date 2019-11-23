@@ -92,6 +92,8 @@ public class Receiver {
                     receiveSocket = new DatagramSocket();
                     byte[] buf;
                     User user = new User();
+                    if(Attribute.QQ==null || Attribute.QQ.equals(""))
+                        SystemClock.sleep(2000);
                     user.setQQNum(Attribute.QQ);
                     Request request = new Request(0,"",user);
                     buf=MyDateBase.toByteArray(request);
@@ -129,10 +131,11 @@ public class Receiver {
                                             Attribute.msgArrayList.add(msg);
                                         }
                                         Receiver.writeMessageToFile(context, msg, msg.getSendQQ());
+                                        setPoint(msg.getSendQQ(), true);
+                                        Attribute.isReadMsgListFile=false;
                                         if (changeIndex(msg.getSendQQ())) {
                                             writeMsgListToFile(context);
                                         }
-                                        setPoint(msg.getSendQQ(), true);
                                     }
                                 }
                             }).start();
@@ -191,6 +194,7 @@ public class Receiver {
 
     public  static void writeMsgListToFile(Context context){
         try {
+            Attribute.isReadMsgListFile=true;
             List<MsgList> msgList=Attribute.msgList;
             if(msgList!=null) {
                 FileOutputStream fos = context.openFileOutput(Attribute.QQ + "messageList.json", Context.MODE_PRIVATE);
