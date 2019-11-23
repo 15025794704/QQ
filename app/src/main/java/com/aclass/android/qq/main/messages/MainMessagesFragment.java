@@ -43,6 +43,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -87,7 +88,13 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
     public static  void readFile(Activity activity){
         try {
-            FileInputStream fis = activity.openFileInput(Attribute.QQ+"messageList.json");
+            FileInputStream fis=null;
+            try {
+                fis = activity.openFileInput(Attribute.QQ + "messageList.json");
+            }
+            catch (FileNotFoundException e2){
+                activity.openFileOutput(Attribute.QQ + "messageList.json",Context.MODE_PRIVATE);
+                e2.printStackTrace();}
             if(fis==null)
                 return;
 
