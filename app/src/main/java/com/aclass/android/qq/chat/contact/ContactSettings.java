@@ -26,6 +26,10 @@ public class ContactSettings {
      */
     boolean isDND;
     /**
+     * 隐藏会话
+     */
+    boolean isHidden;
+    /**
      * 屏蔽
      */
     boolean isBlocked;
@@ -45,7 +49,8 @@ public class ContactSettings {
         groupTag = friend.getQQgroup();
         isPinnedTop = friend.getIsTop() == 1;
         isDND = friend.getIsDisturb() == 1;
-        isBlocked = friend.getIsHide() == 1;
+        isHidden = friend.getIsHide() == 1;
+        isBlocked = friend.getIsBlocked() == 1;
         mData = friend;
     }
 
@@ -55,7 +60,8 @@ public class ContactSettings {
         mData.setQQgroup(groupTag);
         mData.setIsTop(isPinnedTop ? 1 : 0);
         mData.setIsDisturb(isDND ? 1 : 0);
-        mData.setIsHide(isBlocked ? 1 : 0);
+        mData.setIsHide(isHidden ? 1 : 0);
+        mData.setIsBlocked(isBlocked ? 1 : 0);
         return mData;
     }
 }

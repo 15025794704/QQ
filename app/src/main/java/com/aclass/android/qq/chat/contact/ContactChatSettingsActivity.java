@@ -88,8 +88,8 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
     }
 
-    private void bindData(Context context, final ContactSettings contactSettings){
-        Bitmap bitmap = Attribute.userHeadList.get(contactSettings.contactNum);
+    private void bindData(Context context, final ContactSettings settings){
+        Bitmap bitmap = Attribute.userHeadList.get(settings.contactNum);
         if (bitmap == null) return;
         int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
         Drawable[] drawables = mViews.chatSettingsContactInfo.getCompoundDrawablesRelative();
@@ -98,7 +98,7 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
         profilePhoto.setBounds(0, 0, length, length);
         mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
-        mViews.chatSettingsContactInfo.setText(contactSettings.contactName);
+        mViews.chatSettingsContactInfo.setText(settings.contactName);
 
         Switch[] switches = new Switch[]{
                 mViews.chatSettingsContactPinnedTop,
@@ -107,10 +107,10 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
                 mViews.chatSettingsContactBlocked
         };
         for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(null);
-        mViews.chatSettingsContactPinnedTop.setChecked(contactSettings.isPinnedTop);
-        mViews.chatSettingsContactDND.setChecked(contactSettings.isDND);
-        mViews.chatSettingsContactHidden.setChecked(contactSettings.isBlocked); // todo
-        mViews.chatSettingsContactBlocked.setChecked(contactSettings.isBlocked);
+        mViews.chatSettingsContactPinnedTop.setChecked(settings.isPinnedTop);
+        mViews.chatSettingsContactDND.setChecked(settings.isDND);
+        mViews.chatSettingsContactHidden.setChecked(settings.isHidden);
+        mViews.chatSettingsContactBlocked.setChecked(settings.isBlocked);
         for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(this);
     }
 
@@ -179,7 +179,7 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
     private void changeHidden(boolean newValue){
         ContactSettings settings = mViewModel.contactSettings.getValue();
         if (settings == null) return;
-        settings.isBlocked = newValue; // todo
+        settings.isHidden = newValue;
         updateData();
     }
 

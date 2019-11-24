@@ -31,9 +31,11 @@ public class GroupSettings {
      */
     boolean isDND;
     /**
-     * 屏蔽
+     * 隐藏会话
      */
-    boolean isBlocked;
+    boolean isHidden;
+    private Qun mDataGroupAccount;
+    private Member mDataGroup;
 
     public static GroupSettings get(String groupNum, MyDateBase dateBase){
         MyDateBase mDateBase = dateBase == null ? new MyDateBase() : dateBase;
@@ -51,6 +53,23 @@ public class GroupSettings {
         memberName = group.getNiCheng();
         isPinnedTop = group.getIsTop() == 1;
         isDND = group.getIsDisturb() == 1;
-        isBlocked = group.getIsHide() == 1;
+        isHidden = group.getIsHide() == 1;
+        mDataGroupAccount = groupAccount;
+        mDataGroup = group;
+    }
+
+    Qun toQun(){
+        mDataGroupAccount.setQunID(groupNum);
+        mDataGroupAccount.setName(groupName);
+        mDataGroupAccount.setHost(hostNum);
+        return mDataGroupAccount;
+    }
+
+    Member toMember(){
+        mDataGroup.setNiCheng(memberName);
+        mDataGroup.setIsTop(isPinnedTop ? 1 : 0);
+        mDataGroup.setIsDisturb(isDND ? 1 : 0);
+        mDataGroup.setIsHide(isHidden ? 1 : 0);
+        return mDataGroup;
     }
 }

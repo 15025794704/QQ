@@ -3,6 +3,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".chat.group.GroupChatSettingsActivity"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -120,7 +121,7 @@
                         android:textSize="15sp"
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
+                        android:drawableTop="@drawable/chat_tool_document"
                         android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -142,7 +143,7 @@
                         android:textSize="15sp"
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
+                        android:drawableTop="@drawable/chat_tool_check_in"
                         android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -153,7 +154,7 @@
                         android:textSize="15sp"
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
+                        android:drawableTop="@drawable/chat_tool_poll"
                         android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -164,7 +165,7 @@
                         android:textSize="15sp"
                         android:textColor="?mColorOnSurface"
                         android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
+                        android:drawableTop="@drawable/chat_tool_more"
                         android:drawablePadding="13dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -193,12 +194,16 @@
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsGroupPinnedTop"
+                    android:drawableEnd="@null"
                     android:text="置顶"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsGroupDND"
+                    android:drawableEnd="@null"
                     android:text="消息免打扰"
                     style="@style/AppTheme.SimpleOption"/>
 
@@ -206,7 +211,9 @@
                     android:text="消息通知设置"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
+                <Switch
+                    android:id="@+id/chatSettingsGroupHidden"
+                    android:drawableEnd="@null"
                     android:text="隐藏会话"
                     style="@style/AppTheme.SimpleOption"/>
 
@@ -246,6 +253,8 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
+                    android:id="@+id/chatSettingsGroupQuitGroup"
+                    android:onClick="onClick"
                     android:text="退出该群"
                     android:textColor="#FFF03030"
                     android:gravity="center"

@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.custom.GeneralActivity;
@@ -57,7 +56,6 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
 
     private void logOut(Context context){
         getSharedPreferences("GeneralPrefs", MODE_PRIVATE).edit().putBoolean("isLogin", false).apply();
-        Toast.makeText(context, "You are logged out", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
     }

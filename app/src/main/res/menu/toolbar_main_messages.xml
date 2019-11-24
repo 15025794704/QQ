@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/mainToolbarMessagesRecord"
-        android:icon="@drawable/main_messages_toolbar_record"
+        android:icon="@drawable/ic_camera_24"
         app:showAsAction="ifRoom"
-        android:title="@string/textMore"/>
+        android:title="录制"/>
 
     <item
         android:id="@+id/mainToolbarMessagesMore"

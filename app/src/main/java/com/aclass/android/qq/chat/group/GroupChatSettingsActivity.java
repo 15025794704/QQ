@@ -14,7 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.R;
@@ -29,7 +31,7 @@ import com.aclass.android.qq.tools.MyDateBase;
 /**
  * QQ 群聊天设置页面
  */
-public class GroupChatSettingsActivity extends GeneralActivity implements Toolbar.OnMenuItemClickListener {
+public class GroupChatSettingsActivity extends GeneralActivity implements View.OnClickListener, Toolbar.OnMenuItemClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static String ARG_NUM = "groupNum";
     private String groupNum;
@@ -48,7 +50,7 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
         final Context context = this;
 
         Intent intent = getIntent();
-        groupNum = BuildConfig.DEBUG ? "" : intent.getStringExtra(ARG_NUM);
+        groupNum = BuildConfig.DEBUG ? "12345678" : intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsGroupToolbar;
         // 工具栏选项点击监听器
@@ -115,12 +117,12 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
         return false;
     }
 
-    private void bindData(final GroupSettings groupSettings){
+    private void bindData(final GroupSettings settings){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 MyDateBase dateBase = new MyDateBase();
-                final Bitmap profilePhoto = dateBase.getImageByQQ(groupSettings.groupNum);
+                final Bitmap profilePhoto = dateBase.getImageByQQ(settings.groupNum);
                 dateBase.Destory();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -130,6 +132,81 @@ public class GroupChatSettingsActivity extends GeneralActivity implements Toolba
                 });
             }
         }).start();
-        mViews.chatSettingsGroupInfo.setText(groupSettings.groupName);
+        mViews.chatSettingsGroupInfo.setText(settings.groupName);
+
+        Switch[] switches = new Switch[]{
+                mViews.chatSettingsGroupPinnedTop,
+                mViews.chatSettingsGroupDND,
+                mViews.chatSettingsGroupHidden
+        };
+        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(null);
+        mViews.chatSettingsGroupPinnedTop.setChecked(settings.isPinnedTop);
+        mViews.chatSettingsGroupDND.setChecked(settings.isDND);
+        mViews.chatSettingsGroupHidden.setChecked(settings.isHidden);
+        for (Switch aSwitch : switches) aSwitch.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == null) return;
+        switch (v.getId()){
+            case R.id.chatSettingsGroupQuitGroup:
+                quitGroup();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == null) return;
+        switch (buttonView.getId()){
+            case R.id.chatSettingsGroupPinnedTop:
+                changePinnedTop(isChecked);
+                break;
+            case R.id.chatSettingsGroupDND:
+                changeDND(isChecked);
+                break;
+            case R.id.chatSettingsGroupHidden:
+                changeHidden(isChecked);
+                break;
+        }
+    }
+
+    private void quitGroup(){
+    }
+
+    private void changePinnedTop(boolean newValue){
+        GroupSettings settings = mViewModel.groupSettings.getValue();
+        if (settings == null) return;
+        settings.isPinnedTop = newValue;
+        updateData();
+    }
+
+    private void changeDND(boolean newValue){
+        GroupSettings settings = mViewModel.groupSettings.getValue();
+        if (settings == null) return;
+        settings.isDND = newValue;
+        updateData();
+    }
+
+    private void changeHidden(boolean newValue){
+        GroupSettings settings = mViewModel.groupSettings.getValue();
+        if (settings == null) return;
+        settings.isHidden = newValue;
+        updateData();
+    }
+
+    private void updateData(){
+        final GroupSettings settings = mViewModel.groupSettings.getValue();
+        if (settings == null) return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyDateBase dateBase = new MyDateBase();
+                int resultGroupAccount = dateBase.updateEntity(settings.toQun());
+                int resultGroup = dateBase.updateEntity(settings.toMember());
+                dateBase.Destory();
+            }
+        }).start();
     }
 }

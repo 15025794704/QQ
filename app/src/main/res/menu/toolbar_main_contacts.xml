@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/mainToolbarContactsSeek"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/ic_person_add_24"
         app:showAsAction="ifRoom"
         android:title="加好友/群"/>
 </menu>
