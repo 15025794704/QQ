@@ -13,7 +13,7 @@ public class Member extends Entity implements Serializable, Parcelable {
 	private String qunID;//群id
 	private String memberQQ;//成员qq
 	private int isTop;//置顶
-	private int isHide;//屏蔽
+	private int isHide; // 隐藏会话
 	private int isDisturb;//免打扰
 	private String niCheng;//成员昵称
 

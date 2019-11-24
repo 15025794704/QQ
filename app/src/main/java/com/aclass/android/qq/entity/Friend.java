@@ -16,9 +16,9 @@ public class Friend extends Entity implements Serializable, Parcelable {
 	private String QQgroup;//好友存在的分组
 	private int isTop;//好友是否消息置顶
 	private int isDisturb;//消息免打扰
-	private int isHide;//是否屏蔽好友
+	private int isHide; // 隐藏会话
 	private int isAgree;//好友申请是否通过了
-	private int isBlocked;//
+	private int isBlocked; // 屏蔽
 
 	public int getIsBlocked() {
 		return isBlocked;
