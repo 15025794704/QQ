@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.common.GraphicsUtil;
@@ -64,10 +63,7 @@ public class DrawerFragment extends GeneralFragment {
             }
         });
 
-        mViews.recordView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(6.0/121))));
-        mViews.detailMenu.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(Attribute.screen.getposHeight()*(70.0/121))));
-
-        mViews.icon.setOnClickListener(new View.OnClickListener() {
+        mViews.sideHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(mActivity, MyDataActivity.class);

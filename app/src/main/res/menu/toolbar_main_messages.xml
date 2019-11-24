@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/mainToolbarMessagesRecord"
+        android:icon="@drawable/main_messages_toolbar_record"
+        app:showAsAction="ifRoom"
+        android:title="@string/textMore"/>
+
+    <item
         android:id="@+id/mainToolbarMessagesMore"
         android:icon="@drawable/ic_add_24"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/textMore"/>
 </menu>

@@ -68,24 +68,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <!--    以单个 TextView 实现的“选项”控件（侧栏）-->
-    <style name="AppTheme.MainSideSimpleOption">
-        <item name="android:textColor">?mColorOnSurface</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:drawableEnd">@drawable/ic_option_go_24</item>
-        <item name="android:drawablePadding">13dp</item>
-        <item name="android:drawableTint">?mColorOptionGo</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="android:background">?mColorSurface</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <!--“选项组”-->
     <style name="AppTheme.SimpleOptionGroup">
         <item name="android:orientation">vertical</item>
@@ -93,6 +75,40 @@
         <item name="android:showDividers">middle</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.SeekPersonOptionLayout">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?mColorSurface</item>
+        <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!--    以单个 TextView 实现的“选项”控件（侧栏）-->
+    <style name="AppTheme.MainSideSimpleOption">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:drawableEnd">@drawable/ic_option_go_24</item>
+        <item name="android:drawablePadding">13dp</item>
+        <item name="android:drawableTint">?mColorOptionGo</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.MainSideSimpleOptionLayout">
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
     <!--“打卡栏”-->

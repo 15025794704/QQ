@@ -25,31 +25,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                style="@style/AppTheme.SimpleOption"
-                android:text="添加手机联系人"
-                android:drawableStart="@drawable/ic_call_24"/>
+            <LinearLayout
+                style="@style/AppTheme.SeekPersonOptionLayout">
 
-            <TextView
-                style="@style/AppTheme.SimpleOption"
-                android:text="扫一扫添加好友"
-                android:drawableStart="@drawable/ic_menu_24"/>
+                <ImageView
+                    android:src="@drawable/seek_contact_phone"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
 
-            <TextView
-                style="@style/AppTheme.SimpleOption"
-                android:text="面对面发起群聊"
-                android:drawableStart="@drawable/ic_menu_24"/>
+                <TextView
+                    style="@style/AppTheme.SimpleOption"
+                    android:background="@null"
+                    android:text="添加手机联系人"/>
 
-            <TextView
-                style="@style/AppTheme.SimpleOption"
-                android:text="按条件查找陌生人"
-                android:drawableStart="@drawable/ic_search_24"/>
+            </LinearLayout>
 
-            <TextView
-                style="@style/AppTheme.SimpleOption"
-                android:text="查看附近的人"
+            <LinearLayout
+                style="@style/AppTheme.SeekPersonOptionLayout">
+
+                <ImageView
+                    android:src="@drawable/seek_contact_scan"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    style="@style/AppTheme.SimpleOption"
+                    android:background="@null"
+                    android:text="扫一扫添加好友"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/AppTheme.SeekPersonOptionLayout">
+
+                <ImageView
+                    android:src="@drawable/seek_contact_face_to_face_group_chat"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    style="@style/AppTheme.SimpleOption"
+                    android:background="@null"
+                    android:text="面对面发起群聊"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/AppTheme.SeekPersonOptionLayout">
+
+                <ImageView
+                    android:src="@drawable/seek_contact_search"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    style="@style/AppTheme.SimpleOption"
+                    android:background="@null"
+                    android:text="按条件查找陌生人"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_marginBottom="@dimen/optionGroupMargin"
-                android:drawableStart="@drawable/ic_menu_24"/>
+                style="@style/AppTheme.SeekPersonOptionLayout">
+
+                <ImageView
+                    android:src="@drawable/seek_contact_nearby"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    style="@style/AppTheme.SimpleOption"
+                    android:background="@null"
+                    android:text="查看附近的人" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </layout>
