@@ -194,4 +194,11 @@ public class Entity {
 	}
 	public void setPhone(String phone) {
 	}
+	private int isBlocked;//
+
+	public int getIsBlocked() {
+		return 0;
+	}
+	public void setIsBlocked(int isBlocked) {
+	}
 }

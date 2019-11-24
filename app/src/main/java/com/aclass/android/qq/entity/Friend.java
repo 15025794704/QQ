@@ -18,6 +18,17 @@ public class Friend extends Entity implements Serializable, Parcelable {
 	private int isDisturb;//消息免打扰
 	private int isHide;//是否屏蔽好友
 	private int isAgree;//好友申请是否通过了
+	private int isBlocked;//
+
+	public int getIsBlocked() {
+		return isBlocked;
+	}
+
+	public void setIsBlocked(int isBlocked) {
+		this.isBlocked = isBlocked;
+	}
+
+
 
 	public Friend(){}
 
@@ -30,6 +41,7 @@ public class Friend extends Entity implements Serializable, Parcelable {
 		isDisturb = in.readInt();
 		isHide = in.readInt();
 		isAgree = in.readInt();
+		isBlocked=in.readInt();
 	}
 
 	public static final Creator<Friend> CREATOR = new Creator<Friend>() {
@@ -113,5 +125,6 @@ public class Friend extends Entity implements Serializable, Parcelable {
 		dest.writeInt(isDisturb);
 		dest.writeInt(isHide);
 		dest.writeInt(isAgree);
+		dest.writeInt(isBlocked);
 	}
 }
