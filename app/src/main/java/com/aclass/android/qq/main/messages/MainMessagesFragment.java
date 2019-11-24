@@ -5,16 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +19,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.custom.control.RoundImageView;
-import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 import com.aclass.android.qq.entity.Friend;
-import com.aclass.android.qq.entity.Message;
 import com.aclass.android.qq.entity.MsgList;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
@@ -217,7 +211,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
 
         title.setText(R.string.mainBottomNavMessages);
         mainToolbar = toolbar;
-        toolbar.setOverflowIcon(toolbar.getContext().getDrawable(R.drawable.ic_add_24));
         toolbar.inflateMenu(R.menu.toolbar_main_messages);
         toolbar.setOnMenuItemClickListener(this);
 
@@ -246,14 +239,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                     MenuBuilder.class.getMethod("setOptionalIconsVisible", boolean.class).invoke(pop.getMenu(), true);
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
-                }
-                int color = Color.parseColor("#FF5050F0");
-                Menu menu = pop.getMenu();
-                for (int i = 0; i < menu.size(); i++){
-                    MenuItem menuItem = menu.getItem(i);
-                    Drawable icon = menuItem.getIcon();
-                    if (icon == null) continue;
-                    icon.setTint(color);
                 }
                 pop.setOnMenuItemClickListener(this);
                 pop.show();

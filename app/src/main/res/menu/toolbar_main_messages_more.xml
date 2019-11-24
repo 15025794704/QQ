@@ -4,31 +4,31 @@
 
     <item
         android:id="@+id/mainToolbarMessagesNewGroupChat"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/main_messages_toolbar_group_chat"
         app:showAsAction="never"
         android:title="创建群聊"/>
 
     <item
         android:id="@+id/mainToolbarMessagesSeek"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/main_messages_toolbar_seek"
         app:showAsAction="never"
         android:title="加好友/群"/>
 
     <item
         android:id="@+id/mainToolbarMessagesScan"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/main_messages_toolbar_scan"
         app:showAsAction="never"
         android:title="扫一扫"/>
 
     <item
         android:id="@+id/mainToolbarMessagesSend"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/main_messages_toolbar_transfer"
         app:showAsAction="never"
         android:title="面对面快传"/>
 
     <item
         android:id="@+id/mainToolbarMessagesPay"
-        android:icon="@drawable/ic_add_24"
+        android:icon="@drawable/main_messages_toolbar_pay"
         app:showAsAction="never"
         android:title="收付款"/>
 

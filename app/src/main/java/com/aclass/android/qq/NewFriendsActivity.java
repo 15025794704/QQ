@@ -1,5 +1,6 @@
 package com.aclass.android.qq;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.seek.SeekActivity;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.List;
@@ -41,6 +43,12 @@ public class NewFriendsActivity extends GeneralActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        findViewById(R.id.new_friend_seek).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewFriendsActivity.this, SeekActivity.class));
             }
         });
 

@@ -20,7 +20,7 @@
             style="@style/AppTheme.ToolbarTitle"/>
 
         <TextView
-            android:id="@+id/newFriend_send"
+            android:id="@+id/new_friend_seek"
             android:text="添加"
             android:textSize="19sp"
             android:layout_gravity="end"
