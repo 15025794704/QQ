@@ -73,6 +73,7 @@
                     android:layout_height="match_parent"
                     android:drawableRight="@drawable/angle"
                     android:textSize="19sp"
+                    android:layout_marginRight="20dp"
                     />
             </LinearLayout>
 
