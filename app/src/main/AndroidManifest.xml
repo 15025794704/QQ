@@ -59,6 +59,7 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".CreateGroupActivity"></activity>
     </application>
 
 </manifest>

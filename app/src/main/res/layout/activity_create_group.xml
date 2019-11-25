@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_group"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aclass.android.qq.CreateGroupActivity">
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/color_white"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+
+        <RadioButton
+            android:id="@+id/rb_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_rb"
+            android:layout_marginLeft="40dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:button="@null"
+            android:gravity="center"
+            android:text="选人创建"
+            android:textSize="18sp"
+            android:drawableTint="#000000"
+            />
+     <RadioButton
+        android:id="@+id/rb_type"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+         android:layout_marginRight="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/selector_rb"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:button="@null"
+        android:text="按分类创建"
+        android:textSize="18sp"
+        android:drawableTint="#000000"
+        />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/L1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:layout_below="@id/radio_group"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
+        <EditText
+            android:id="@+id/et_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="19sp"
+            android:textColor="#FFAD33"
+            android:hint="搜索"
+            android:drawableLeft="@drawable/ic_search1"
+            android:drawablePadding="8dp"
+            android:maxLines="1"
+            android:paddingBottom="10dp"/>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/sv_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/L1"
+        android:layout_marginTop="20dp"
+        android:background="@color/color_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_face"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="面对面创建群聊"
+            android:textSize="19dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorOnBackground"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:drawableRight="@drawable/angle"/>
+
+
+        <TextView
+            android:id="@+id/tv_exist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="从群聊中选择"
+            android:textSize="19dp"
+            android:layout_below="@id/tv_face"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorOnBackground"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:drawableRight="@drawable/angle"/>
+
+
+                <com.aclass.android.qq.main.contacts.PinnedHeaderExpandableListView
+                    android:id="@+id/explistview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="0.0dip"
+                    android:cacheColorHint="#00000000"
+                    android:choiceMode="singleChoice"
+                    android:drawSelectorOnTop="false"
+                    android:fastScrollEnabled="false"
+                    android:footerDividersEnabled="true"
+                    android:layout_below="@+id/tv_exist"
+                    android:groupIndicator="@null"
+                    android:scrollbars="vertical"
+                    android:scrollingCache="true"
+                    tools:ignore="RtlHardcoded" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sv_create"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_white"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="15dp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textSize="19sp"
+            android:background="@drawable/selector_bt"
+            android:text="立即创建"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

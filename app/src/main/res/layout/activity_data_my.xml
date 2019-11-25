@@ -164,6 +164,7 @@
                 android:id="@+id/textView4" />
         </LinearLayout>
     </RelativeLayout>
+
     <RadioGroup
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
