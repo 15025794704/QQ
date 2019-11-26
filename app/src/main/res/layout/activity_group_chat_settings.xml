@@ -176,13 +176,50 @@
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOptionGroup">
 
-                    <TextView
-                        android:text="群聊名称"
-                        style="@style/AppTheme.SimpleOption"/>
+                    <LinearLayout
+                        style="@style/AppTheme.SimpleOptionLayout">
 
-                    <TextView
-                        android:text="二维码"
-                        style="@style/AppTheme.SimpleOption"/>
+                        <TextView
+                            android:text="群聊名称"
+                            style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                        <LinearLayout
+                            tools:ignore="UseCompoundDrawables"
+                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
+
+                            <ImageView
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
+
+                            <TextView
+                                android:id="@+id/chatSettingsGroupName"
+                                tools:text="Android 小分队"
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/AppTheme.SimpleOptionLayout">
+
+                        <TextView
+                            android:text="（群号和）二维码"
+                            style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                        <LinearLayout
+                            tools:ignore="UseCompoundDrawables"
+                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
+
+                            <ImageView
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
+
+                            <TextView
+                                android:id="@+id/chatSettingsGroupNum"
+                                tools:text="12345678"
+                                android:drawableEnd="@drawable/drawer_barcode"
+                                android:drawableTint="?android:textColorHint"
+                                android:drawablePadding="8dp"
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:text="群公告"
@@ -218,13 +255,31 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="管理群"
+                    android:text="管理群（管理员）"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
-                <TextView
-                    android:text="我的群昵称"
-                    style="@style/AppTheme.SimpleOption"/>
+                <LinearLayout
+                    style="@style/AppTheme.SimpleOptionLayout">
+
+                    <TextView
+                        android:text="我的群昵称"
+                        style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                    <EditText
+                        android:id="@+id/chatSettingsGroupMemberName"
+                        tools:text="MADNESS"
+                        android:textColor="?android:textColorHint"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
                 <TextView
                     android:text="一起听歌"

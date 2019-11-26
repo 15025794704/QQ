@@ -1,34 +1,15 @@
 package com.aclass.android.qq.chat.contact;
 
+import com.aclass.android.qq.chat.Settings;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
-public class ContactSettings {
-    /**
-     * 好友 QQ 号
-     */
-    String contactNum;
-    /**
-     * 备注
-     */
-    String contactName;
+public class ContactSettings extends Settings {
     /**
      * 分组
      */
     String groupTag;
-    /**
-     * 聊天置顶
-     */
-    boolean isPinnedTop;
-    /**
-     * 新消息勿扰
-     */
-    boolean isDND;
-    /**
-     * 隐藏会话
-     */
-    boolean isHidden;
     /**
      * 屏蔽
      */
@@ -44,8 +25,8 @@ public class ContactSettings {
     }
 
     public ContactSettings(Friend friend){
-        contactNum = friend.getQQ2();
-        contactName = friend.getBeiZhu();
+        number = friend.getQQ2();
+        name = friend.getBeiZhu();
         groupTag = friend.getQQgroup();
         isPinnedTop = friend.getIsTop() == 1;
         isDND = friend.getIsDisturb() == 1;
@@ -55,8 +36,8 @@ public class ContactSettings {
     }
 
     Friend toFriend(){
-        mData.setQQ2(contactNum);
-        mData.setBeiZhu(contactName);
+        mData.setQQ2(number);
+        mData.setBeiZhu(name);
         mData.setQQgroup(groupTag);
         mData.setIsTop(isPinnedTop ? 1 : 0);
         mData.setIsDisturb(isDND ? 1 : 0);

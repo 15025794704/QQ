@@ -4,23 +4,16 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
-import com.aclass.android.qq.common.GraphicsUtil;
-import com.aclass.android.qq.common.ThemeUtil;
-import com.aclass.android.qq.custom.GeneralActivity;
+import com.aclass.android.qq.chat.ChatSettingsActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
 import com.aclass.android.qq.internet.Attribute;
@@ -29,13 +22,13 @@ import com.aclass.android.qq.tools.MyDateBase;
 /**
  * QQ 好友聊天设置页面
  */
-public class ContactChatSettingsActivity extends GeneralActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class ContactChatSettingsActivity extends ChatSettingsActivity {
 
     public static String ARG_NUM = "contactNum";
 
     private ActivityContactChatSettingsBinding mViews;
     private ContactChatSettingsViewModel mViewModel;
-    private String contactNum;
+    private String number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +38,7 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         final Context context = this;
 
         Intent intent = getIntent();
-        contactNum = intent.getStringExtra(ARG_NUM);
+        number = intent.getStringExtra(ARG_NUM);
 
         MyToolbar toolbar = mViews.chatSettingsContactToolbar;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -56,23 +49,24 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
         });
 
         mViewModel = ViewModelProviders.of(this).get(ContactChatSettingsViewModel.class);
-        mViewModel.contactSettings.observe(this, new Observer<ContactSettings>() {
+        chatSettingsViewModel = mViewModel;
+        mViewModel.settings.observe(this, new Observer<ContactSettings>() {
             @Override
             public void onChanged(@Nullable ContactSettings contactSettings) {
                 if (contactSettings == null) return;
-                contactNum = contactSettings.contactNum;
+                number = contactSettings.number;
                 bindData(context, contactSettings);
             }
         });
-        if (mViewModel.contactSettings.getValue() == null){
+        if (mViewModel.settings.getValue() == null){
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final ContactSettings contactSettings = ContactSettings.get(contactNum, null);
+                    final ContactSettings contactSettings = ContactSettings.get(number, null);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mViewModel.contactSettings.setValue(contactSettings);
+                            mViewModel.settings.setValue(contactSettings);
                         }
                     });
                 }
@@ -82,23 +76,12 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
 
     @Override
     protected void consumeInsets(Rect insets) {
-        MyToolbar tb = mViews.chatSettingsContactToolbar;
-        tb.setPadding(tb.getPaddingStart(), insets.top, tb.getPaddingEnd(), tb.getPaddingBottom());
-        LinearLayout container = mViews.chatSettingsContactContainer;
-        container.setPadding(container.getPaddingStart(), container.getPaddingTop(), container.getPaddingEnd(), insets.bottom);
+        consumeInsets(insets, mViews.chatSettingsContactToolbar, mViews.chatSettingsContactContainer);
     }
 
     private void bindData(Context context, final ContactSettings settings){
-        Bitmap bitmap = Attribute.userHeadList.get(settings.contactNum);
-        if (bitmap == null) return;
-        int colorOption = ThemeUtil.getColor(context, R.attr.mColorOptionGo);
-        Drawable[] drawables = mViews.chatSettingsContactInfo.getCompoundDrawablesRelative();
-        drawables[2].setTint(colorOption);
-        int length = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, context.getResources().getDisplayMetrics()));
-        Drawable profilePhoto = new BitmapDrawable(getResources(), GraphicsUtil.round(bitmap));
-        profilePhoto.setBounds(0, 0, length, length);
-        mViews.chatSettingsContactInfo.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
-        mViews.chatSettingsContactInfo.setText(settings.contactName);
+        bindDataProfilePhoto(context, mViews.chatSettingsContactInfo, Attribute.userHeadList.get(settings.number));
+        mViews.chatSettingsContactInfo.setText(settings.name);
 
         Switch[] switches = new Switch[]{
                 mViews.chatSettingsContactPinnedTop,
@@ -152,7 +135,7 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
 
     private void contactInfo(Context context) {
         Intent intent = new Intent(context, MyDataActivity.class);
-        intent.putExtra("qqNum", contactNum);
+        intent.putExtra("qqNum", number);
         startActivity(intent);
     }
 
@@ -162,36 +145,17 @@ public class ContactChatSettingsActivity extends GeneralActivity implements View
     private void removeContact(){
     }
 
-    private void changePinnedTop(boolean newValue){
-        ContactSettings settings = mViewModel.contactSettings.getValue();
-        if (settings == null) return;
-        settings.isPinnedTop = newValue;
-        updateData();
-    }
-
-    private void changeDND(boolean newValue){
-        ContactSettings settings = mViewModel.contactSettings.getValue();
-        if (settings == null) return;
-        settings.isDND = newValue;
-        updateData();
-    }
-
-    private void changeHidden(boolean newValue){
-        ContactSettings settings = mViewModel.contactSettings.getValue();
-        if (settings == null) return;
-        settings.isHidden = newValue;
-        updateData();
-    }
-
     private void changeBlocked(boolean newValue){
-        ContactSettings settings = mViewModel.contactSettings.getValue();
+        ContactSettings settings = mViewModel.settings.getValue();
         if (settings == null) return;
+        if (settings.isBlocked == newValue) return;
         settings.isBlocked = newValue;
         updateData();
     }
 
-    private void updateData(){
-        final ContactSettings settings = mViewModel.contactSettings.getValue();
+    @Override
+    protected void updateData(){
+        final ContactSettings settings = mViewModel.settings.getValue();
         if (settings == null) return;
         new Thread(new Runnable() {
             @Override

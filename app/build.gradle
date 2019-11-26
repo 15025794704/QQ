@@ -48,7 +48,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:design:26.1.0'
     compile "android.arch.lifecycle:extensions:1.1.1"
-    //    compile 'com.android.databinding:library:3.5.2'
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

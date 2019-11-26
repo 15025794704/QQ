@@ -1,19 +1,12 @@
 package com.aclass.android.qq.chat.group;
 
+import com.aclass.android.qq.chat.Settings;
 import com.aclass.android.qq.entity.Member;
 import com.aclass.android.qq.entity.Qun;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
-public class GroupSettings {
-    /**
-     * 群号
-     */
-    String groupNum;
-    /**
-     * 群名称
-     */
-    String groupName;
+public class GroupSettings extends Settings {
     /**
      * 群主 QQ 号
      */
@@ -22,18 +15,6 @@ public class GroupSettings {
      * 个人群昵称
      */
     String memberName;
-    /**
-     * 聊天置顶
-     */
-    boolean isPinnedTop;
-    /**
-     * 新消息勿扰
-     */
-    boolean isDND;
-    /**
-     * 隐藏会话
-     */
-    boolean isHidden;
     private Qun mDataGroupAccount;
     private Member mDataGroup;
 
@@ -47,8 +28,8 @@ public class GroupSettings {
     }
 
     public GroupSettings(Qun groupAccount, Member group){
-        groupNum = groupAccount.getQunID();
-        groupName = groupAccount.getName();
+        number = groupAccount.getQunID();
+        name = groupAccount.getName();
         hostNum = groupAccount.getHost();
         memberName = group.getNiCheng();
         isPinnedTop = group.getIsTop() == 1;
@@ -59,8 +40,8 @@ public class GroupSettings {
     }
 
     Qun toQun(){
-        mDataGroupAccount.setQunID(groupNum);
-        mDataGroupAccount.setName(groupName);
+        mDataGroupAccount.setQunID(number);
+        mDataGroupAccount.setName(name);
         mDataGroupAccount.setHost(hostNum);
         return mDataGroupAccount;
     }

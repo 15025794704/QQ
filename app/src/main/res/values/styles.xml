@@ -77,6 +77,56 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+
+    <style name="AppTheme.SimpleOptionLayout">
+        <item name="android:paddingTop">@dimen/optionPaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/optionPaddingVertical</item>
+        <item name="android:paddingStart">@dimen/optionPaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/optionPaddingHorizontal</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?mColorSurface</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="AppTheme.SimpleOptionLayoutTitle">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="AppTheme.SimpleOptionLayoutNestedLayout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="AppTheme.SimpleOptionLayoutNestedLayoutIcon">
+        <item name="android:src">@drawable/ic_option_go_24</item>
+        <item name="android:tint">?mColorOptionGo</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+
+    <style name="AppTheme.SimpleOptionLayoutNestedLayoutText">
+        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:layoutDirection">locale</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <style name="AppTheme.SeekPersonOptionLayout">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:background">?mColorSurface</item>

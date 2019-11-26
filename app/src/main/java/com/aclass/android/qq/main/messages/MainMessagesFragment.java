@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aclass.android.qq.CreateGroupActivity;
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
@@ -245,6 +246,9 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
                 return true;
             case R.id.mainToolbarMessagesSeek:
                 startActivity(new Intent(getActivity(), SeekActivity.class));
+                return true;
+            case R.id.mainToolbarMessagesNewGroupChat:
+                startActivity(new Intent(getActivity(), CreateGroupActivity.class));
                 return true;
         }
         return false;
