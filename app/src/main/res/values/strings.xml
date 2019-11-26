@@ -23,4 +23,5 @@
     <string name="s2">群聊</string>
     <string name="s3">设备</string>
     <string name="search">搜索</string>
+    <string name="groupChatSettingsAddMember">邀请</string>
 </resources>

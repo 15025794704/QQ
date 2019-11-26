@@ -137,6 +137,24 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="AppTheme.GroupChatSettingsMember">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.GroupChatSettingsToolTitle">
+        <item name="android:textColor">?mColorOnSurface</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <!--    以单个 TextView 实现的“选项”控件（侧栏）-->
     <style name="AppTheme.MainSideSimpleOption">
         <item name="android:textColor">?mColorOnSurface</item>

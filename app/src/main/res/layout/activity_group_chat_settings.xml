@@ -3,8 +3,8 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".chat.group.GroupChatSettingsActivity"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".chat.group.GroupChatSettingsActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -43,133 +43,144 @@
 
                 <LinearLayout
                     android:background="?mColorSurface"
-                    android:paddingTop="@dimen/optionPaddingVertical"
+                    android:paddingTop="0dp"
                     android:paddingBottom="@dimen/optionPaddingVertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="成员1"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/chatSettingsGroupMember1"
+                        tools:text="成员1"
+                        style="@style/AppTheme.GroupChatSettingsMember" />
 
                     <TextView
-                        android:text="成员2"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/chatSettingsGroupMember2"
+                        tools:text="成员2"
+                        style="@style/AppTheme.GroupChatSettingsMember" />
 
                     <TextView
-                        android:text="成员3"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/chatSettingsGroupMember3"
+                        tools:text="成员3"
+                        style="@style/AppTheme.GroupChatSettingsMember" />
 
                     <TextView
-                        android:text="成员4"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/chatSettingsGroupMember4"
+                        tools:text="成员4"
+                        style="@style/AppTheme.GroupChatSettingsMember" />
 
                     <TextView
-                        android:text="邀请"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOptionGo"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/chat_settings_add"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:id="@+id/chatSettingsGroupMember5"
+                        tools:text="@string/groupChatSettingsAddMember"
+                        style="@style/AppTheme.GroupChatSettingsMember" />
                 </LinearLayout>
 
                 <TextView
                     android:text="群应用"
                     android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:drawableEnd="@null"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <LinearLayout
                     android:background="?mColorSurface"
-                    android:paddingTop="@dimen/optionPaddingVertical"
+                    android:paddingTop="0dp"
                     android:paddingBottom="@dimen/optionPaddingVertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:text="文件"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/chat_tool_document"
-                        android:drawablePadding="13dp"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <TextView
-                        android:text="相册"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        <ImageView
+                            android:src="@drawable/chat_tool_document"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
 
-                    <TextView
-                        android:text="签到"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/chat_tool_check_in"
-                        android:drawablePadding="13dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="文件"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:text="投票"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/chat_tool_poll"
-                        android:drawablePadding="13dp"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <TextView
-                        android:text="更多"
-                        android:textSize="15sp"
-                        android:textColor="?mColorOnSurface"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/chat_tool_more"
-                        android:drawablePadding="13dp"
+                        <ImageView
+                            android:src="@drawable/chat_tool_activity"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="活动"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/chat_tool_check_in"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="签到"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/chat_tool_poll"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="投票"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/chat_tool_more"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="更多"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -201,7 +212,7 @@
                         style="@style/AppTheme.SimpleOptionLayout">
 
                         <TextView
-                            android:text="（群号和）二维码"
+                            android:text="群号和二维码"
                             style="@style/AppTheme.SimpleOptionLayoutTitle"/>
 
                         <LinearLayout
@@ -255,7 +266,7 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="管理群（管理员）"
+                    android:text="管理群管理员"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 

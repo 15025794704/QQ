@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,10 +20,173 @@
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:padding="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="热门分类"
+                android:textSize="15sp"
+                android:paddingStart="@dimen/optionPaddingHorizontal"
+                android:paddingEnd="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <HorizontalScrollView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:background="?mColorSurface"
+                    android:paddingTop="@dimen/optionPaddingVertical"
+                    android:paddingBottom="@dimen/optionPaddingVertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_business"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="行业"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_education"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="教育"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_fans"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="粉丝"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_game"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="游戏"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_hobby"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="爱好"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_life"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="生活"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:src="@drawable/seek_group_category_school"
+                            android:contentDescription="@null"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                        <TextView
+                            android:text="学校"
+                            style="@style/AppTheme.GroupChatSettingsToolTitle" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 </layout>

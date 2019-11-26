@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.GraphicsUtil;
@@ -19,8 +16,7 @@ import com.aclass.android.qq.common.MyButtonOperation;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
-
-import org.w3c.dom.Text;
+import com.aclass.android.qq.tools.MyDateBase;
 
 
 /**
@@ -31,6 +27,7 @@ public class MyDataActivity extends GeneralActivity {
     private Button idBtn,editBtn,sendBtn;
     private ImageView head;
     private TextView name,qq,sex,xingZuo,qianMing,myReturn;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,42 +62,64 @@ public class MyDataActivity extends GeneralActivity {
 
         //加数据
         Intent intent=getIntent();
-        String qqNum=intent.getStringExtra("qqNum");
-        User user= Attribute.userInfoList.get(qqNum);
-        if(!Attribute.QQ.equals(qqNum))
+        final String qqNum=intent.getStringExtra("qqNum");
+        mUser = Attribute.userInfoList.get(qqNum);
+        // 非好友
+        if (mUser == null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    MyDateBase dateBase = new MyDateBase();
+                    mUser = dateBase.getUser(qqNum);
+                    dateBase.Destory();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initWithUser();
+                        }
+                    });
+                }
+            }).start();
+        } else {
+            initWithUser();
+        }
+    }
+
+    private void initWithUser(){
+        if (mUser == null) return;
+
+        if(!Attribute.QQ.equals(mUser.getQQNum()))
             editBtn.setText("好友设置");
         else
             editBtn.setText("编辑资料");
 
-        if(user!=null){
-            Bitmap bitmap=Attribute.userHeadList.get(qqNum);
-               if( bitmap!=null) {
-                   bitmap = GraphicsUtil.round(bitmap);
-                   head.setImageBitmap(bitmap);
-               }
-                else{
-                   head.setImageDrawable(getDrawable(R.drawable.main_side_icon));
-               }
-            name.setText(user.getNiCheng());
-            qq.setText(user.getQQNum());
-            if( user.getSex()!=null &&( user.getSex().equals("男") || user.getSex().equals("女"))){
-                sex.setText(user.getSex());
-            }
-            else
-                sex.setText("男");
-
-            if(user.getXingZuo()!=null &&!(user.getXingZuo().equalsIgnoreCase("null") || user.getXingZuo().equalsIgnoreCase(""))){
-                xingZuo.setText(user.getXingZuo());
-            }
-            else
-                xingZuo.setText("白羊座");
-
-            if(user.getQianMing()!=null &&!(user.getQianMing().equalsIgnoreCase("null") || user.getQianMing().equalsIgnoreCase(""))){
-                qianMing.setText(user.getQianMing());
-            }
-            else
-                qianMing.setText("编辑签名，展示我的独特态度");
+        Bitmap bitmap=Attribute.userHeadList.get(mUser.getQQNum());
+        if( bitmap!=null) {
+            bitmap = GraphicsUtil.round(bitmap);
+            head.setImageBitmap(bitmap);
         }
+        else{
+            head.setImageDrawable(getDrawable(R.drawable.main_side_icon));
+        }
+        name.setText(mUser.getNiCheng());
+        qq.setText(mUser.getQQNum());
+        if( mUser.getSex()!=null &&( mUser.getSex().equals("男") || mUser.getSex().equals("女"))){
+            sex.setText(mUser.getSex());
+        }
+        else
+            sex.setText("男");
+
+        if(mUser.getXingZuo()!=null &&!(mUser.getXingZuo().equalsIgnoreCase("null") || mUser.getXingZuo().equalsIgnoreCase(""))){
+            xingZuo.setText(mUser.getXingZuo());
+        }
+        else
+            xingZuo.setText("白羊座");
+
+        if(mUser.getQianMing()!=null &&!(mUser.getQianMing().equalsIgnoreCase("null") || mUser.getQianMing().equalsIgnoreCase(""))){
+            qianMing.setText(mUser.getQianMing());
+        }
+        else
+            qianMing.setText("编辑签名，展示我的独特态度");
 
         setClick();
     }
@@ -124,7 +143,7 @@ public class MyDataActivity extends GeneralActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Attribute.QQ.equals(qq.getText())) {
+                if(!Attribute.QQ.equals(qq.getText().toString())) {
 //                    ActivityOpreation.jumpActivity(MyDataActivity.this, EditDataActivity.class);
                 }
                 else {

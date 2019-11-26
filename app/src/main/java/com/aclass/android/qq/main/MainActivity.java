@@ -203,7 +203,7 @@ public class MainActivity extends GeneralActivity {
     @Override
     public void onBackPressed() {
         // 在抽屉页面时，返回到主界面
-        if (mViews.mainViewPager.getCurrentItem() == 0){
+        if (mViews != null && mViews.mainViewPager.getCurrentItem() == 0){
             setPagerItem(1);
             return;
         }
