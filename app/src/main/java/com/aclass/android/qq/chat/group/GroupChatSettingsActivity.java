@@ -169,14 +169,14 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
                 List<Member> allMembers = dateBase.getMembersByID(number);
                 if (allMembers == null) return;
                 int total = allMembers.size();
-                List<Member> members = allMembers.subList(0, total > 4 ? 3 : total - 1);
+                List<Member> members = allMembers.subList(0, total > 4 ? 3 : total);
                 int size = members.size();
                 boolean isEnd;
-                isEnd = bindMember(context, mViews.chatSettingsGroupMember1, members.get(0), dateBase);
-                isEnd = bindMember(context, mViews.chatSettingsGroupMember2, size > 1 ? members.get(1) : null, isEnd ? null : dateBase);
+                bindMember(context, mViews.chatSettingsGroupMember1, members.get(0), dateBase);
+                isEnd = bindMember(context, mViews.chatSettingsGroupMember2, size > 1 ? members.get(1) : null, dateBase);
                 isEnd = bindMember(context, mViews.chatSettingsGroupMember3, size > 2 ? members.get(2) : null, isEnd ? null : dateBase);
-                isEnd = bindMember(context, mViews.chatSettingsGroupMember4, size > 3 ? members.get(3) : null, isEnd ? null : dateBase);
-                bindMember(context, mViews.chatSettingsGroupMember5, size > 4 ? members.get(4) : null, isEnd ? null : dateBase);
+                bindMember(context, mViews.chatSettingsGroupMember4, size > 3 ? members.get(3) : null, isEnd ? null : dateBase);
+                bindMember(context, mViews.chatSettingsGroupMember5, null, null);
                 dateBase.Destory();
             }
         }).start();
