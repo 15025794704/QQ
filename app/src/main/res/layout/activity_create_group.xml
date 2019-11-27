@@ -6,6 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.aclass.android.qq.CreateGroupActivity">
+    <com.aclass.android.qq.custom.control.MyToolbar
+        android:id="@+id/activity_create_group_toolbar"
+        style="@style/AppTheme.Toolbar">
+
+        <TextView
+            android:text="创建群聊"
+            style="@style/AppTheme.ToolbarTitle"/>
+    </com.aclass.android.qq.custom.control.MyToolbar>
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
