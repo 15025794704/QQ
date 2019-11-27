@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aclass.android.qq.chat.contact.ContactChatSettingsActivity;
+import com.aclass.android.qq.chat.group.GroupChatSettingsActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.AssetsOperation;
 import com.aclass.android.qq.common.DisplayUtil;
@@ -86,12 +87,22 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.messageToolbarCall: // 语音通话
+                if(QQFriend.length()==8){//群聊，没有语音通话
+                    return true;
+                }
                 ActivityOpreation.jumpActivity(this,VideoWindowActivity.class,new String[]{"send",QQFriend});
                 return true;
             case R.id.messageToolbarInfo: // 聊天详情
-                Intent intent=new Intent(this, ContactChatSettingsActivity.class);
-                intent.putExtra(ContactChatSettingsActivity.ARG_NUM,QQFriend);
-                startActivity(intent);
+                if(QQFriend.length()==8){//跳转群设置
+                    Intent intent = new Intent(this, GroupChatSettingsActivity.class);
+//                    intent.putExtra(ContactChatSettingsActivity.ARG_NUM, QQFriend);
+                    startActivity(intent);
+                }
+                else {//跳转QQ好友设置
+                    Intent intent = new Intent(this, ContactChatSettingsActivity.class);
+                    intent.putExtra(ContactChatSettingsActivity.ARG_NUM, QQFriend);
+                    startActivity(intent);
+                }
                 return true;
         }
         return false;
@@ -210,9 +221,15 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         });
         // 设置工具栏标题文字
         titleName=(TextView)findViewById(R.id.messageToolbarTitle_name);
-        String title=Attribute.friendList.get(QQFriend).getBeiZhu();
-        if(title!=null && title.equalsIgnoreCase(""))
-            title=Attribute.userInfoList.get(QQFriend).getNiCheng();
+        String title="";
+        if(QQFriend.length()!=8) {
+            title=Attribute.friendList.get(QQFriend).getBeiZhu();
+            if (title != null && title.equalsIgnoreCase(""))
+                title = Attribute.userInfoList.get(QQFriend).getNiCheng();
+        }
+        else{
+            title ="QQ开发小团队";
+        }
 
         titleName.setText(title);
 
@@ -233,6 +250,8 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         listBtn=new Object[][]{{micBtn,0},{imageBtn,0},{cameraBtn,0},{redBtn,0},{emojiBtn,0}};
 
 
+        if(QQFriend.length()==8)
+            btn_send.setClickable(false);
         View view=View.inflate(MessageWindowActivity.this, R.layout.window_message_list_item_right,null);
         TextView textView=(TextView)view.findViewById(R.id.window_message_list_item_textView);
         RoundImageView head=(RoundImageView)view.findViewById(R.id.window_message_list_item_head);

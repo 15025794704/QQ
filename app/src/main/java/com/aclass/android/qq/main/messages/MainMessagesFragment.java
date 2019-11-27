@@ -52,7 +52,7 @@ import java.util.List;
 public class MainMessagesFragment extends Fragment implements MainFragment.MainPage, Toolbar.OnMenuItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     private MyToolbar mainToolbar;
-    public    LinearLayout msgListBox;
+    public   LinearLayout msgListBox;
     private  MainActivity mActivity;
 
     public static MainMessagesFragment newInstance(){
@@ -92,6 +92,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             }
             catch (FileNotFoundException e2){
                 activity.openFileOutput(Attribute.QQ + "messageList.json",Context.MODE_PRIVATE);
+                addWeQun(activity);
                 e2.printStackTrace();}
             if(fis==null)
                 return;
@@ -130,6 +131,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         TimeMsg.setText(msgList.getTime());
         if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
             HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
+        else
+            HeadMsg.setImageDrawable(getResources().getDrawable(R.drawable.qq));
         if(msgList.isTop()) {
             btnTop.setText("取消置顶");
             LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
@@ -254,6 +257,14 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         return false;
     }
 
+    /**
+    *添加默认群聊
+     */
+    public static void addWeQun(Activity activity){
+        MsgList msgList=new MsgList("QQ开发小团队","10:25","12345678",Attribute.msgList.size(),false);
+        Attribute.msgList.add(msgList);
+        Receiver.writeMsgListToFile(activity);
+    }
 }
 
 

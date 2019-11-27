@@ -53,6 +53,15 @@ public class Receiver {
                 SystemClock.sleep(3000);
                 try {
                     MainMessagesFragment.readFile(activity);
+                    boolean isWriteQun=false;
+                   for(MsgList msg:Attribute.msgList){
+                       if(msg.getQQFriend().length()==8) {
+                           isWriteQun = true;
+                           break;
+                       }
+                   }
+                    if(!isWriteQun)
+                        MainMessagesFragment.addWeQun(activity);
                 }
                 catch (Exception e){e.printStackTrace();}
 
@@ -191,7 +200,6 @@ public class Receiver {
         }
     }
 
-
     public  static void writeMsgListToFile(Context context){
         try {
             Attribute.isReadMsgListFile=true;
@@ -268,8 +276,6 @@ public class Receiver {
         }
         return c;
     }
-
-
 
     public static void setPoint(String QQ,boolean point){
         int index= getIndexByQQ(QQ);

@@ -131,7 +131,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     if(Attribute.friendList==null)
                         Attribute.friendList=new HashMap<String, Friend>();
 
-                    SystemClock.sleep(300);
+                    SystemClock.sleep(200);
                     List<GroupTitleInfo> groupList = new ArrayList<>();
                     List<String> list = new ArrayList<>();
                     List<Friend> specificFriends;
@@ -152,7 +152,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     for (int i = 0; i < newList.size(); i++) {
                         List<ContentInfo> listContentInfos = new ArrayList<>();
                         if (!newList.isEmpty()) {
-                            SystemClock.sleep(100);
+                            SystemClock.sleep(50);
                             specificFriends = myDateBase.getFriendsByqqGroup(newList.get(i));//获取特定组名下的好友列表
                             for (int j = 0; j < specificFriends.size(); j++) {
                                 if (!specificFriends.isEmpty() && specificFriends.get(j).getIsAgree()!=0) {
