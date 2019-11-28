@@ -132,7 +132,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
             HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
         else
-            HeadMsg.setImageDrawable(getResources().getDrawable(R.drawable.qq));
+            HeadMsg.setImageDrawable(getResources().getDrawable(R.drawable.profile_photo_default));
         if(msgList.isTop()) {
             btnTop.setText("取消置顶");
             LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
