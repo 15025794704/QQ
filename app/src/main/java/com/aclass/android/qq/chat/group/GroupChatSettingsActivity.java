@@ -21,7 +21,6 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.chat.ChatSettingsActivity;
@@ -57,7 +56,11 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
         final Context context = this;
 
         Intent intent = getIntent();
-        number = BuildConfig.DEBUG ? "12345678" : intent.getStringExtra(ARG_NUM);
+        number = intent.getStringExtra(ARG_NUM);
+        if (number == null) {
+            finish();
+            return;
+        }
 
         MyToolbar toolbar = mViews.chatSettingsGroupToolbar;
         // 工具栏选项点击监听器

@@ -23,8 +23,20 @@ public class GroupSettings extends Settings {
         Qun groupAccount = mDateBase.getQun(groupNum);
         Member group = mDateBase.getMemberByQQAndID(groupNum, Attribute.currentAccount.getQQNum());
         if (dateBase == null) mDateBase.Destory();
-        if (group == null) return null;
+        // todo 目前群功能仍欠缺，用于群设置页面展示
+        if (group == null) group = fakeGroup(groupNum, Attribute.currentAccount.getQQNum());
         return new GroupSettings(groupAccount, group);
+    }
+
+    private static Member fakeGroup(String groupNum, String currentAccountNum){
+        Member member = new Member();
+        member.setQunID(groupNum);
+        member.setMemberQQ(currentAccountNum);
+        member.setNiCheng("Faker");
+        member.setIsTop(0);
+        member.setIsHide(0);
+        member.setIsDisturb(0);
+        return member;
     }
 
     public GroupSettings(Qun groupAccount, Member group){

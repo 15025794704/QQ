@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
+import com.aclass.android.qq.R;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.Screen;
@@ -170,9 +172,10 @@ public class MainActivity extends GeneralActivity {
     // 访问网络获取个人信息----吴 （加）
     private void getInfo(){
         MyDateBase dateBase = new MyDateBase();
-        final User myAccount = dateBase.getUser(Attribute.QQ);
+        User myAccount = dateBase.getUser(Attribute.QQ);
         if (myAccount == null) return;
-        final Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
+        Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
+        if (profilePhoto == null) profilePhoto = BitmapFactory.decodeResource(getResources(), R.drawable.profile_photo_default);
         Attribute.currentAccount = myAccount;
         Attribute.currentAccountProfilePhoto = profilePhoto;
         Attribute.isAccountInitialized = true;

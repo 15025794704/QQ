@@ -39,6 +39,10 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
 
         Intent intent = getIntent();
         number = intent.getStringExtra(ARG_NUM);
+        if (number == null) {
+            finish();
+            return;
+        }
 
         MyToolbar toolbar = mViews.chatSettingsContactToolbar;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -95,7 +95,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
             case R.id.messageToolbarInfo: // 聊天详情
                 if(QQFriend.length()==8){//跳转群设置
                     Intent intent = new Intent(this, GroupChatSettingsActivity.class);
-//                    intent.putExtra(ContactChatSettingsActivity.ARG_NUM, QQFriend);
+                    intent.putExtra(GroupChatSettingsActivity.ARG_NUM, QQFriend);
                     startActivity(intent);
                 }
                 else {//跳转QQ好友设置
