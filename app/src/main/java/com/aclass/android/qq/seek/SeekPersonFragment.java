@@ -57,10 +57,10 @@ public class SeekPersonFragment extends Fragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    MyDateBase dateBase = new MyDateBase();
-                    final User user = dateBase.getUser(input);
-                    Qun group = dateBase.getQun(input);
-                    dateBase.Destory();
+                    MyDateBase database = new MyDateBase();
+                    final User user = database.getUser(input);
+                    Qun group = database.getQun(input);
+                    database.Destory();
                     if (user != null){
                         final Intent intent = new Intent(context, NewContactActivity.class);
                         intent.putExtra(NewContactActivity.ARG_CONTACT, (Parcelable) user);

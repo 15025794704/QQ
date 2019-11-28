@@ -168,26 +168,26 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                List<Member> allMembers = dateBase.getMembersByID(number);
+                MyDateBase database = new MyDateBase();
+                List<Member> allMembers = database.getMembersByID(number);
                 if (allMembers == null) return;
                 int total = allMembers.size();
                 List<Member> members = allMembers.subList(0, total > 4 ? 3 : total);
                 int size = members.size();
                 boolean isEnd;
-                bindMember(context, mViews.chatSettingsGroupMember1, members.get(0), dateBase);
-                isEnd = bindMember(context, mViews.chatSettingsGroupMember2, size > 1 ? members.get(1) : null, dateBase);
-                isEnd = bindMember(context, mViews.chatSettingsGroupMember3, size > 2 ? members.get(2) : null, isEnd ? null : dateBase);
-                bindMember(context, mViews.chatSettingsGroupMember4, size > 3 ? members.get(3) : null, isEnd ? null : dateBase);
+                bindMember(context, mViews.chatSettingsGroupMember1, members.get(0), database);
+                isEnd = bindMember(context, mViews.chatSettingsGroupMember2, size > 1 ? members.get(1) : null, database);
+                isEnd = bindMember(context, mViews.chatSettingsGroupMember3, size > 2 ? members.get(2) : null, isEnd ? null : database);
+                bindMember(context, mViews.chatSettingsGroupMember4, size > 3 ? members.get(3) : null, isEnd ? null : database);
                 bindMember(context, mViews.chatSettingsGroupMember5, null, null);
-                dateBase.Destory();
+                database.Destory();
             }
         }).start();
     }
 
-    private boolean bindMember(final Context context, final TextView view, final Member member, MyDateBase dateBase){
+    private boolean bindMember(final Context context, final TextView view, final Member member, MyDateBase database){
         final boolean isEnd = member == null;
-        boolean isBlank = isEnd && dateBase == null;
+        boolean isBlank = isEnd && database == null;
         if (isBlank) return true;
         final String text;
         final Drawable image;
@@ -197,7 +197,7 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
         } else {
             Bitmap memberProfilePhoto = Attribute.userHeadList.get(member.getMemberQQ());
             if (memberProfilePhoto == null) memberProfilePhoto = ProfileUtil.getProfilePhoto(context, member.getMemberQQ(), null);
-            text = member.getNiCheng();
+            text = ProfileUtil.getGroupMemberDisplayName(member.getQunID(), member.getMemberQQ(), database, member, null);
             image = memberProfilePhoto == null ? null : new BitmapDrawable(context.getResources(), GraphicsUtil.round(memberProfilePhoto));
         }
         runOnUiThread(new Runnable() {
@@ -268,10 +268,10 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                int resultGroupAccount = dateBase.updateEntity(settings.toQun());
-                int resultGroup = dateBase.updateEntity(settings.toMember());
-                dateBase.Destory();
+                MyDateBase database = new MyDateBase();
+                int resultGroupAccount = database.updateEntity(settings.toQun());
+                int resultGroup = database.updateEntity(settings.toMember());
+                database.Destory();
             }
         }).start();
     }

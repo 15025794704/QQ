@@ -1,6 +1,7 @@
 package com.aclass.android.qq.chat.contact;
 
 import com.aclass.android.qq.chat.Settings;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
@@ -16,17 +17,17 @@ public class ContactSettings extends Settings {
     boolean isBlocked;
     private Friend mData;
 
-    public static ContactSettings get(String contactNum, MyDateBase dateBase){
-        MyDateBase mDateBase = dateBase == null ? new MyDateBase() : dateBase;
-        Friend friend = mDateBase.getFriend(Attribute.currentAccount.getQQNum(), contactNum);
-        if (dateBase == null) mDateBase.Destory();
+    public static ContactSettings get(String contactNum, MyDateBase database){
+        MyDateBase mDatabase = database == null ? new MyDateBase() : database;
+        Friend friend = mDatabase.getFriend(Attribute.currentAccount.getQQNum(), contactNum);
+        if (database == null) mDatabase.Destory();
         if (friend == null) return null;
         return new ContactSettings(friend);
     }
 
     public ContactSettings(Friend friend){
         number = friend.getQQ2();
-        name = friend.getBeiZhu();
+        name = ProfileUtil.getDisplayName(friend.getQQ1(), number, null, friend, null);
         groupTag = friend.getQQgroup();
         isPinnedTop = friend.getIsTop() == 1;
         isDND = friend.getIsDisturb() == 1;

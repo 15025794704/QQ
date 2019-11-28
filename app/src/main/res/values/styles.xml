@@ -21,14 +21,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppTheme.MainMorePop" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:popupMenuStyle">@style/AppTheme.MainMorePopMenu</item>
-    </style>
-
-    <style name="AppTheme.MainMorePopMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
-        <item name="android:popupBackground">@drawable/main_more_back</item>
-    </style>
-
     <!-- 带返回按键和白色图标颜色的工具栏 -->
     <style name="AppTheme.Toolbar">
         <item name="android:layout_width">match_parent</item>

@@ -170,14 +170,14 @@ public class MainActivity extends GeneralActivity {
 
     // 访问网络获取个人信息----吴 （加）
     private void getInfo(){
-        MyDateBase dateBase = new MyDateBase();
-        User myAccount = dateBase.getUser(Attribute.QQ);
+        MyDateBase database = new MyDateBase();
+        User myAccount = database.getUser(Attribute.QQ);
         if (myAccount == null) {
-            dateBase.Destory();
+            database.Destory();
             return;
         }
-        Bitmap profilePhoto = ProfileUtil.getProfilePhoto(this, myAccount.getQQNum(), dateBase);
-        dateBase.Destory();
+        Bitmap profilePhoto = ProfileUtil.getProfilePhoto(this, myAccount.getQQNum(), database);
+        database.Destory();
         Attribute.currentAccount = myAccount;
         Attribute.currentAccountProfilePhoto = profilePhoto;
         Attribute.isAccountInitialized = true;

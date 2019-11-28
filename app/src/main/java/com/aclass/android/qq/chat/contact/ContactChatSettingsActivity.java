@@ -168,9 +168,9 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                int result = dateBase.updateEntity(settings.toFriend());
-                dateBase.Destory();
+                MyDateBase database = new MyDateBase();
+                int result = database.updateEntity(settings.toFriend());
+                database.Destory();
             }
         }).start();
     }
