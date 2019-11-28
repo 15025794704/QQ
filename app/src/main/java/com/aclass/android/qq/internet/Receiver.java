@@ -231,12 +231,12 @@ public class Receiver {
         int qqIndex= getIndexByQQ(QQFriend);
         int topMc=getMaxTopCount();
         Date d=new Date();
-        if(topMc==qqIndex){
+        if(topMc==qqIndex && qqIndex!=-1){
             return false;
         }
         if(qqIndex==-1){
             Friend f= Attribute.friendList.get(QQFriend);
-            MsgList m= new MsgList(QQFriend,f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),topMc,false);
+            MsgList m= new MsgList(f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),QQFriend,topMc,false);
             Attribute.msgList.add(topMc,m);
         }
         else{
