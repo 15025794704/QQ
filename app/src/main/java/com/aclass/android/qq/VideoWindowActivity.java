@@ -180,6 +180,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                     Attribute.isInVideo=false;
                     return;
                 }
+
             }
         });
 
@@ -334,11 +335,15 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                             sendVideoThread.stop();
                     } catch (Exception e) {
                     } finally {
+                        finish();
                     }
                 }
             }).start();
         }
         catch (Exception e){}
+        finally {
+            finish();
+        }
     }
 
     protected void init(){
