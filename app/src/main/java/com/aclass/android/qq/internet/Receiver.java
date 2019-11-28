@@ -181,7 +181,6 @@ public class Receiver {
         }
     }
 
-
     public  static void writeMessageToFile(Context context,Message msg,String QQFriend){
         try {
             String time="null";
