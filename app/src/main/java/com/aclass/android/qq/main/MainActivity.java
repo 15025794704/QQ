@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,9 +13,9 @@ import android.widget.Toast;
 
 import com.aclass.android.qq.BuildConfig;
 import com.aclass.android.qq.LoginWindowActivity;
-import com.aclass.android.qq.R;
 import com.aclass.android.qq.SplashActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.databinding.ActivityMainBinding;
@@ -173,9 +172,12 @@ public class MainActivity extends GeneralActivity {
     private void getInfo(){
         MyDateBase dateBase = new MyDateBase();
         User myAccount = dateBase.getUser(Attribute.QQ);
-        if (myAccount == null) return;
-        Bitmap profilePhoto = dateBase.getImageByQQ(myAccount.getQQNum());
-        if (profilePhoto == null) profilePhoto = BitmapFactory.decodeResource(getResources(), R.drawable.profile_photo_default);
+        if (myAccount == null) {
+            dateBase.Destory();
+            return;
+        }
+        Bitmap profilePhoto = ProfileUtil.getProfilePhoto(this, myAccount.getQQNum(), dateBase);
+        dateBase.Destory();
         Attribute.currentAccount = myAccount;
         Attribute.currentAccountProfilePhoto = profilePhoto;
         Attribute.isAccountInitialized = true;

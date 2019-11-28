@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.Switch;
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.chat.ChatSettingsActivity;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityContactChatSettingsBinding;
 import com.aclass.android.qq.internet.Attribute;
@@ -84,7 +86,9 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
     }
 
     private void bindData(Context context, final ContactSettings settings){
-        bindDataProfilePhoto(context, mViews.chatSettingsContactInfo, Attribute.userHeadList.get(settings.number));
+        Bitmap profilePhoto = Attribute.userHeadList.get(settings.number);
+        if (profilePhoto == null) profilePhoto = ProfileUtil.getDefaultProfilePhoto(context);
+        bindDataProfilePhoto(context, mViews.chatSettingsContactInfo, profilePhoto);
         mViews.chatSettingsContactInfo.setText(settings.name);
 
         Switch[] switches = new Switch[]{

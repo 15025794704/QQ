@@ -50,13 +50,18 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
                 logOut(context);
                 break;
             case R.id.settingsAccountsQuit:
+                quit();
                 break;
         }
     }
 
     private void logOut(Context context){
-        getSharedPreferences("GeneralPrefs", MODE_PRIVATE).edit().putBoolean("isLogin", false).apply();
+        context.getSharedPreferences("GeneralPrefs", MODE_PRIVATE).edit().putBoolean("isLogin", false).apply();
+        Attribute.isAccountInitialized = false;
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void quit(){
     }
 }

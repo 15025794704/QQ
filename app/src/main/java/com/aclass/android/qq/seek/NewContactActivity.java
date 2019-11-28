@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityNewContactBinding;
@@ -44,10 +45,8 @@ public class NewContactActivity extends GeneralActivity implements View.OnClickL
             public void run() {
                 Intent intent = getIntent();
                 mContactRef.set((User) intent.getParcelableExtra(ARG_CONTACT));
-                MyDateBase dateBase = new MyDateBase();
                 final User contact = getContact();
-                final Bitmap profilePhoto = dateBase.getImageByQQ(contact.getQQNum());
-                dateBase.Destory();
+                final Bitmap profilePhoto = ProfileUtil.getRoundProfilePhoto(NewContactActivity.this, contact.getQQNum(), null);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

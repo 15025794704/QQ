@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -18,135 +17,128 @@
                 style="@style/AppTheme.ToolbarTitle"/>
         </com.aclass.android.qq.custom.control.MyToolbar>
 
-        <android.support.design.widget.CoordinatorLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <android.support.v4.widget.NestedScrollView
-                app:layout_behavior="com.aclass.android.qq.common.OverScrollBounceBehavior"
+            <LinearLayout
+                android:id="@+id/settingsContainer"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/settingsContainer"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/AppTheme.SimpleOptionGroup"
+                    android:layout_marginTop="@dimen/optionGroupMargin">
 
                     <LinearLayout
-                        style="@style/AppTheme.SimpleOptionGroup"
-                        android:layout_marginTop="@dimen/optionGroupMargin">
-
-                        <LinearLayout
-                            android:id="@+id/settingsAccounts"
-                            android:onClick="onClick"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            style="@style/AppTheme.SimpleOptionLayout">
-
-                            <TextView
-                                android:text="账号管理"
-                                style="@style/AppTheme.SimpleOptionLayoutTitle"/>
-
-                            <LinearLayout
-                                style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
-
-                                <ImageView
-                                    android:id="@+id/settingsProfilePhoto"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    tools:src="@tools:sample/avatars" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            style="@style/AppTheme.SimpleOptionLayout">
-
-                            <TextView
-                                android:text="手机号码"
-                                style="@style/AppTheme.SimpleOptionLayoutTitle"/>
-
-                            <LinearLayout
-                                tools:ignore="UseCompoundDrawables"
-                                style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
-
-                                <ImageView
-                                    style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
-
-                                <TextView
-                                    android:id="@+id/settingsPhone"
-                                    tools:text="132****4176"
-                                    style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
-                            </LinearLayout>
-                        </LinearLayout>
+                        android:id="@+id/settingsAccounts"
+                        android:onClick="onClick"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        style="@style/AppTheme.SimpleOptionLayout">
 
                         <TextView
-                            style="@style/AppTheme.SimpleOption"
-                            android:text="账号安全"/>
+                            android:text="账号管理"
+                            style="@style/AppTheme.SimpleOptionLayoutTitle"/>
 
                         <LinearLayout
-                            style="@style/AppTheme.SimpleOptionLayout">
+                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
 
-                            <TextView
-                                android:text="QQ达人"
-                                style="@style/AppTheme.SimpleOptionLayoutTitle"/>
-
-                            <LinearLayout
-                                tools:ignore="UseCompoundDrawables"
-                                style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
-
-                                <ImageView
-                                    style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
-
-                                <TextView
-                                    android:text="1024天"
-                                    android:textColor="#FFF0A040"
-                                    android:drawableStart="@drawable/ic_menu_24"
-                                    android:drawablePadding="8dp"
-                                    android:drawableTint="#FFF0A040"
-                                    style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
-                            </LinearLayout>
+                            <ImageView
+                                android:id="@+id/settingsProfilePhoto"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                tools:src="@tools:sample/avatars" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/AppTheme.SimpleOptionGroup"
-                        android:layout_marginTop="@dimen/optionGroupMargin">
+                        style="@style/AppTheme.SimpleOptionLayout">
 
                         <TextView
-                            style="@style/AppTheme.SimpleOption"
-                            android:text="消息通知"/>
+                            android:text="手机号码"
+                            style="@style/AppTheme.SimpleOptionLayoutTitle"/>
 
-                        <TextView
-                            style="@style/AppTheme.SimpleOption"
-                            android:text="隐私"/>
+                        <LinearLayout
+                            tools:ignore="UseCompoundDrawables"
+                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
 
-                        <TextView
-                            style="@style/AppTheme.SimpleOption"
-                            android:text="通用"/>
+                            <ImageView
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
 
-                        <TextView
-                            style="@style/AppTheme.SimpleOption"
-                            android:text="辅助功能"/>
+                            <TextView
+                                android:id="@+id/settingsPhone"
+                                tools:text="132****4176"
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <TextView
-                        android:layout_marginTop="@dimen/optionGroupMargin"
                         style="@style/AppTheme.SimpleOption"
-                        android:text="免流量特权"/>
+                        android:text="账号安全"/>
 
-                    <TextView
-                        android:layout_marginTop="@dimen/optionGroupMargin"
-                        android:layout_marginBottom="@dimen/optionGroupMargin"
-                        style="@style/AppTheme.SimpleOption"
-                        android:text="关于QQ与帮助"/>
+                    <LinearLayout
+                        style="@style/AppTheme.SimpleOptionLayout">
 
+                        <TextView
+                            android:text="QQ达人"
+                            style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                        <LinearLayout
+                            tools:ignore="UseCompoundDrawables"
+                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
+
+                            <ImageView
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
+
+                            <TextView
+                                android:text="1024天"
+                                android:textColor="#FFF0A040"
+                                android:drawableStart="@drawable/ic_menu_24"
+                                android:drawablePadding="8dp"
+                                android:drawableTint="#FFF0A040"
+                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
-            </android.support.v4.widget.NestedScrollView>
+                <LinearLayout
+                    style="@style/AppTheme.SimpleOptionGroup"
+                    android:layout_marginTop="@dimen/optionGroupMargin">
 
-        </android.support.design.widget.CoordinatorLayout>
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="消息通知"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="隐私"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="通用"/>
+
+                    <TextView
+                        style="@style/AppTheme.SimpleOption"
+                        android:text="辅助功能"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="免流量特权"/>
+
+                <TextView
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    android:layout_marginBottom="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOption"
+                    android:text="关于QQ与帮助"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 

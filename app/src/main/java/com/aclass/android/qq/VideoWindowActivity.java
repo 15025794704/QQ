@@ -27,18 +27,16 @@ import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.AssetsOperation;
 import com.aclass.android.qq.common.MyBitMapOperation;
 import com.aclass.android.qq.common.MyButtonOperation;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.common.Screen;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Request;
-import com.aclass.android.qq.entity.*;
 import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.security.spec.ECField;
-import java.util.ArrayList;
 import java.util.List;
 
 public class VideoWindowActivity extends GeneralActivity implements TextureView.SurfaceTextureListener{
@@ -103,7 +101,7 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         QQfriend=args[1];
         videoType=args[0];
 
-        Attribute.video_bitmap_send=bitmap2Bytes(BitmapFactory.decodeResource(getResources(),R.drawable.qq));
+        Attribute.video_bitmap_send=bitmap2Bytes(ProfileUtil.getDefaultProfilePhoto(this));
         init();
         initData();
         set_btn_click();

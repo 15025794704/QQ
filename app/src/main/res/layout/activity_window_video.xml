@@ -80,7 +80,7 @@
                     android:layout_width="145dp"
                     android:layout_height="145dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/qq"
+                    android:src="@drawable/profile_photo_default"
                     app:type="circle"
                     android:id="@+id/RoundImageView_video_head"
                     />

@@ -24,6 +24,7 @@ import com.aclass.android.qq.CreateGroupActivity;
 import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.custom.control.RoundImageView;
 import com.aclass.android.qq.entity.Friend;
@@ -41,6 +42,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +102,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             //读取json数据
             byte[] data = new byte[fis.available()];
             fis.read(data);
-            String json=new String(data,0,data.length,"utf-8");
+            String json=new String(data,0,data.length, StandardCharsets.UTF_8);
             if(json.equals(""))
                 return;
             json="["+json.substring(0,json.length()-1)+"]";
@@ -132,7 +134,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
             HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
         else
-            HeadMsg.setImageDrawable(getResources().getDrawable(R.drawable.qq));
+            HeadMsg.setImageBitmap(ProfileUtil.getDefaultProfilePhoto(getContext()));
         if(msgList.isTop()) {
             btnTop.setText("取消置顶");
             LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));

@@ -25,10 +25,12 @@ import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.chat.ChatSettingsActivity;
 import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.common.ThemeUtil;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivityGroupChatSettingsBinding;
 import com.aclass.android.qq.entity.Member;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 import java.util.List;
@@ -79,7 +81,7 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
             public void onChanged(@Nullable GroupSettings groupSettings) {
                 if (groupSettings == null) return;
                 number = groupSettings.number;
-                bindData(groupSettings);
+                bindData(context, groupSettings);
             }
         });
         mViewModel.groupProfilePhoto.observe(this, new Observer<Bitmap>() {
@@ -118,13 +120,11 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
         return false;
     }
 
-    private void bindData(final GroupSettings settings){
+    private void bindData(final Context context, final GroupSettings settings){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MyDateBase dateBase = new MyDateBase();
-                final Bitmap profilePhoto = dateBase.getImageByQQ(settings.number);
-                dateBase.Destory();
+                final Bitmap profilePhoto = ProfileUtil.getProfilePhoto(context, settings.number, null);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -195,7 +195,8 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
             text = context.getString(R.string.groupChatSettingsAddMember);
             image = context.getDrawable(R.drawable.chat_settings_add);
         } else {
-            final Bitmap memberProfilePhoto = dateBase.getImageByQQ(member.getMemberQQ());
+            Bitmap memberProfilePhoto = Attribute.userHeadList.get(member.getMemberQQ());
+            if (memberProfilePhoto == null) memberProfilePhoto = ProfileUtil.getProfilePhoto(context, member.getMemberQQ(), null);
             text = member.getNiCheng();
             image = memberProfilePhoto == null ? null : new BitmapDrawable(context.getResources(), GraphicsUtil.round(memberProfilePhoto));
         }
