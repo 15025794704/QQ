@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ProfileUtil;
@@ -73,6 +74,11 @@ public class NewContactActivity extends GeneralActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.newContactToolbarSend:
+                String groupTag = getText(mViews.newContactGroupTag);
+                if (groupTag.isEmpty()) {
+                    Toast.makeText(NewContactActivity.this, "请填写分组名称", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 sendRequest();
                 break;
         }
