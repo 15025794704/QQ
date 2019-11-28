@@ -143,7 +143,8 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                         for (int i = 0; i < friends.size(); i++) {
                             Attribute.friendList.put(friends.get(i).getQQ2(),friends.get(i));
                             String GroupName = friends.get(i).getQQgroup();
-                            list.add(GroupName);
+                            if(!GroupName.equals(""))
+                                list.add(GroupName);
                         }
                     System.out.println("list的长度为" + list.size());//2
 
