@@ -160,8 +160,6 @@ public class Receiver {
         Attribute.mainMessageReceive.start();
     }
 
-
-
     //获取历史消息
     private static void getLastMsg(Context context){
         try {

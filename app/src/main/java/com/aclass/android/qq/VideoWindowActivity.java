@@ -177,7 +177,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
                         }
                 }
                 catch (Exception e){
-                    ActivityOpreation.updateUI(handler, 0x12,"已关闭");
                     Attribute.isInVideo=false;
                     return;
                 }
@@ -261,7 +260,6 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
             }
         }
         catch (Exception e){
-            ActivityOpreation.updateUI(handler, 0x12, "已关闭");
             Attribute.isInVideo=false;
             return;
         }
@@ -292,52 +290,55 @@ public class VideoWindowActivity extends GeneralActivity implements TextureView.
         btn_refuse_come.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Request request= Attribute.friendVideoRequest;
-                        com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
+                try {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Request request= Attribute.friendVideoRequest;
+                            com.aclass.android.qq.entity.Message msg=(com.aclass.android.qq.entity.Message)request.getObj();
 
-                        receiveVideoDataBase.setTimeout(10000);
-                        msg.setContext("refuse");//拒绝
-                        request.setObj(msg);
-                        receiveVideoDataBase.UDPsend(request);    //发送拒绝或接受
-                        receiveVideoDataBase.Destory();
-                        ActivityOpreation.updateUI(handler,0x13,"");//finish
-                    }
-                }).start();
+                            receiveVideoDataBase.setTimeout(10000);
+                            msg.setContext("refuse");//拒绝
+                            request.setObj(msg);
+                            receiveVideoDataBase.UDPsend(request);    //发送拒绝或接受
+                            receiveVideoDataBase.Destory();
+                            ActivityOpreation.updateUI(handler,0x13,"");//finish
+                        }
+                    }).start();
+                }
+             catch (Exception e){}
             }
         });
     }
 
     private void close(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if(sendVideoDataBase!=null) {
-                        sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
-                        SystemClock.sleep(30);
-                        sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (sendVideoDataBase != null) {
+                            sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                            SystemClock.sleep(30);
+                            sendVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                        }
+                        if (receiveVideoDataBase != null) {
+                            receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                            SystemClock.sleep(30);
+                            receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
+                        }
+                        Attribute.isInVideo = false;
+                        if (videoThread != null)
+                            videoThread.stop();
+                        if (sendVideoThread != null)
+                            sendVideoThread.stop();
+                    } catch (Exception e) {
+                    } finally {
                     }
-                    if(receiveVideoDataBase!=null) {
-                        receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
-                        SystemClock.sleep(30);
-                        receiveVideoDataBase.UDPsend(ServerPort, new byte[0]);
-                    }
-                    Attribute.isInVideo=false;
-                    if (videoThread != null)
-                        videoThread.stop();
-                    if(sendVideoThread!=null)
-                        sendVideoThread.stop();
                 }
-                catch (Exception e){
-                }
-                finally {
-                    ActivityOpreation.updateUI(handler,0x13,"finish");
-                }
-            }
-        }).start();
+            }).start();
+        }
+        catch (Exception e){}
     }
 
     protected void init(){
