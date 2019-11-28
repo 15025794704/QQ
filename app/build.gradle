@@ -25,8 +25,17 @@ android {
 //        resValue "string", "testActivityName", buildTestActivityName
     }
     buildTypes {
-        release {
+        debug {
+            debuggable true
+            zipAlignEnabled true
             minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            debuggable false
+            zipAlignEnabled true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
