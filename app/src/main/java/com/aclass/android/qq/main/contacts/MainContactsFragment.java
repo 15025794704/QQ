@@ -170,6 +170,10 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                         Attribute.userInfoList.put(user.getQQNum(),user);
                                     }
 
+                                    //备注
+                                    if(beizhu.equals(""))
+                                        beizhu=user.getNiCheng();
+
                                     String qianming = user.getQianMing();
                                     SystemClock.sleep(50);
                                     Bitmap headImage = myDateBase.getImageByQQ(user.getQQNum());
