@@ -234,7 +234,7 @@ public class Receiver {
         }
         if(qqIndex==-1){
             Friend f= Attribute.friendList.get(QQFriend);
-            MsgList m= new MsgList(f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),QQFriend,topMc,false);
+            MsgList m= new MsgList(f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),QQFriend,topMc,true);
             Attribute.msgList.add(topMc,m);
         }
         else{
@@ -248,10 +248,6 @@ public class Receiver {
             Attribute.msgList.add(topMc,m);
         }
         return true;
-    }
-
-    public static int toInt(String s){
-        return Integer.parseInt(s);
     }
 
     public static int getIndexByQQ(String QQFriend){
