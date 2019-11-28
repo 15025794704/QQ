@@ -70,7 +70,6 @@ public class LoginWindowActivity extends GeneralActivity implements View.OnClick
                     {
                         Toast.makeText(LoginWindowActivity.this,"密码的长度小于了8位或者超出了18位",Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
