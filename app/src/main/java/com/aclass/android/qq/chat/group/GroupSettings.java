@@ -1,6 +1,7 @@
 package com.aclass.android.qq.chat.group;
 
 import com.aclass.android.qq.chat.Settings;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.entity.Member;
 import com.aclass.android.qq.entity.Qun;
 import com.aclass.android.qq.internet.Attribute;
@@ -19,10 +20,10 @@ public class GroupSettings extends Settings {
     private Member mDataGroup;
 
     public static GroupSettings get(String groupNum, MyDateBase dateBase){
-        MyDateBase mDateBase = dateBase == null ? new MyDateBase() : dateBase;
-        Qun groupAccount = mDateBase.getQun(groupNum);
-        Member group = mDateBase.getMemberByQQAndID(groupNum, Attribute.currentAccount.getQQNum());
-        if (dateBase == null) mDateBase.Destory();
+        MyDateBase mDatabase = dateBase == null ? new MyDateBase() : dateBase;
+        Qun groupAccount = mDatabase.getQun(groupNum);
+        Member group = mDatabase.getMemberByQQAndID(groupNum, Attribute.currentAccount.getQQNum());
+        if (dateBase == null) mDatabase.Destory();
         // todo 目前群功能仍欠缺，用于群设置页面展示
         if (group == null) group = fakeGroup(groupNum, Attribute.currentAccount.getQQNum());
         return new GroupSettings(groupAccount, group);
@@ -43,7 +44,7 @@ public class GroupSettings extends Settings {
         number = groupAccount.getQunID();
         name = groupAccount.getName();
         hostNum = groupAccount.getHost();
-        memberName = group.getNiCheng();
+        memberName = ProfileUtil.getGroupMemberDisplayName(number, group.getMemberQQ(), null, group, null);
         isPinnedTop = group.getIsTop() == 1;
         isDND = group.getIsDisturb() == 1;
         isHidden = group.getIsHide() == 1;

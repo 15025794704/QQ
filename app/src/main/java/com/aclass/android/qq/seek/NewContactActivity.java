@@ -90,9 +90,9 @@ public class NewContactActivity extends GeneralActivity implements View.OnClickL
                 friend.setIsAgree(0);
                 friend.setBeiZhu(remark.isEmpty() ? null : remark);
                 friend.setQQgroup(groupTag.isEmpty() ? null : groupTag);
-                MyDateBase dateBase = new MyDateBase();
-                int result = dateBase.insertEntity(friend);
-                dateBase.Destory();
+                MyDateBase database = new MyDateBase();
+                int result = database.insertEntity(friend);
+                database.Destory();
             }
         }).start();
         finish();

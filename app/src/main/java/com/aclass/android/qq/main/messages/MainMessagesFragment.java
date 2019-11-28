@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -238,8 +237,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mainToolbarMessagesMore: // more options
-                Context popContext = new ContextThemeWrapper(getContext(), R.style.AppTheme_MainMorePop);
-                PopupMenu pop = new PopupMenu(popContext, mainToolbar.findViewById(R.id.mainToolbarMessagesMore));
+                PopupMenu pop = new PopupMenu(getContext(), mainToolbar.findViewById(R.id.mainToolbarMessagesMore));
                 pop.inflate(R.menu.toolbar_main_messages_more);
                 try {
                     MenuBuilder.class.getMethod("setOptionalIconsVisible", boolean.class).invoke(pop.getMenu(), true);
