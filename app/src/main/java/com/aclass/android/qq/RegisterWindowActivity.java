@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.tools.MyDateBase;
@@ -30,6 +31,7 @@ public class RegisterWindowActivity extends GeneralActivity {
     private int recLen = 3;//倒计时提示5秒
     Timer timer = new Timer();
 
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,37 +46,47 @@ public class RegisterWindowActivity extends GeneralActivity {
             public void onClick(View v) {
                 if(checkEdit())
                 {
+                    final String account=new_account.getText().toString().trim();
+                    final String pwd=new_pwd.getText().toString().trim();
+                    final String nickName=nickname.getText().toString().trim();
+                    final String sex=choose_sex;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyDateBase myDateBase=new MyDateBase();
 
-                    MyDateBase myDateBase=new MyDateBase();
-                    String account=new_account.getText().toString().trim();
-                    String pwd=new_pwd.getText().toString().trim();
-                    String nickName=nickname.getText().toString().trim();
-                    String sex=choose_sex;
-                    User user=new User();
-                    user.setQQNum(account);
-                    user.setPassword(pwd);
-                    user.setNiCheng(nickName);
-                    user.setSex(sex);
-                    if(!myDateBase.isExitqqNum(account)) {
-                        myDateBase.insertEntity(user);
-                        timer.schedule(getTask(), 1000, 1000);//等待时间一秒，停顿时间一秒
+                            User user=new User();
+                            user.setQQNum(account);
+                            user.setPassword(pwd);
+                            user.setNiCheng(nickName);
+                            user.setSex(sex);
+                            if(!myDateBase.isExitqqNum(account)) {
+                                myDateBase.insertEntity(user);
+                                timer.schedule(getTask(), 1000, 1000);//等待时间一秒，停顿时间一秒
 
 
-                        /**
-                         * 正常情况下不点击跳过
-                         */
-                       Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
+                                /**
+                                 * 正常情况下不点击跳过
+                                 */
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ActivityOpreation.jumpActivity(RegisterWindowActivity.this,LoginWindowActivity.class);
+                                        finish();
+                                    }
+                                }, 5000);//延迟5S后发送handler信息
                             }
-                        }, 5000);//延迟5S后发送handler信息
-                    }
-                    else
-                    {
-                        Toast.makeText(RegisterWindowActivity.this,"该qq账号已存在",Toast.LENGTH_SHORT).show();
-                    }
+                            else
+                            {
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(RegisterWindowActivity.this,"该qq账号已存在",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
                 }
             }
         });
@@ -96,7 +108,6 @@ public class RegisterWindowActivity extends GeneralActivity {
                         Toast.makeText(RegisterWindowActivity.this,"还剩"+recLen+"秒到登录界面。。",Toast.LENGTH_SHORT).show();
                         if (recLen < 2) {
                             timer.cancel();
-
                         }
                     }
                 });
