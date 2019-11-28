@@ -33,6 +33,7 @@ public class LoginWindowActivity extends GeneralActivity implements View.OnClick
         login_password= findViewById(R.id.pwd_editText);
         user_register_button =findViewById(R.id.register_button);
         user_login_button = findViewById(R.id.login_button);
+
         initWidget();
 
     }
