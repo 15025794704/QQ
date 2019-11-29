@@ -194,18 +194,19 @@
                             android:text="群聊名称"
                             style="@style/AppTheme.SimpleOptionLayoutTitle"/>
 
-                        <LinearLayout
-                            tools:ignore="UseCompoundDrawables"
-                            style="@style/AppTheme.SimpleOptionLayoutNestedLayout">
-
-                            <ImageView
-                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutIcon"/>
-
-                            <TextView
-                                android:id="@+id/chatSettingsGroupName"
-                                tools:text="Android 小分队"
-                                style="@style/AppTheme.SimpleOptionLayoutNestedLayoutText"/>
-                        </LinearLayout>
+                        <EditText
+                            android:id="@+id/chatSettingsGroupName"
+                            tools:text="Android 小分队"
+                            android:textColor="?android:textColorHint"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:background="@null"
+                            android:gravity="end"
+                            android:layout_marginStart="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -266,7 +267,7 @@
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="管理群管理员"
+                    android:text="管理群"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
@@ -278,7 +279,7 @@
                         style="@style/AppTheme.SimpleOptionLayoutTitle"/>
 
                     <EditText
-                        android:id="@+id/chatSettingsGroupMemberName"
+                        android:id="@+id/chatSettingsGroupRemark"
                         tools:text="MADNESS"
                         android:textColor="?android:textColorHint"
                         android:inputType="text"

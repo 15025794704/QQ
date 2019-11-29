@@ -41,26 +41,27 @@ public class GroupSettings extends Settings {
     }
 
     public GroupSettings(Qun groupAccount, Member group){
+        mDataGroupAccount = groupAccount;
+        mDataGroup = group;
         number = groupAccount.getQunID();
-        name = groupAccount.getName();
-        hostNum = groupAccount.getHost();
         memberName = ProfileUtil.getGroupMemberDisplayName(number, group.getMemberQQ(), null, group, null);
+
+        name = groupAccount.getName();
+        remark = group.getNiCheng();
+        hostNum = groupAccount.getHost();
         isPinnedTop = group.getIsTop() == 1;
         isDND = group.getIsDisturb() == 1;
         isHidden = group.getIsHide() == 1;
-        mDataGroupAccount = groupAccount;
-        mDataGroup = group;
     }
 
     Qun toQun(){
-        mDataGroupAccount.setQunID(number);
-        mDataGroupAccount.setName(name);
-        mDataGroupAccount.setHost(hostNum);
+        mDataGroupAccount.setName(name.isEmpty() ? null : name);
+        mDataGroupAccount.setHost(hostNum.isEmpty() ? null : hostNum);
         return mDataGroupAccount;
     }
 
     Member toMember(){
-        mDataGroup.setNiCheng(memberName);
+        mDataGroup.setNiCheng(remark.isEmpty() ? null : remark);
         mDataGroup.setIsTop(isPinnedTop ? 1 : 0);
         mDataGroup.setIsDisturb(isDND ? 1 : 0);
         mDataGroup.setIsHide(isHidden ? 1 : 0);

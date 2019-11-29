@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aclass.android.qq.databinding.FragmentSeekPersonBinding;
 import com.aclass.android.qq.entity.Qun;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 public class SeekPersonFragment extends Fragment {
@@ -57,20 +59,39 @@ public class SeekPersonFragment extends Fragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    MyDateBase database = new MyDateBase();
-                    final User user = database.getUser(input);
-                    Qun group = database.getQun(input);
-                    database.Destory();
-                    if (user != null){
-                        final Intent intent = new Intent(context, NewContactActivity.class);
-                        intent.putExtra(NewContactActivity.ARG_CONTACT, (Parcelable) user);
+                    boolean isSelf = input.equals(Attribute.currentAccount.getQQNum());
+                    MyDateBase database = isSelf ? null : new MyDateBase();
+                    final User user = isSelf ? null : database.getUser(input);
+                    Qun group = isSelf ? null : database.getQun(input);
+                    if (!isSelf) database.Destory();
+                    boolean isContactExist = isSelf || user != null;
+                    boolean isContactAdded = !isSelf && isContactExist && Attribute.friendList.containsKey(user.getQQNum());
+                    String errorMessage = null;
+                    if (isSelf) {
+                        errorMessage = "不能添加自己哦";
+                    } else if (!isContactExist) {
+                        errorMessage = "账号不存在";
+                    } else if (isContactAdded) {
+                        errorMessage = "你与该账号已经是好友啦";
+                    }
+                    if (errorMessage != null) {
+                        final String message = errorMessage;
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(intent);
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                             }
                         });
+                        return;
                     }
+                    final Intent intent = new Intent(context, NewContactActivity.class);
+                    intent.putExtra(NewContactActivity.ARG_CONTACT, (Parcelable) user);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(intent);
+                        }
+                    });
                 }
             }).start();
         }

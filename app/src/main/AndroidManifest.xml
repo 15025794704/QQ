@@ -31,9 +31,7 @@
         tools:ignore="GoogleAppIndexingWarning,ManifestResource">
         <activity android:name=".settings.SettingsAccountsActivity" />
         <activity android:name=".seek.SeekActivity" />
-        <activity
-            android:name=".seek.NewContactActivity"
-            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".seek.NewContactActivity" />
         <activity android:name=".chat.contact.ContactChatSettingsActivity" />
         <activity android:name=".chat.group.GroupChatSettingsActivity" />
         <activity android:name=".MessageWindowActivity" />

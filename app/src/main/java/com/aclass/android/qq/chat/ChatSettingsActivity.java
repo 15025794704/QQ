@@ -40,6 +40,15 @@ public abstract class ChatSettingsActivity extends GeneralActivity
         view.setCompoundDrawablesRelative(profilePhoto, null, drawables[2], null);
     }
 
+    protected void changeRemark(String newValue){
+        Settings settings = chatSettingsViewModel.getSettings().getValue();
+        if (settings == null) return;
+        if (settings.remark == null && newValue.isEmpty()) return;
+        if (settings.remark != null && settings.remark.equals(newValue)) return;
+        settings.remark = newValue;
+        updateData();
+    }
+
     protected void changePinnedTop(boolean newValue){
         Settings settings = chatSettingsViewModel.getSettings().getValue();
         if (settings == null) return;

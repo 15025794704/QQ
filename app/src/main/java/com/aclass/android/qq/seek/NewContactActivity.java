@@ -76,7 +76,7 @@ public class NewContactActivity extends GeneralActivity implements View.OnClickL
             case R.id.newContactToolbarSend:
                 String groupTag = getText(mViews.newContactGroupTag);
                 if (groupTag.isEmpty()) {
-                    Toast.makeText(NewContactActivity.this, "请填写分组名称", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewContactActivity.this, "分组名称不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 sendRequest();

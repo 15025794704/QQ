@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
@@ -134,21 +135,35 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
             }
         }).start();
         mViews.chatSettingsGroupInfo.setText(settings.name);
-        mViews.chatSettingsGroupName.setText(settings.name);
         mViews.chatSettingsGroupNum.setText(settings.number);
-        mViews.chatSettingsGroupMemberName.setText(settings.memberName);
-        mViews.chatSettingsGroupMemberName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mViews.chatSettingsGroupName.setText(settings.name);
+        mViews.chatSettingsGroupRemark.setText(settings.remark);
+        TextView.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || actionId == EditorInfo.IME_ACTION_DONE){
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (inputMethodManager != null) inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    changeMemberName(v.getText().toString());
+                    final String newValue = v.getText().toString();
+                    switch (v.getId()) {
+                        case R.id.chatSettingsGroupRemark:
+                            changeRemark(newValue);
+                            break;
+                        case R.id.chatSettingsGroupName:
+                            if (newValue.isEmpty()) {
+                                Toast.makeText(context, "群聊名称不能为空", Toast.LENGTH_SHORT).show();
+                                return false;
+                            }
+                            changeGroupName(newValue);
+                            break;
+                    }
                     return true;
                 }
                 return false;
             }
-        });
+        };
+        mViews.chatSettingsGroupName.setOnEditorActionListener(editorActionListener);
+        mViews.chatSettingsGroupRemark.setOnEditorActionListener(editorActionListener);
 
         Switch[] switches = new Switch[]{
                 mViews.chatSettingsGroupPinnedTop,
@@ -253,11 +268,11 @@ public class GroupChatSettingsActivity extends ChatSettingsActivity implements T
     private void quitGroup(){
     }
 
-    private void changeMemberName(String newValue){
+    protected void changeGroupName(String newValue){
         GroupSettings settings = mViewModel.settings.getValue();
         if (settings == null) return;
-        if (settings.memberName.equals(newValue)) return;
-        settings.memberName = newValue;
+        if (settings.name.equals(newValue)) return;
+        settings.name = newValue;
         updateData();
     }
 

@@ -48,6 +48,51 @@
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
+                <LinearLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOptionLayout">
+
+                    <TextView
+                        android:text="备注"
+                        style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                    <EditText
+                        android:id="@+id/chatSettingsContactRemark"
+                        tools:text="MADNESS"
+                        android:textColor="?android:textColorHint"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/AppTheme.SimpleOptionLayout">
+
+                    <TextView
+                        android:text="分组"
+                        style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                    <EditText
+                        android:id="@+id/chatSettingsContactGroupTag"
+                        tools:text="Android Dev"
+                        android:textColor="?android:textColorHint"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
                 <TextView
                     android:text="查找聊天记录"
                     android:layout_marginTop="@dimen/optionGroupMargin"

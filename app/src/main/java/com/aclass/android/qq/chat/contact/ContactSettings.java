@@ -26,20 +26,21 @@ public class ContactSettings extends Settings {
     }
 
     public ContactSettings(Friend friend){
+        mData = friend;
         number = friend.getQQ2();
         name = ProfileUtil.getDisplayName(friend.getQQ1(), number, null, friend, null);
+
+        remark = friend.getBeiZhu();
         groupTag = friend.getQQgroup();
         isPinnedTop = friend.getIsTop() == 1;
         isDND = friend.getIsDisturb() == 1;
         isHidden = friend.getIsHide() == 1;
         isBlocked = friend.getIsBlocked() == 1;
-        mData = friend;
     }
 
     Friend toFriend(){
-        mData.setQQ2(number);
-        mData.setBeiZhu(name);
-        mData.setQQgroup(groupTag);
+        mData.setBeiZhu(remark.isEmpty() ? null : remark);
+        mData.setQQgroup(groupTag.isEmpty() ? null : groupTag);
         mData.setIsTop(isPinnedTop ? 1 : 0);
         mData.setIsDisturb(isDND ? 1 : 0);
         mData.setIsHide(isHidden ? 1 : 0);
