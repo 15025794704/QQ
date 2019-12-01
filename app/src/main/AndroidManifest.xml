@@ -34,7 +34,8 @@
         <activity android:name=".seek.NewContactActivity" />
         <activity android:name=".chat.contact.ContactChatSettingsActivity" />
         <activity android:name=".chat.group.GroupChatSettingsActivity" />
-        <activity android:name=".MessageWindowActivity" />
+        <activity android:name=".MessageWindowActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
@@ -51,13 +52,12 @@
         <activity android:name=".SplashActivity" />
         <activity android:name=".MyDataActivity" />
         <activity android:name=".NewFriendsActivity" />
+        <activity android:name=".CreateGroupActivity" />
 
         <service
             android:name=".internet.ReceiveService"
             android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".CreateGroupActivity"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
