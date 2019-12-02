@@ -34,6 +34,8 @@
                     android:id="@+id/chatSettingsGroupInfo"
                     tools:text="群聊名称"
                     android:drawableTint="@null"
+                    android:paddingTop="@dimen/optionPaddingVerticalWithIcon"
+                    android:paddingBottom="@dimen/optionPaddingVerticalWithIcon"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
