@@ -28,6 +28,7 @@ import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.User;
 import com.aclass.android.qq.internet.Attribute;
+import com.aclass.android.qq.internet.Receiver;
 import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.main.MainFragment;
 import com.aclass.android.qq.seek.SeekActivity;
@@ -153,7 +154,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                     for (int i = 0; i < newList.size(); i++) {
                         List<ContentInfo> listContentInfos = new ArrayList<>();
                         if (!newList.isEmpty()) {
-                            SystemClock.sleep(50);
+
                             specificFriends = myDateBase.getFriendsByqqGroup(newList.get(i));//获取特定组名下的好友列表
                             for (int j = 0; j < specificFriends.size(); j++) {
                                 if (!specificFriends.isEmpty() && specificFriends.get(j).getIsAgree()!=0) {
@@ -175,8 +176,8 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                         beizhu=user.getNiCheng();
 
                                     String qianming = user.getQianMing();
-                                    SystemClock.sleep(50);
-                                    Bitmap headImage = myDateBase.getImageByQQ(user.getQQNum());
+
+                                    Bitmap headImage = Receiver.getImageBitmap(Attribute.urlHead+user.getQQNum()+".png");
                                     //添加 好友头像 到公共集合
                                     if(!Attribute.userHeadList.containsKey(user.getQQNum())){
                                         Attribute.userHeadList.put(user.getQQNum(),headImage);

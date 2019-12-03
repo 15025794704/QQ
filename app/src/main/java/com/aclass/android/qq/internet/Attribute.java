@@ -41,7 +41,7 @@ public class Attribute {
     //是否需要从消息列表文件里读取
     public static boolean  isReadMsgListFile=true;
 
-
+    public static String urlHead="http://xiaofuwu.club/QQhead/";
 
     //好友消息列表
     public static List<MsgList> msgList;
