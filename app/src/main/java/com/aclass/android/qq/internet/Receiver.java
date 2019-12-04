@@ -239,7 +239,12 @@ public class Receiver {
         }
         if(qqIndex==-1){
             Friend f= Attribute.friendList.get(QQFriend);
-            MsgList m= new MsgList(f.getBeiZhu(),d.getHours()+":"+d.getMinutes(),QQFriend,topMc,true);
+            String bz;
+            if(f.getBeiZhu()==null || f.getBeiZhu().equals(""))
+                bz=Attribute.userInfoList.get(QQFriend).getNiCheng();
+            else
+                bz=f.getBeiZhu();
+            MsgList m= new MsgList(bz,d.getHours()+":"+d.getMinutes(),QQFriend,topMc,false);
             Attribute.msgList.add(topMc,m);
         }
         else{
