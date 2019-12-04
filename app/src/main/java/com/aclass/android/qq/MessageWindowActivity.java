@@ -224,7 +224,7 @@ public class MessageWindowActivity extends GeneralActivity implements Toolbar.On
         String title="";
         if(QQFriend.length()!=8) {
             title=Attribute.friendList.get(QQFriend).getBeiZhu();
-            if (title != null && title.equalsIgnoreCase(""))
+            if (title == null || title.equalsIgnoreCase(""))
                 title = Attribute.userInfoList.get(QQFriend).getNiCheng();
         }
         else{
