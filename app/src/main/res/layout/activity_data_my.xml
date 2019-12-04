@@ -168,11 +168,11 @@
     <RadioGroup
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="@drawable/data_my_button_group"
-        android:padding="10dp"
+        android:padding="4dp"
         >
         <Button
             android:id="@+id/idBtn"
@@ -180,7 +180,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
             android:layout_weight="1"
-            android:layout_marginEnd="15dp"
+            android:layout_margin="8dp"
             android:text="个性名片"
             android:textSize="18sp"
             android:drawableTint="#000000"
@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
             android:layout_weight="1"
-            android:layout_marginEnd="15dp"
+            android:layout_margin="8dp"
             android:text="编辑资料"
             android:textSize="18sp"
             android:drawableTint="#000000"
@@ -204,6 +204,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/data_my_button"
             android:layout_weight="1"
+            android:layout_margin="8dp"
             android:text="发消息"
             android:textSize="18sp"
             android:drawableTint="#000000"/>

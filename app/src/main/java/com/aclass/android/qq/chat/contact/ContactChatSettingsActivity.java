@@ -8,14 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aclass.android.qq.MyDataActivity;
 import com.aclass.android.qq.R;
@@ -95,35 +90,6 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
         if (profilePhoto == null) profilePhoto = ProfileUtil.getDefaultProfilePhoto(context);
         bindDataProfilePhoto(context, mViews.chatSettingsContactInfo, profilePhoto);
         mViews.chatSettingsContactInfo.setText(settings.name);
-        mViews.chatSettingsContactRemark.setText(settings.remark);
-        mViews.chatSettingsContactGroupTag.setText(settings.groupTag);
-        TextView.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || actionId == EditorInfo.IME_ACTION_DONE){
-                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (inputMethodManager != null) inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    final String newValue = v.getText().toString();
-                    switch (v.getId()) {
-                        case R.id.chatSettingsContactRemark:
-                            changeRemark(newValue);
-                            Attribute.agreeFriendClick = 1;
-                            break;
-                        case R.id.chatSettingsContactGroupTag:
-                            if (newValue.isEmpty()) {
-                                Toast.makeText(context, "分组名称不能为空", Toast.LENGTH_SHORT).show();
-                                return false;
-                            }
-                            changeGroupTag(newValue);
-                            break;
-                    }
-                    return true;
-                }
-                return false;
-            }
-        };
-        mViews.chatSettingsContactRemark.setOnEditorActionListener(editorActionListener);
-        mViews.chatSettingsContactGroupTag.setOnEditorActionListener(editorActionListener);
 
         Switch[] switches = new Switch[]{
                 mViews.chatSettingsContactPinnedTop,
@@ -185,15 +151,6 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
     }
 
     private void removeContact(){
-    }
-
-    private void changeGroupTag(String newValue){
-        ContactSettings settings = mViewModel.settings.getValue();
-        if (settings == null) return;
-        if (settings.groupTag.equals(newValue)) return;
-        settings.groupTag = newValue;
-        Attribute.agreeFriendClick = 1;
-        updateData();
     }
 
     private void changeBlocked(boolean newValue){

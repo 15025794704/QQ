@@ -38,9 +38,4 @@ public class MainExploreFragment extends Fragment implements MainFragment.MainPa
     public void onVisiblyClick() {
 
     }
-
-    @Override
-    public boolean onVisiblyDoubleClick() {
-        return false;
-    }
 }

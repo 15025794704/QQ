@@ -242,11 +242,6 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     @Override
-    public boolean onVisiblyDoubleClick() {
-        return false;
-    }
-
-    @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mainToolbarMessagesMore: // more options

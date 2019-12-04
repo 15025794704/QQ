@@ -1,5 +1,6 @@
 package com.aclass.android.qq;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -7,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aclass.android.qq.chat.contact.account.ContactAccountSettingsActivity;
 import com.aclass.android.qq.common.ActivityOpreation;
 import com.aclass.android.qq.common.GraphicsUtil;
 import com.aclass.android.qq.common.MyButtonOperation;
@@ -39,6 +42,13 @@ public class MyDataActivity extends GeneralActivity {
     @Override
     protected void consumeInsets(Rect insets) {
         ((RelativeLayout)findViewById(R.id.myBackground)).setPadding(0,insets.top,0,0);
+        RadioGroup bottomOptions = findViewById(R.id.bottomNavigation);
+        bottomOptions.setPadding(
+                bottomOptions.getPaddingStart(),
+                bottomOptions.getPaddingTop(),
+                bottomOptions.getPaddingEnd(),
+                bottomOptions.getPaddingBottom() + insets.bottom
+        );
     }
 
     private void init(){
@@ -121,10 +131,12 @@ public class MyDataActivity extends GeneralActivity {
         else
             qianMing.setText("编辑签名，展示我的独特态度");
 
-        setClick();
+        setClick(this);
     }
 
-    private void setClick(){
+    private void setClick(final Activity context) {
+        final String number = mUser.getQQNum();
+        final boolean isSelf = number.equals(Attribute.QQ);
         myReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,20 +146,20 @@ public class MyDataActivity extends GeneralActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!qq.getText().equals(Attribute.QQ)){
-                    ActivityOpreation.jumpActivity(MyDataActivity.this,MessageWindowActivity.class,new String[]{qq.getText().toString()});
-                    finish();
-                }
+                if (isSelf) return;
+                ActivityOpreation.jumpActivity(context, MessageWindowActivity.class, new String[]{ number });
+                finish();
             }
         });
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Attribute.QQ.equals(qq.getText().toString())) {
-//                    ActivityOpreation.jumpActivity(MyDataActivity.this, EditDataActivity.class);
-                }
-                else {
-                    ActivityOpreation.jumpActivity(MyDataActivity.this, EditDataActivity.class);
+                if (isSelf) {
+                    ActivityOpreation.jumpActivity(context, EditDataActivity.class);
+                } else {
+                    Intent intent = new Intent(context, ContactAccountSettingsActivity.class);
+                    intent.putExtra(ContactAccountSettingsActivity.ARG_NUM, number);
+                    startActivity(intent);
                 }
             }
         });

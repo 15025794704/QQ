@@ -2,12 +2,9 @@ package com.aclass.android.qq.main.contacts;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,12 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.aclass.android.qq.MessageWindowActivity;
 import com.aclass.android.qq.NewFriendsActivity;
 import com.aclass.android.qq.R;
 import com.aclass.android.qq.common.ActivityOpreation;
@@ -80,16 +74,12 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
             }
         });
         Attribute.agreeFriendClick=1;
-        initData();
         return view;
     }
 
     @Override
-    public void onPageVisible(MyToolbar toolbar, TextView title) {
-        title.setText(R.string.mainBottomNavContacts);
-        toolbar.inflateMenu(R.menu.toolbar_main_contacts);
-        toolbar.setOnMenuItemClickListener(this);
-
+    public void onResume() {
+        super.onResume();
         if(Attribute.agreeFriendClick!=0)
         {
             initData();
@@ -97,12 +87,14 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
     }
 
     @Override
-    public void onVisiblyClick() {
+    public void onPageVisible(MyToolbar toolbar, TextView title) {
+        title.setText(R.string.mainBottomNavContacts);
+        toolbar.inflateMenu(R.menu.toolbar_main_contacts);
+        toolbar.setOnMenuItemClickListener(this);
     }
 
     @Override
-    public boolean onVisiblyDoubleClick() {
-        return false;
+    public void onVisiblyClick() {
     }
 
     /*
@@ -178,14 +170,16 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
 
                                     Bitmap headImage = Receiver.getImageBitmap(Attribute.urlHead+user.getQQNum()+".png");
                                     //添加 好友头像 到公共集合
-                                    if(!Attribute.userHeadList.containsKey(user.getQQNum())){
-                                        Attribute.userHeadList.put(user.getQQNum(),headImage);
-                                    }
-                                    else{
-                                       if( headImage.getByteCount()>Attribute.userHeadList.get(user.getQQNum()).getByteCount()){
-                                           Attribute.userHeadList.remove(user.getQQNum());
-                                           Attribute.userHeadList.put(user.getQQNum(),headImage);
-                                       }
+                                    if (headImage != null) {
+                                        if(!Attribute.userHeadList.containsKey(user.getQQNum())){
+                                            Attribute.userHeadList.put(user.getQQNum(),headImage);
+                                        }
+                                        else{
+                                            if( headImage.getByteCount()>Attribute.userHeadList.get(user.getQQNum()).getByteCount()){
+                                                Attribute.userHeadList.remove(user.getQQNum());
+                                                Attribute.userHeadList.put(user.getQQNum(),headImage);
+                                            }
+                                        }
                                     }
 
 
