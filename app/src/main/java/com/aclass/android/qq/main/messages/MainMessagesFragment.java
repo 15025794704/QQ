@@ -117,7 +117,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         }
     }
 
-    private  View fillValue(final MsgList msgList){
+    private  View fillValue(final MsgList msgList,int i){
         View view= View.inflate(mActivity, R.layout.messages_list_layout, null);
         final LinearLayout LinearMsgC=(LinearLayout) view.findViewById(R.id.LinearMsgC);
         LinearLayout LinearMsgP=(LinearLayout) view.findViewById(R.id.LinearMsgP);
@@ -128,6 +128,13 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         final Button btnTop=(Button) view.findViewById(R.id.btnTop);
         Button btnDelete=(Button) view.findViewById(R.id.btnDelete);
 
+        if(msgList.getQQFriend().length()!=8) {
+            String bz = Attribute.friendList.get(msgList.getQQFriend()).getBeiZhu();
+            if (bz != null && !bz.equals("") && !bz.equals(msgList.getName())) {
+                msgList.setName(bz);
+                Attribute.msgList.get(i).setName(bz);
+            }
+        }
         NameMsg.setText( msgList.getName());
         TimeMsg.setText(msgList.getTime());
         if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
@@ -207,10 +214,11 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         msgListBox.removeAllViewsInLayout();
         for (int i=0;i<Attribute.msgList.size();i++ ) {
             MsgList msg =Attribute. msgList.get(i);
-            View view=fillValue(msg);
+            View view=fillValue(msg,i);
             msgListBox.addView(view,i);
         }
     }
+
     @Override
     public void onPageVisible(MyToolbar toolbar, TextView title) {
 
