@@ -87,8 +87,8 @@ public class NewFriendsActivity extends GeneralActivity {
                                                         MyDateBase myDateBase = new MyDateBase();
                                                         Friend f = myDateBase.getFriend(u.getQQNum(), Attribute.QQ);
                                                         f.setIsAgree(1);
-                                                        if(f.getQQgroup().equals("")||f.getQQgroup()==null)
-                                                            f.setQQgroup("我的好友");
+
+                                                        f.setQQgroup("我的好友");
                                                         myDateBase.updateEntity(f);
                                                         f.setQQ1(Attribute.QQ);
                                                         f.setQQ2(u.getQQNum());

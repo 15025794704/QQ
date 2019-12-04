@@ -172,7 +172,7 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
                                     }
 
                                     //备注
-                                    if(beizhu.equals(""))
+                                    if(beizhu==null || beizhu.equals(""))
                                         beizhu=user.getNiCheng();
 
                                     String qianming = user.getQianMing();
