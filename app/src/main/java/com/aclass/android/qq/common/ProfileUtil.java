@@ -10,6 +10,7 @@ import com.aclass.android.qq.R;
 import com.aclass.android.qq.entity.Friend;
 import com.aclass.android.qq.entity.Member;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.tools.MyDateBase;
 
 public class ProfileUtil {
@@ -31,9 +32,11 @@ public class ProfileUtil {
      * @return 头像或者默认头像
      */
     public static Bitmap getProfilePhoto(Context context, String number, MyDateBase database){
-        MyDateBase mDatabase = database == null ? new MyDateBase() : database;
-        Bitmap profilePhoto = mDatabase.getImageByQQ(number);
-        if (database == null) mDatabase.Destory();
+        boolean isSelf = number == null;
+        boolean isSelfReady = isSelf && Attribute.isAccountInitialized;
+        MyDateBase mDatabase = (database == null && !isSelfReady) ? new MyDateBase() : database;
+        Bitmap profilePhoto = isSelfReady ? Attribute.currentAccountProfilePhoto : mDatabase.getImageByQQ(number);
+        if (database == null && !isSelfReady) mDatabase.Destory();
         if (profilePhoto == null) profilePhoto = getDefaultProfilePhoto(context);
         return profilePhoto;
     }

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aclass.android.qq.MyDataActivity;
-import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.databinding.FragmentDrawerBinding;
 import com.aclass.android.qq.entity.User;
@@ -87,7 +87,7 @@ public class DrawerFragment extends GeneralFragment {
         Attribute.userHeadList = new HashMap<>();
         Attribute.userInfoList.put(Attribute.QQ, account);
         Attribute.userHeadList.put(Attribute.QQ, Attribute.currentAccountProfilePhoto);
-        Bitmap navIcon = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+        Bitmap navIcon = ProfileUtil.getRoundProfilePhoto(getContext(), null, null);
         mViews.sideHead.setImageBitmap(navIcon);
         mViews.name.setText(account.getNiCheng());
         mViews.myMessage.setText(account.getQianMing());

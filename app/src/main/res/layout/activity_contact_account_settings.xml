@@ -9,11 +9,11 @@
         android:orientation="vertical">
 
         <com.aclass.android.qq.custom.control.MyToolbar
-            android:id="@+id/chatSettingsContactToolbar"
+            android:id="@+id/accountSettingsContactToolbar"
             style="@style/AppTheme.Toolbar">
 
             <TextView
-                android:text="聊天设置"
+                android:text="设置"
                 style="@style/AppTheme.ToolbarTitle"/>
         </com.aclass.android.qq.custom.control.MyToolbar>
 
@@ -23,86 +23,94 @@
             android:layout_height="0dp">
 
             <LinearLayout
-                android:id="@+id/chatSettingsContactContainer"
+                android:id="@+id/accountSettingsContactContainer"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/chatSettingsContactInfo"
-                    android:onClick="onClick"
-                    tools:text="好友昵称"
-                    android:drawableTint="@null"
-                    android:paddingTop="@dimen/optionPaddingVerticalWithIcon"
-                    android:paddingBottom="@dimen/optionPaddingVerticalWithIcon"
-                    style="@style/AppTheme.SimpleOption"/>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/optionGroupMargin"
+                    style="@style/AppTheme.SimpleOptionLayout">
+
+                    <TextView
+                        android:text="备注"
+                        style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                    <EditText
+                        android:id="@+id/accountSettingsContactRemark"
+                        tools:text="MADNESS"
+                        android:textColor="?android:textColorHint"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/AppTheme.SimpleOptionLayout">
+
+                    <TextView
+                        android:text="分组"
+                        style="@style/AppTheme.SimpleOptionLayoutTitle"/>
+
+                    <EditText
+                        android:id="@+id/accountSettingsContactGroupTag"
+                        tools:text="Android Dev"
+                        android:textColor="?android:textColorHint"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:layout_marginStart="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/chatSettingsContactGroupChat"
-                    android:onClick="onClick"
-                    android:text="发起群聊"
-                    android:drawableStart="@drawable/chat_settings_add"
-                    android:drawableEnd="@null"
-                    android:paddingTop="@dimen/optionPaddingVerticalWithIcon"
-                    android:paddingBottom="@dimen/optionPaddingVerticalWithIcon"
-                    style="@style/AppTheme.SimpleOption"/>
-
-                <TextView
-                    android:text="一起听歌"
+                    android:text="推荐该联系人"
                     android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="查找聊天记录"
+                    android:text="好友动态设置"
                     android:layout_marginTop="@dimen/optionGroupMargin"
-                    style="@style/AppTheme.SimpleOption"/>
-
-                <TextView
-                    android:text="聊天背景"
-                    style="@style/AppTheme.SimpleOption"/>
-
-                <Switch
-                    android:id="@+id/chatSettingsContactPinnedTop"
-                    android:layout_marginTop="@dimen/optionGroupMargin"
-                    android:drawableEnd="@null"
-                    android:text="设为置顶"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
                     android:text="特别关心"
-                    style="@style/AppTheme.SimpleOption"/>
-
-                <Switch
-                    android:id="@+id/chatSettingsContactDND"
-                    android:drawableEnd="@null"
-                    android:text="消息免打扰"
+                    android:layout_marginTop="@dimen/optionGroupMargin"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="消息通知设置"
+                    android:text="亲密关系"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <Switch
-                    android:id="@+id/chatSettingsContactHidden"
+                    android:id="@+id/accountSettingsContactDND"
                     android:drawableEnd="@null"
-                    android:text="隐藏会话"
+                    android:text="好友消息免打扰"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <Switch
-                    android:id="@+id/chatSettingsContactBlocked"
+                    android:drawableEnd="@null"
+                    android:text="隐藏到不常用联系人"
+                    style="@style/AppTheme.SimpleOption"/>
+
+                <Switch
+                    android:id="@+id/accountSettingsContactBlocked"
                     android:drawableEnd="@null"
                     android:text="屏蔽此人"
                     style="@style/AppTheme.SimpleOption"/>
 
                 <TextView
-                    android:text="删除聊天记录"
-                    android:textColor="?mColorAccent"
-                    android:drawableEnd="@null"
-                    android:layout_marginTop="@dimen/optionGroupMargin"
-                    style="@style/AppTheme.SimpleOption"/>
-
-                <TextView
-                    android:id="@+id/chatSettingsContactRemoveContact"
+                    android:id="@+id/accountSettingsContactRemoveContact"
                     android:onClick="onClick"
                     android:text="删除好友"
                     android:textColor="#FFF03030"

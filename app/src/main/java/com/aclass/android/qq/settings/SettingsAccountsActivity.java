@@ -1,12 +1,14 @@
 package com.aclass.android.qq.settings;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.aclass.android.qq.R;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.ActivitySettingsAccountsBinding;
@@ -27,8 +29,9 @@ public class SettingsAccountsActivity extends GeneralActivity implements View.On
                 finish();
             }
         });
-        final User currentAccount = Attribute.currentAccount;
-        mViews.settingsAccountsProfilePhoto.setImageBitmap(Attribute.currentAccountProfilePhoto);
+        User currentAccount = Attribute.currentAccount;
+        Bitmap bitmap = ProfileUtil.getRoundProfilePhoto(this, null, null);
+        mViews.settingsAccountsProfilePhoto.setImageBitmap(bitmap);
         mViews.settingsAccountsName.setText(currentAccount.getNiCheng());
         mViews.settingsAccountsInfo.setText(currentAccount.getQQNum());
     }

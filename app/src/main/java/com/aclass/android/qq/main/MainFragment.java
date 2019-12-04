@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aclass.android.qq.R;
-import com.aclass.android.qq.common.GraphicsUtil;
+import com.aclass.android.qq.common.ProfileUtil;
 import com.aclass.android.qq.custom.GeneralFragment;
 import com.aclass.android.qq.custom.control.MyToolbar;
 import com.aclass.android.qq.databinding.FragmentMainBinding;
@@ -101,7 +101,7 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    mViewModel.accountProfilePhoto = GraphicsUtil.round(Attribute.currentAccountProfilePhoto);
+                    mViewModel.accountProfilePhoto = ProfileUtil.getRoundProfilePhoto(getContext(), null, null);
                     mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -200,7 +200,6 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
     public void onNavigationItemReselected(@NonNull MenuItem item) {
         MainPage page = getNavPage(item);
         page.onVisiblyClick();
-        // todo onVisiblyDoubleClick
     }
 
     public interface MainPage{
@@ -214,15 +213,9 @@ public class MainFragment extends GeneralFragment implements BottomNavigationVie
         /**
          * 当前页面时，单击 tab
          * 应当回到顶部等
+         * 若当前页面已处于顶部，可以进行刷新（双击 tab 事件）
          */
         void onVisiblyClick();
-
-        /**
-         * 当前页面时，双击 tab
-         * 应当刷新等
-         * @return 是：已消化双击事件，否：调用 {@link #onVisiblyClick() onVisiblyClick}
-         */
-        boolean onVisiblyDoubleClick();
 
 //        /**
 //         * 用于标识 fragment
