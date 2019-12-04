@@ -98,7 +98,6 @@ public class MainContactsFragment extends Fragment implements MainFragment.MainP
 
     @Override
     public void onVisiblyClick() {
-
     }
 
     @Override

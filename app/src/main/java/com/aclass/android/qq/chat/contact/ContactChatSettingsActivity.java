@@ -107,6 +107,7 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
                     switch (v.getId()) {
                         case R.id.chatSettingsContactRemark:
                             changeRemark(newValue);
+                            Attribute.agreeFriendClick = 1;
                             break;
                         case R.id.chatSettingsContactGroupTag:
                             if (newValue.isEmpty()) {
@@ -191,6 +192,7 @@ public class ContactChatSettingsActivity extends ChatSettingsActivity {
         if (settings == null) return;
         if (settings.groupTag.equals(newValue)) return;
         settings.groupTag = newValue;
+        Attribute.agreeFriendClick = 1;
         updateData();
     }
 
