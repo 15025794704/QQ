@@ -58,7 +58,7 @@ public class EditDataActivity extends GeneralActivity {
             }
         });
 
-        String BirthDay;
+        String BirthDay="";
         SimpleDateFormat temp;
         mChooes=findViewById(R.id.im_chooes);
         mQianMing=findViewById(R.id.tv_qianming);
@@ -80,7 +80,11 @@ public class EditDataActivity extends GeneralActivity {
         mNiCheng.setText(user.getNiCheng());
         mSex.setText(user.getSex());
         temp=new SimpleDateFormat("yyyy-MM-dd");
-        BirthDay=temp.format(user.getBirthday());
+        try {
+            if(user.getBirthday()!=null && !user.getBirthday().equals(""))
+                BirthDay=temp.format(user.getBirthday());
+        }catch (Exception e){e.printStackTrace();}
+
         mBrith.setText(BirthDay);
         mZhiYe.setText(user.getZhiYe());
         mGongSi.setText(user.getGongSi());

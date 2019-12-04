@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +84,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     public static  void readFile(Activity activity){
+        Log.d("TAG",Attribute.QQ);
         try {
             if(!Attribute.isReadMsgListFile){
                 return;
@@ -105,6 +107,7 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
             if(json.equals(""))
                 return;
             json="["+json.substring(0,json.length()-1)+"]";
+            Log.d("TAG",json);
             //转换json数据
             Attribute.msgList=new ArrayList<>();
             Gson gson = new Gson();
@@ -118,94 +121,95 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
     }
 
     private  View fillValue(final MsgList msgList,int i){
-        View view= View.inflate(mActivity, R.layout.messages_list_layout, null);
-        final LinearLayout LinearMsgC=(LinearLayout) view.findViewById(R.id.LinearMsgC);
-        LinearLayout LinearMsgP=(LinearLayout) view.findViewById(R.id.LinearMsgP);
-        RoundImageView HeadMsg=(RoundImageView) view.findViewById(R.id.HeadMsg);
-        TextView NameMsg=(TextView) view.findViewById(R.id.NameMsg);
-        TextView TimeMsg=(TextView) view.findViewById(R.id.TimeMsg);
-        final ImageView point=(ImageView) view.findViewById(R.id.point);
-        final Button btnTop=(Button) view.findViewById(R.id.btnTop);
-        Button btnDelete=(Button) view.findViewById(R.id.btnDelete);
+        try {
+            View view = View.inflate(mActivity, R.layout.messages_list_layout, null);
+            final LinearLayout LinearMsgC = (LinearLayout) view.findViewById(R.id.LinearMsgC);
+            LinearLayout LinearMsgP = (LinearLayout) view.findViewById(R.id.LinearMsgP);
+            RoundImageView HeadMsg = (RoundImageView) view.findViewById(R.id.HeadMsg);
+            TextView NameMsg = (TextView) view.findViewById(R.id.NameMsg);
+            TextView TimeMsg = (TextView) view.findViewById(R.id.TimeMsg);
+            final ImageView point = (ImageView) view.findViewById(R.id.point);
+            final Button btnTop = (Button) view.findViewById(R.id.btnTop);
+            Button btnDelete = (Button) view.findViewById(R.id.btnDelete);
 
-        if(msgList.getQQFriend().length()!=8) {
-            String bz = Attribute.friendList.get(msgList.getQQFriend()).getBeiZhu();
-            if (bz != null && !bz.equals("") && !bz.equals(msgList.getName())) {
-                msgList.setName(bz);
-                Attribute.msgList.get(i).setName(bz);
-            }
-        }
-        NameMsg.setText( msgList.getName());
-        TimeMsg.setText(msgList.getTime());
-        if(Attribute.userHeadList!=null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
-            HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
-        else
-            HeadMsg.setImageBitmap(ProfileUtil.getDefaultProfilePhoto(getContext()));
-        if(msgList.isTop()) {
-            btnTop.setText("取消置顶");
-            LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
-        }
-        else{
-            btnTop.setText("置顶");
-            LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
-        }
-
-        if(msgList.isPoint()){
-            point.setVisibility(View.VISIBLE);
-        }
-        else {
-            point.setVisibility(View.INVISIBLE);
-        }
-
-        LinearMsgC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class,new String[]{msgList.getQQFriend()});
-                Receiver.setPoint(msgList.getQQFriend(),false);
-                Receiver.writeMsgListToFile(mActivity);
-                loadMsgList();
-            }
-        });
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for(int i=0;i<Attribute.msgList.size();i++){
-                    if(Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())){
-                        Attribute.msgList.remove(i);
-                        Receiver.writeMsgListToFile(mActivity);
-                        msgListBox.removeViewAt(i);
-                        break;
-                    }
+            if (msgList.getQQFriend().length() != 8) {
+                String bz = Attribute.friendList.get(msgList.getQQFriend()).getBeiZhu();
+                if (bz != null && !bz.equals("") && !bz.equals(msgList.getName())) {
+                    msgList.setName(bz);
+                    Attribute.msgList.get(i).setName(bz);
                 }
             }
-        });
-        btnTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    for (int i = 0; i < Attribute.msgList.size(); i++) {
-                            if (Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())) {
-                                int mc = Receiver.getMaxTopCount();
-                                MsgList msg = Attribute.msgList.get(i);
-                                if(btnTop.getText().equals("置顶")) {
-                                    msg.setTop(true);
-                                }
-                                else if(btnTop.getText().equals("取消置顶")){
-                                    msg.setTop(false);
-                                }
-                                msg.setIndex(mc);
-                                Attribute.msgList.add(mc,msg);
-                                if(mc<i)
-                                    Attribute.msgList.remove(i+1);
-                                else
-                                    Attribute.msgList.remove(i);
-                                Receiver.writeMsgListToFile(mActivity);
-                                loadMsgList();
-                                break;
-                            }
-                    }
+            NameMsg.setText(msgList.getName());
+            TimeMsg.setText(msgList.getTime());
+            if (Attribute.userHeadList != null && Attribute.userHeadList.containsKey(msgList.getQQFriend()))
+                HeadMsg.setImageBitmap(Attribute.userHeadList.get(msgList.getQQFriend()));
+            else
+                HeadMsg.setImageBitmap(ProfileUtil.getDefaultProfilePhoto(getContext()));
+            if (msgList.isTop()) {
+                btnTop.setText("取消置顶");
+                LinearMsgC.setBackgroundColor(Color.parseColor("#eeeeee"));
+            } else {
+                btnTop.setText("置顶");
+                LinearMsgC.setBackgroundColor(Color.parseColor("#ffffff"));
             }
-        });
-        return view;
+
+            if (msgList.isPoint()) {
+                point.setVisibility(View.VISIBLE);
+            } else {
+                point.setVisibility(View.INVISIBLE);
+            }
+
+            LinearMsgC.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityOpreation.jumpActivity(mActivity, MessageWindowActivity.class, new String[]{msgList.getQQFriend()});
+                    Receiver.setPoint(msgList.getQQFriend(), false);
+                    Receiver.writeMsgListToFile(mActivity);
+                    loadMsgList();
+                }
+            });
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i = 0; i < Attribute.msgList.size(); i++) {
+                        if (Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())) {
+                            Attribute.msgList.remove(i);
+                            Receiver.writeMsgListToFile(mActivity);
+                            msgListBox.removeViewAt(i);
+                            break;
+                        }
+                    }
+                }
+            });
+            btnTop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i = 0; i < Attribute.msgList.size(); i++) {
+                        if (Attribute.msgList.get(i).getQQFriend().equals(msgList.getQQFriend())) {
+                            int mc = Receiver.getMaxTopCount();
+                            MsgList msg = Attribute.msgList.get(i);
+                            if (btnTop.getText().equals("置顶")) {
+                                msg.setTop(true);
+                            } else if (btnTop.getText().equals("取消置顶")) {
+                                msg.setTop(false);
+                            }
+                            msg.setIndex(mc);
+                            Attribute.msgList.add(mc, msg);
+                            if (mc < i)
+                                Attribute.msgList.remove(i + 1);
+                            else
+                                Attribute.msgList.remove(i);
+                            Receiver.writeMsgListToFile(mActivity);
+                            loadMsgList();
+                            break;
+                        }
+                    }
+                }
+            });
+            return view;
+        }
+        catch (Exception e){}
+        return null;
     }
 
     private void loadMsgList(){
@@ -215,7 +219,8 @@ public class MainMessagesFragment extends Fragment implements MainFragment.MainP
         for (int i=0;i<Attribute.msgList.size();i++ ) {
             MsgList msg =Attribute. msgList.get(i);
             View view=fillValue(msg,i);
-            msgListBox.addView(view,i);
+            if (view!=null)
+                msgListBox.addView(view);
         }
     }
 

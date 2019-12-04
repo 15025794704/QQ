@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.aclass.android.qq.custom.GeneralActivity;
 import com.aclass.android.qq.entity.User;
+import com.aclass.android.qq.internet.Attribute;
 import com.aclass.android.qq.main.MainActivity;
 import com.aclass.android.qq.tools.MyDateBase;
 
@@ -43,7 +44,7 @@ public class LoginWindowActivity extends GeneralActivity implements View.OnClick
     }
 
     private void initWidget() {
-
+        Attribute.msgList.clear();
         user_login_button.setOnClickListener( this);
         user_register_button.setOnClickListener( this);
 
